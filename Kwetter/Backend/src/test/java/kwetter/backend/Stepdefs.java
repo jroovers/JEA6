@@ -9,7 +9,11 @@ import static org.junit.Assert.*;
 class IsItFriday {
 
     static String isItFriday(String today) {
-        return "Nope";
+        if (today.equals("Friday")) {
+            return "TGIF";
+        } else {
+            return "Nope";
+        }
     }
 }
 

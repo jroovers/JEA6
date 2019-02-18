@@ -9,4 +9,4 @@ Feature: Is it Friday yet?
   Scenario: Friday is Friday
     Given today is Friday
     When I ask whether it's Friday yet
-    Then I should be told "TGIF
+    Then I should be told "TGIF"
