@@ -33,3 +33,4 @@ dist/
 nbdist/
 .nb-gradle/
 /Kwetter/Backend/target/
+/Kwetter/Backend/nbproject/

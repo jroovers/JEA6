@@ -16,7 +16,7 @@ public class Role {
 
     }
 
-    private Role(boolean viewUsers, boolean deleteKweets, boolean manageRoles, boolean assignRoles) {
+    public Role(boolean viewUsers, boolean deleteKweets, boolean manageRoles, boolean assignRoles) {
         this.allowedToViewUsers = viewUsers;
         this.allowedToDeleteKweets = deleteKweets;
         this.allowedToManageRoles = manageRoles;
