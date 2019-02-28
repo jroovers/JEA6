@@ -10,11 +10,11 @@ import persistence.IBaseDao;
  *
  * @author Jeroen Roovers
  */
-public abstract class BaseDaoCollectionImpl<T> implements IBaseDao<T> {
+public abstract class BaseDaoCollection<T> implements IBaseDao<T> {
 
     private HashMap<Integer, T> objects;
 
-    public BaseDaoCollectionImpl() {
+    public BaseDaoCollection() {
         objects = new HashMap<>();
     }
 

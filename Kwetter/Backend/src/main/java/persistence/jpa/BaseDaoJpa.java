@@ -7,7 +7,7 @@ import persistence.IBaseDao;
  *
  * @author Jeroen Roovers
  */
-public abstract class BaseDaoJpaImpl<T> implements IBaseDao<T> {
+public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
 
     private Class<T> entityClass;
 

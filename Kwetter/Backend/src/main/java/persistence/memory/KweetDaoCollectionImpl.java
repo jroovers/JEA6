@@ -8,7 +8,7 @@ import persistence.KweetDao;
  *
  * @author Jeroen Roovers
  */
-public class KweetDaoCollectionImpl extends BaseDaoCollectionImpl<Kweet> implements KweetDao {
+public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements KweetDao {
 
     public KweetDaoCollectionImpl() {
         super();
