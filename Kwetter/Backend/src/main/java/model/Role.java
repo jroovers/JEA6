@@ -2,7 +2,7 @@ package model;
 
 /**
  *
- * @author Jeroen
+ * @author Jeroen Roovers
  */
 public class Role {
 

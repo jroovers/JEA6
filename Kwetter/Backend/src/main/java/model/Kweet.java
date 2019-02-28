@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author Jeroen
+ * @author Jeroen Roovers
  */
 public class Kweet {
 

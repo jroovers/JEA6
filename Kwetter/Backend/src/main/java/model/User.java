@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  *
- * @author Jeroen
+ * @author Jeroen Roovers
  */
 public class User {
 
@@ -22,6 +22,8 @@ public class User {
     private List<User> followedByUsers;
     private List<User> followingOtherUsers;
 
+    private List<Kweet> kweets;
+
     public User() {
 
     }
@@ -31,6 +33,7 @@ public class User {
         this.role = role;
         this.followedByUsers = new LinkedList<>();
         this.followingOtherUsers = new LinkedList<>();
+        this.kweets = new LinkedList<>();
     }
 
     public void followUser(User user) {
@@ -127,6 +130,14 @@ public class User {
 
     public void setFollowingOtherUsers(List<User> followingOtherUsers) {
         this.followingOtherUsers = followingOtherUsers;
+    }
+
+    public List<Kweet> getKweets() {
+        return kweets;
+    }
+
+    public void setKweets(List<Kweet> kweets) {
+        this.kweets = kweets;
     }
 
 }
