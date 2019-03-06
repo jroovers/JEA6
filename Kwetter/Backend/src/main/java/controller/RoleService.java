@@ -7,17 +7,28 @@ import model.Role;
  *
  * @author Jeroen Roovers
  */
-public class RoleService {
+public interface RoleService {
 
-    public Role createNewRole(Role role) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Create a new role
+     *
+     * @param role role to add
+     * @return the added role
+     */
+    public Role createNewRole(Role role);
 
-    public List<Role> getExistingRoles() {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Gets a list of all existing roles
+     *
+     * @return list of roles
+     */
+    public List<Role> getExistingRoles();
 
-    public boolean deleteRole(Role role) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Deletes a role
+     *
+     * @param role
+     * @return true if succesfully deleted
+     */
+    public boolean deleteRole(Role role);
 }

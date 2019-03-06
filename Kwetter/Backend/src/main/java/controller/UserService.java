@@ -9,46 +9,84 @@ import model.User;
  *
  * @author Jeroen Roovers
  */
-public class UserService {
+public interface UserService {
 
-    public User registerUser(String username, String password) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Registers a new user
+     *
+     * @param username new user's username
+     * @param password new user's password
+     * @return the created user
+     * @throws IllegalArgumentException if username already taken
+     */
+    public User registerUser(String username, String password) throws IllegalArgumentException;
 
-    public User login(String username, String password) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * authenticate using username and password and get an user.
+     *
+     * @param username username to use
+     * @param password password to use
+     * @return used if succesful, null if invalid credentials.
+     */
+    public User login(String username, String password);
 
-    public boolean logout(User user) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * logs out a user and destroys the session
+     *
+     * @param user user to logout
+     * @return true if succesful
+     */
+    public boolean logout(User user);
 
-    public User changeUserName(User user, String newName) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @param newName
+     * @return
+     */
+    public User changeUserName(User user, String newName);
 
-    public User changeProfilePhoto(User user, BufferedImage image) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @param image
+     * @return
+     */
+    public User changeProfilePhoto(User user, BufferedImage image);
 
-    public User updateProfileDetails(User user) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public User updateProfileDetails(User user);
 
-    public List<User> getFollowersByUser(User user) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public List<User> getFollowersByUser(User user);
 
-    public List<User> getUsersFollowedByUser(User user) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @return
+     */
+    public List<User> getUsersFollowedByUser(User user);
 
-    public List<User> getAllUsers() {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @return
+     */
+    public List<User> getAllUsers();
 
-    public User setUserRole(User user, Role role) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     *
+     * @param user
+     * @param role
+     * @return
+     */
+    public User setUserRole(User user, Role role);
 
 }

@@ -8,26 +8,50 @@ import model.User;
  *
  * @author Jeroen Roovers
  */
-public class KweetService {
+public interface KweetService {
 
-    public List<Kweet> getKweetsByUser(User user) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Gets the kweets for a particular user
+     *
+     * @param user user to get kweets of
+     * @return List of kweets sorted from most recent to last
+     */
+    public List<Kweet> getKweetsByUser(User user);
 
-    public List<Kweet> getKweetsBySearch(String query) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Get kweets by search query. query should be at least 3 characters long
+     * and can contain (partial) usernames, tags and kweet body content
+     *
+     * @param query text to query
+     * @return List of kweets sorted from most recent to last
+     */
+    public List<Kweet> getKweetsBySearch(String query);
 
-    public Kweet createKweet(User author, Kweet kweet) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Creates a new kweet
+     *
+     * @param author user that posts the kweet
+     * @param kweet kweet to be saved
+     * @return the created kweet
+     */
+    public Kweet createKweet(User author, Kweet kweet);
 
-    public List<Kweet> getKweetOverviewForUser(User u) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Get a personal selection of kweets for an user. This method should return
+     * relevant kweets for example ones that mention the user or that are placed
+     * by followed users
+     *
+     * @param u user
+     * @return list of kweets
+     */
+    public List<Kweet> getKweetOverviewForUser(User u);
 
-    public boolean deleteKweet(Kweet kweet) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Deletes a particular kweet
+     *
+     * @param kweet kweet to be deleted
+     * @return true if deleted, false if not
+     */
+    public boolean deleteKweet(Kweet kweet);
 
 }
