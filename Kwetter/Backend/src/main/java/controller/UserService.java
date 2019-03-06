@@ -39,53 +39,62 @@ public interface UserService {
     public boolean logout(User user);
 
     /**
+     * Changes the username for given user
      *
-     * @param user
-     * @param newName
-     * @return
+     * @param user user to update
+     * @param newName username to update user with
+     * @return the updated user
+     * @throws IllegalArgumentException when username already taken
      */
-    public User changeUserName(User user, String newName);
+    public User changeUserName(User user, String newName) throws IllegalArgumentException;
 
     /**
+     * Changes the profile picture for a given user
      *
-     * @param user
-     * @param image
-     * @return
+     * @param user user to update
+     * @param image image to set for user
+     * @return the updated user
      */
     public User changeProfilePhoto(User user, BufferedImage image);
 
     /**
+     * Saves the users profile details including name, location, website,
+     * biography
      *
-     * @param user
-     * @return
+     * @param user user with updated details
+     * @return the (same) user
      */
     public User updateProfileDetails(User user);
 
     /**
+     * gets all the users who are following a given user
      *
-     * @param user
-     * @return
+     * @param user user to get followers of
+     * @return list of users
      */
     public List<User> getFollowersByUser(User user);
 
     /**
+     * gets all the users who are being followed by given user
      *
-     * @param user
-     * @return
+     * @param user user to get followed users of
+     * @return list of users
      */
     public List<User> getUsersFollowedByUser(User user);
 
     /**
+     * gets all the users!
      *
-     * @return
+     * @return list of users
      */
     public List<User> getAllUsers();
 
     /**
+     * Sets the role for a particular user
      *
-     * @param user
-     * @param role
-     * @return
+     * @param user user to set role of
+     * @param role role to set on user
+     * @return the updated user
      */
     public User setUserRole(User user, Role role);
 
