@@ -4,12 +4,12 @@ Feature: Model Associations
   Scenario: Everyone follows everyone
     Given there are 10 users
     When everyone starts following eachother
-    Then everyone is added to eachothers followers lists
+    Then everyone should have 9 followers
 
   Scenario: Everyone follows everyone big
     Given there are 1000 users
     When everyone starts following eachother
-    Then everyone is added to eachothers followers lists
+    Then everyone should have 999 followers
 
   Scenario: Everyone places some tweets
     Given there are 10 users

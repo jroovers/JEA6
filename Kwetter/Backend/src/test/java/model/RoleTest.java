@@ -46,7 +46,7 @@ public class RoleTest {
      */
     @Test
     public void testId() {
-        System.out.println("setId");
+        System.out.println("Id");
         int id = 0;
         defaultrole.setId(id);
         assertEquals(id, defaultrole.getId());

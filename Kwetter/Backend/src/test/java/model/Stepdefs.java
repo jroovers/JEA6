@@ -71,6 +71,18 @@ public class Stepdefs {
         }
     }
 
+    @Then("^everyone should have (\\d+) followers$")
+    public void everyone_should_have_followers(int arg1) throws Exception {
+        // Write code here that turns the phrase above into concrete actions
+        int expected = arg1;
+        for (User u : users) {
+            int actualFollowers = u.getFollowedByUsers().size();
+            int actualFollowed = u.getFollowingOtherUsers().size();
+            Assert.assertEquals(expected, actualFollowers);
+            Assert.assertEquals(expected, actualFollowed);
+        }
+    }
+
     @Then("^there should be (\\d+) tweets in total$")
     public void there_should_be_tweets_in_total(int arg1) throws Exception {
         // Write code here that turns the phrase above into concrete actions

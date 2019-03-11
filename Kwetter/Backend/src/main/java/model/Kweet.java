@@ -35,6 +35,7 @@ public class Kweet {
         this.likedBy = new LinkedList<>();
     }
 
+    /// THIS PROBALY DOESNT BELONG HERE BUT IN SERVICE LAYER INSTEAD
     public void likePost(User user) {
         throw new UnsupportedOperationException("not yet implemented");
     }
