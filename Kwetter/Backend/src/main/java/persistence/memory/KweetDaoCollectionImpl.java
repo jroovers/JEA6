@@ -14,8 +14,11 @@ import persistence.Memory;
 @Memory
 public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements KweetDao {
 
+    private int counter;
+
     public KweetDaoCollectionImpl() {
         super();
+        counter = 0;
     }
 
     @Override
@@ -23,6 +26,8 @@ public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements 
         if (getObjectById(kweet.getId()) != null) {
             throw new EntityExistsException();
         }
+        counter++;
+        kweet.setId(counter);
         getObjectStorage().put(kweet.getId(), kweet);
     }
 
