@@ -1,13 +1,17 @@
 package persistence.memory;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import model.Role;
+import persistence.Memory;
 import persistence.RoleDao;
 
 /**
  *
  * @author Jeroen Roovers
  */
+@Stateless
+@Memory
 public class RoleDaoCollectionImpl extends BaseDaoCollection<Role> implements RoleDao {
 
     @Override

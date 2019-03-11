@@ -1,13 +1,17 @@
 package persistence.memory;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import model.User;
+import persistence.Memory;
 import persistence.UserDao;
 
 /**
  *
  * @author Jeroen Roovers
  */
+@Stateless
+@Memory
 public class UserDaoCollectionImpl extends BaseDaoCollection<User> implements UserDao {
 
     @Override

@@ -1,16 +1,25 @@
-package controller.rest;
+package controller.impl;
 
 import controller.UserService;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import model.Role;
 import model.User;
+import persistence.Memory;
+import persistence.UserDao;
 
 /**
  *
  * @author Jeroen Roovers
  */
-public class UserServiceRestImpl implements UserService {
+@Stateless
+public class UserServiceImpl implements UserService {
+
+    @Inject
+    @Memory
+    private UserDao userDao;
 
     @Override
     public User registerUser(String username, String password) throws IllegalArgumentException {
@@ -29,37 +38,55 @@ public class UserServiceRestImpl implements UserService {
 
     @Override
     public User changeUserName(User user, String newName) throws IllegalArgumentException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<User> allUsers = userDao.getAll();
+        for (User u : allUsers) {
+            if (u.getUsername().equals(newName)) {
+                throw new IllegalArgumentException("Username already taken by other user or same as existing username");
+            }
+        }
+        User savedUser = userDao.get(user.getId());
+        savedUser.setUsername(newName);
+        userDao.save(savedUser);
+        return savedUser;
     }
 
     @Override
     public User changeProfilePhoto(User user, BufferedImage image) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User u = userDao.get(user.getId());
+        u.setImage(image);
+        userDao.save(u);
+        return u;
     }
 
     @Override
     public User updateProfileDetails(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        userDao.save(user);
+        return user;
     }
 
     @Override
     public List<User> getFollowersByUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User savedUser = userDao.get(user.getId());
+        return savedUser.getFollowedByUsers();
     }
 
     @Override
     public List<User> getUsersFollowedByUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User savedUser = userDao.get(user.getId());
+        return savedUser.getFollowingOtherUsers();
     }
 
     @Override
     public List<User> getAllUsers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userDao.getAll();
     }
 
     @Override
     public User setUserRole(User user, Role role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User savedUser = userDao.get(user.getId());
+        savedUser.setRole(role);
+        userDao.save(savedUser);
+        return savedUser;
     }
 
 }

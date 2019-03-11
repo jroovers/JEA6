@@ -1,13 +1,17 @@
 package persistence.memory;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import model.Kweet;
 import persistence.KweetDao;
+import persistence.Memory;
 
 /**
  *
  * @author Jeroen Roovers
  */
+@Stateless
+@Memory
 public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements KweetDao {
 
     public KweetDaoCollectionImpl() {
