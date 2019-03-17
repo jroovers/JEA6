@@ -15,7 +15,7 @@ import model.Role;
  *
  * @author Jeroen Roovers
  */
-@Path("roles")
+@Path("/roles")
 public class RoleResource {
 
     @Context

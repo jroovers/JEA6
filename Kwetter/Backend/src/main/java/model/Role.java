@@ -12,7 +12,7 @@ public class Role {
     private boolean allowedToManageRoles;
     private boolean allowedToAssignRoles;
 
-    private Role() {
+    public Role() {
 
     }
 

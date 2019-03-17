@@ -2,7 +2,9 @@ package controller.impl;
 
 import controller.KweetService;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import model.Kweet;
@@ -61,7 +63,16 @@ public class KweetServiceImpl implements KweetService {
 
     @Override
     public List<Kweet> getKweetOverviewForUser(User u) {
-        return kweetDao.getAll();
+        List<Kweet> everything = kweetDao.getAll();
+        return everything;
+//        List<Kweet> timeline = new LinkedList();
+//        for(Kweet k : everything){
+//            timeline.addAll(
+//            u.getFollowingOtherUsers().stream()
+//                    .filter(id -> id.getId() == k.getAuthor().getId())
+//                    .collect(Collectors.toList())
+//            );
+//        }
     }
 
     @Override

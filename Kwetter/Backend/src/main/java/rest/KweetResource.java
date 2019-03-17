@@ -4,7 +4,9 @@ import controller.KweetService;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -38,11 +40,11 @@ public class KweetResource {
     public KweetResource() {
     }
 
-    @GET
-    @Path(value = "/timeline/{userid}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Kweet> find(@PathParam("userid") Long id) {
-        return kweetService.getKweetOverviewForUser(null);
+    @POST
+    @Path(value = "/timeline")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response find(User user) {
+        return Response.ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @PUT
