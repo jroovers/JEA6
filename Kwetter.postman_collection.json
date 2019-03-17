@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "26035061-a1bc-449c-8bfa-93eb17148eab",
+		"_postman_id": "374517e7-08dc-4780-9b9a-fcfaef452378",
 		"name": "Kwetter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,16 +9,23 @@
 			"name": "Kweets",
 			"item": [
 				{
-					"name": "Kwetter - GET timeline",
+					"name": "Kwetter - POST timeline",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"followedByUsers\": [],\n    \"followingOtherUsers\": [],\n    \"id\": 0,\n    \"kweets\": [],\n    \"role\": {\n        \"allowedToAssignRoles\": true,\n        \"allowedToDeleteKweets\": true,\n        \"allowedToManageRoles\": true,\n        \"allowedToViewUsers\": true,\n        \"id\": 0\n    },\n    \"username\": \"foouser\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/Backend/rest/kweets/timeline/1",
+							"raw": "http://localhost:8080/Backend/rest/kweets/timeline",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -28,8 +35,7 @@
 								"Backend",
 								"rest",
 								"kweets",
-								"timeline",
-								"1"
+								"timeline"
 							]
 						}
 					},
