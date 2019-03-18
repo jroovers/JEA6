@@ -25,6 +25,13 @@ public interface RoleService {
     public List<Role> getExistingRoles();
 
     /**
+     * updates an existing role
+     *
+     * @return the updated role
+     */
+    public Role updateRole(Role role);
+
+    /**
      * Deletes a role
      *
      * @param role

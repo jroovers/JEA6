@@ -31,6 +31,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public Role updateRole(Role role) {
+        Role savedRole = roleDao.getById(role.getId());
+        savedRole.setName(role.getName());
+        savedRole.setPrivileges(role.getPrivileges());
+        roleDao.update(savedRole);
+        return savedRole;
+    }
+
+    @Override
     public boolean deleteRole(Role role) {
         roleDao.delete(role);
         return true;

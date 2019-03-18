@@ -14,11 +14,11 @@ import persistence.Memory;
 @Memory
 public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements KweetDao {
 
-    private int counter;
+    private Long counter;
 
     public KweetDaoCollectionImpl() {
         super();
-        counter = 0;
+        counter = 0l;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements 
     }
 
     @Override
-    public Kweet get(Integer id) {
+    public Kweet getById(Long id) {
         return getObjectById(id);
     }
 

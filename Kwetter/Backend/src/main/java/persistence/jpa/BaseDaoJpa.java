@@ -32,7 +32,7 @@ public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
     }
 
     @Override
-    public T get(Integer id) {
+    public T getById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

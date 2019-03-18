@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Kweet {
 
-    private int id;
+    private Long id;
     private User author;
     private String body;
     private ZonedDateTime time;
@@ -40,11 +40,11 @@ public class Kweet {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

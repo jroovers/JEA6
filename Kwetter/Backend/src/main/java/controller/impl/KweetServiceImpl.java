@@ -25,7 +25,7 @@ public class KweetServiceImpl implements KweetService {
 
     @Override
     public List<Kweet> getKweetsByUser(User user) {
-        Integer userid = user.getId();
+        Long userid = user.getId();
         List<Kweet> returnlist = new ArrayList<>();
         List<Kweet> allKweets = kweetDao.getAll();
         for (Kweet k : allKweets) {

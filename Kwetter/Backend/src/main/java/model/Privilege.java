@@ -1,20 +1,23 @@
 package model;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  *
  * @author Jeroen Roovers
  */
-public class Role {
+public class Privilege {
 
     private Long id;
     private String name;
-    private Set<User> users;
-    private Set<Privilege> privileges;
 
-    public Role() {
+    private Collection<Role> roles;
 
+    public Privilege() {
+    }
+
+    public Privilege(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -33,11 +36,12 @@ public class Role {
         this.name = name;
     }
 
-    public Set<Privilege> getPrivileges() {
-        return privileges;
+    public Collection<Role> getRoles() {
+        return roles;
     }
 
-    public void setPrivileges(Set<Privilege> privileges) {
-        this.privileges = privileges;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
+
 }

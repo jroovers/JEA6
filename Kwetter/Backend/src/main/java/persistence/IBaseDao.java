@@ -18,5 +18,5 @@ public interface IBaseDao<T> {
 
     public void delete(T entity);
 
-    public T get(Integer id);
+    public T getById(Long id);
 }

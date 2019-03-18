@@ -14,16 +14,25 @@ import persistence.RoleDao;
 @Memory
 public class RoleDaoCollectionImpl extends BaseDaoCollection<Role> implements RoleDao {
 
+    private Long counter;
+
+    public RoleDaoCollectionImpl() {
+        super();
+        counter = 0l;
+    }
+
     @Override
     public void save(Role role) {
         if (getObjectById(role.getId()) != null) {
             throw new EntityExistsException();
         }
+        counter++;
+        role.setId(counter);
         getObjectStorage().put(role.getId(), role);
     }
 
     @Override
-    public Role get(Integer id) {
+    public Role getById(Long id) {
         return getObjectById(id);
     }
 

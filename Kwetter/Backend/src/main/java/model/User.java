@@ -1,9 +1,10 @@
 package model;
 
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -11,27 +12,24 @@ import java.util.List;
  */
 public class User {
 
-    private int id;
+    // non optionals
+    private Long id;
     private String username;
-    private Role role;
+    private String passwordHash;
+    private Set<Role> roles;
+
+    // optionals
     private BufferedImage image;
     private String name;
     private String location;
     private String website;
     private String biography;
-
     private List<User> followedByUsers;
     private List<User> followingOtherUsers;
-
     private List<Kweet> kweets;
 
     public User() {
-
-    }
-
-    public User(String username, Role role) {
-        this.username = username;
-        this.role = role;
+        this.roles = new HashSet<>();
         this.followedByUsers = new LinkedList<>();
         this.followingOtherUsers = new LinkedList<>();
         this.kweets = new LinkedList<>();
@@ -53,11 +51,11 @@ public class User {
         this.followedByUsers.remove(user);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,12 +67,20 @@ public class User {
         this.username = username;
     }
 
-    public Role getRole() {
-        return role;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setPasswordHash(String passwordhash) {
+        this.passwordHash = passwordhash;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public BufferedImage getImage() {

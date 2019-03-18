@@ -33,10 +33,9 @@ public interface UserService {
     /**
      * logs out a user and destroys the session
      *
-     * @param user user to logout
      * @return true if succesful
      */
-    public boolean logout(User user);
+    public boolean logout();
 
     /**
      * Changes the username for given user
@@ -96,6 +95,6 @@ public interface UserService {
      * @param role role to set on user
      * @return the updated user
      */
-    public User setUserRole(User user, Role role);
+    public User setUserRoles(User user, List<Role> role);
 
 }
