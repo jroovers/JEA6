@@ -1,9 +1,14 @@
 package controller;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
-import model.Role;
-import model.User;
+import javax.imageio.ImageIO;
+import model.PersonGroup;
+import model.Person;
 
 /**
  *
@@ -19,7 +24,7 @@ public interface UserService {
      * @return the created user
      * @throws IllegalArgumentException if username already taken
      */
-    public User registerUser(String username, String password) throws IllegalArgumentException;
+    public Person registerUser(String username, String password) throws IllegalArgumentException;
 
     /**
      * authenticate using username and password and get an user.
@@ -28,7 +33,7 @@ public interface UserService {
      * @param password password to use
      * @return used if succesful, null if invalid credentials.
      */
-    public User login(String username, String password);
+    public Person login(String username, String password);
 
     /**
      * logs out a user and destroys the session
@@ -45,7 +50,7 @@ public interface UserService {
      * @return the updated user
      * @throws IllegalArgumentException when username already taken
      */
-    public User changeUserName(User user, String newName) throws IllegalArgumentException;
+    public Person changeUserName(Person user, String newName) throws IllegalArgumentException;
 
     /**
      * Changes the profile picture for a given user
@@ -54,7 +59,7 @@ public interface UserService {
      * @param image image to set for user
      * @return the updated user
      */
-    public User changeProfilePhoto(User user, BufferedImage image);
+    public Person changeProfilePhoto(Person user, BufferedImage image);
 
     /**
      * Saves the users profile details including name, location, website,
@@ -63,7 +68,7 @@ public interface UserService {
      * @param user user with updated details
      * @return the (same) user
      */
-    public User updateProfileDetails(User user);
+    public Person updateProfileDetails(Person user);
 
     /**
      * gets all the users who are following a given user
@@ -71,7 +76,7 @@ public interface UserService {
      * @param user user to get followers of
      * @return list of users
      */
-    public List<User> getFollowersByUser(User user);
+    public List<Person> getFollowersByUser(Person user);
 
     /**
      * gets all the users who are being followed by given user
@@ -79,14 +84,14 @@ public interface UserService {
      * @param user user to get followed users of
      * @return list of users
      */
-    public List<User> getUsersFollowedByUser(User user);
+    public List<Person> getUsersFollowedByUser(Person user);
 
     /**
      * gets all the users!
      *
      * @return list of users
      */
-    public List<User> getAllUsers();
+    public List<Person> getAllUsers();
 
     /**
      * Sets the role for a particular user
@@ -95,6 +100,5 @@ public interface UserService {
      * @param role role to set on user
      * @return the updated user
      */
-    public User setUserRoles(User user, List<Role> role);
-
+    public Person setUserRoles(Person user, List<PersonGroup> role);
 }

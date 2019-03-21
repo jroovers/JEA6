@@ -22,19 +22,26 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @XmlRootElement
-public class Privilege implements Serializable {
+public class PersonGroup implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
-    @ManyToMany(mappedBy = "privileges")
-    private Set<PersonGroup> roles;
+    @ManyToMany(mappedBy = "roles")
+    private Set<Person> users;
+    @ManyToMany
+    private Set<Privilege> privileges;
 
     @java.lang.SuppressWarnings(value = "all")
     @XmlTransient
-    public Set<PersonGroup> getRoles() {
-        return roles;
+    public Set<Person> getUsers() {
+        return users;
+    }
+
+    @java.lang.SuppressWarnings(value = "all")
+    @XmlTransient
+    public Set<Privilege> getPrivileges() {
+        return privileges;
     }
 }

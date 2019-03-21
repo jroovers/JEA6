@@ -7,10 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Role;
-import model.User;
+import model.PersonGroup;
+import model.Person;
+import persistence.JPA;
 import persistence.Memory;
 import persistence.UserDao;
+import utility.BufferedImageConverter;
 import utility.PasswordStorage;
 
 /**
@@ -18,19 +20,19 @@ import utility.PasswordStorage;
  * @author Jeroen Roovers
  */
 @Stateless
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BufferedImageConverter implements UserService {
 
     @Inject
-    @Memory
+    @JPA
     private UserDao userDao;
 
     @Override
-    public User registerUser(String username, String password) throws IllegalArgumentException {
+    public Person registerUser(String username, String password) throws IllegalArgumentException {
         try {
             if (checkIfUserExistsByUsername(username)) {
                 throw new IllegalArgumentException("An User already exists with the given username");
             } else {
-                User u = new User();
+                Person u = new Person();
                 u.setUsername(username);
                 u.setPasswordHash(PasswordStorage.createHash(password));
                 userDao.save(u);
@@ -43,10 +45,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password) {
+    public Person login(String username, String password) {
         try {
             if (checkIfUserExistsByUsername(username)) {
-                User find = userDao.getByUsername(username);
+                Person find = userDao.getByUsername(username);
                 if (PasswordStorage.verifyPassword(password, find.getPasswordHash())) {
                     return find;
                 } else {
@@ -67,11 +69,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User changeUserName(User user, String newName) throws IllegalArgumentException {
+    public Person changeUserName(Person user, String newName) throws IllegalArgumentException {
         if (checkIfUserExistsByUsername(newName)) {
             throw new IllegalArgumentException("Username already taken by other user or same as existing username");
         } else {
-            User savedUser = userDao.getById(user.getId());
+            Person savedUser = userDao.getById(user.getId());
             savedUser.setUsername(newName);
             userDao.update(savedUser);
             return savedUser;
@@ -79,16 +81,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User changeProfilePhoto(User user, BufferedImage image) {
-        User savedUser = userDao.getById(user.getId());
-        savedUser.setImage(image);
+    public Person changeProfilePhoto(Person user, BufferedImage image) {
+        Person savedUser = userDao.getById(user.getId());
+        savedUser.setImage(getBytesFromImage(image));
         userDao.update(savedUser);
         return savedUser;
     }
 
     @Override
-    public User updateProfileDetails(User user) {
-        User savedUser = userDao.getById(user.getId());
+    public Person updateProfileDetails(Person user) {
+        Person savedUser = userDao.getById(user.getId());
         savedUser.setName(user.getName());
         savedUser.setLocation(user.getLocation());
         savedUser.setWebsite(user.getWebsite());
@@ -98,32 +100,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getFollowersByUser(User user) {
-        User savedUser = userDao.getById(user.getId());
-        return savedUser.getFollowedByUsers();
+    public List<Person> getFollowersByUser(Person user) {
+        Person savedUser = userDao.getById(user.getId());
+        return savedUser.getFollowers();
     }
 
     @Override
-    public List<User> getUsersFollowedByUser(User user) {
-        User savedUser = userDao.getById(user.getId());
-        return savedUser.getFollowingOtherUsers();
+    public List<Person> getUsersFollowedByUser(Person user) {
+        Person savedUser = userDao.getById(user.getId());
+        return savedUser.getFollowing();
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Person> getAllUsers() {
         return userDao.getAll();
     }
 
     @Override
-    public User setUserRoles(User user, List<Role> roles) {
-        User savedUser = userDao.getById(user.getId());
+    public Person setUserRoles(Person user, List<PersonGroup> roles) {
+        Person savedUser = userDao.getById(user.getId());
         savedUser.getRoles().addAll(roles);
         userDao.save(savedUser);
         return savedUser;
     }
 
     private boolean checkIfUserExistsByUsername(String username) {
-        User find = userDao.getByUsername(username);
+        Person find = userDao.getByUsername(username);
         if (find == null) {
             return false;
         } else {

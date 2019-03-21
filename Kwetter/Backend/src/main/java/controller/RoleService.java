@@ -1,7 +1,7 @@
 package controller;
 
 import java.util.List;
-import model.Role;
+import model.PersonGroup;
 
 /**
  *
@@ -15,21 +15,21 @@ public interface RoleService {
      * @param role role to add
      * @return the added role
      */
-    public Role createNewRole(Role role);
+    public PersonGroup createNewRole(PersonGroup role);
 
     /**
      * Gets a list of all existing roles
      *
      * @return list of roles
      */
-    public List<Role> getExistingRoles();
+    public List<PersonGroup> getExistingRoles();
 
     /**
      * updates an existing role
      *
      * @return the updated role
      */
-    public Role updateRole(Role role);
+    public PersonGroup updateRole(PersonGroup role);
 
     /**
      * Deletes a role
@@ -37,5 +37,5 @@ public interface RoleService {
      * @param role
      * @return true if succesfully deleted
      */
-    public boolean deleteRole(Role role);
+    public boolean deleteRole(PersonGroup role);
 }

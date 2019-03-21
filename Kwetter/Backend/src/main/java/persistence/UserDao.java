@@ -1,12 +1,12 @@
 package persistence;
 
-import model.User;
+import model.Person;
 
 /**
  *
  * @author Jeroen Roovers
  */
-public interface UserDao extends IBaseDao<User> {
+public interface UserDao extends IBaseDao<Person> {
 
     /**
      * Gets a single user by username
@@ -14,6 +14,6 @@ public interface UserDao extends IBaseDao<User> {
      * @param username to search by
      * @return the user if found, otherwise null
      */
-    public User getByUsername(String username);
+    public Person getByUsername(String username);
 
 }

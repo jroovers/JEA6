@@ -12,8 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import model.Kweet;
-import model.Role;
-import model.User;
+import model.PersonGroup;
+import model.Person;
 
 /**
  * REST Web Service
@@ -39,16 +39,19 @@ public class KweetResource {
     @POST
     @Path(value = "/timeline")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response find(User user) {
+    public Response find(Person user) {
         return Response.ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @PUT
     @Path(value = "/create")
     public Response create() {
-        User u = new User();
+        Person u = new Person();
         u.setUsername("FOOUSER");
-        kweetService.createKweet(u, new Kweet(u, "bar kweet content donald trump 2022"));
+        Kweet k = new Kweet();
+        k.setAuthor(u);
+        k.setBody("bar kweet content donald trump 2022");
+        kweetService.createKweet(u, k);
         return Response.status(Response.Status.CREATED).build();
     }
 
