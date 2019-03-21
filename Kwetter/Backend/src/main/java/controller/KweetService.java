@@ -2,7 +2,7 @@ package controller;
 
 import java.util.List;
 import model.Kweet;
-import model.User;
+import model.Person;
 
 /**
  *
@@ -16,7 +16,7 @@ public interface KweetService {
      * @param user user to get kweets of
      * @return List of kweets sorted from most recent to last
      */
-    public List<Kweet> getKweetsByUser(User user);
+    public List<Kweet> getKweetsByUser(Person user);
 
     /**
      * Get kweets by search query. query should be at least 3 characters long
@@ -34,7 +34,7 @@ public interface KweetService {
      * @param kweet kweet to be saved
      * @return the created kweet
      */
-    public Kweet createKweet(User author, Kweet kweet);
+    public Kweet createKweet(Person author, Kweet kweet);
 
     /**
      * Get a personal selection of kweets for an user. This method should return
@@ -44,7 +44,7 @@ public interface KweetService {
      * @param u user
      * @return list of kweets
      */
-    public List<Kweet> getKweetOverviewForUser(User u);
+    public List<Kweet> getKweetOverviewForUser(Person u);
 
     /**
      * Deletes a particular kweet

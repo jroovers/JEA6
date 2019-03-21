@@ -2,13 +2,12 @@ package controller.impl;
 
 import controller.KweetService;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import model.Kweet;
-import model.User;
+import model.Person;
+import persistence.JPA;
 import persistence.KweetDao;
 import persistence.Memory;
 
@@ -20,12 +19,12 @@ import persistence.Memory;
 public class KweetServiceImpl implements KweetService {
 
     @Inject
-    @Memory
+    @JPA
     private KweetDao kweetDao;
 
     @Override
-    public List<Kweet> getKweetsByUser(User user) {
-        Integer userid = user.getId();
+    public List<Kweet> getKweetsByUser(Person user) {
+        Long userid = user.getId();
         List<Kweet> returnlist = new ArrayList<>();
         List<Kweet> allKweets = kweetDao.getAll();
         for (Kweet k : allKweets) {
@@ -55,14 +54,14 @@ public class KweetServiceImpl implements KweetService {
     }
 
     @Override
-    public Kweet createKweet(User author, Kweet kweet) {
+    public Kweet createKweet(Person author, Kweet kweet) {
         kweet.setAuthor(author);
         kweetDao.save(kweet);
         return kweet;
     }
 
     @Override
-    public List<Kweet> getKweetOverviewForUser(User u) {
+    public List<Kweet> getKweetOverviewForUser(Person u) {
         List<Kweet> everything = kweetDao.getAll();
         return everything;
 //        List<Kweet> timeline = new LinkedList();
