@@ -8,7 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
-import model.PersonGroup;
+import model.Role;
 
 /**
  * REST Web Service
@@ -34,7 +34,7 @@ public class RoleResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    public PersonGroup getXml() {
+    public Role getXml() {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }
@@ -46,6 +46,6 @@ public class RoleResource {
      */
     @PUT
     @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(PersonGroup content) {
+    public void putXml(Role content) {
     }
 }

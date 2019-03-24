@@ -1,6 +1,6 @@
 package rest;
 
-import controller.KweetService;
+import service.KweetService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -12,8 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import model.Kweet;
-import model.PersonGroup;
-import model.Person;
+import model.User;
+import service.UserService;
 
 /**
  * REST Web Service
@@ -26,6 +26,9 @@ public class KweetResource {
 
     @Inject
     private KweetService kweetService;
+    
+    @Inject
+    private UserService userService;
 
     @Context
     private UriInfo context;
@@ -39,15 +42,15 @@ public class KweetResource {
     @POST
     @Path(value = "/timeline")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response find(Person user) {
+    public Response find(User user) {
         return Response.ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE).build();
     }
 
     @PUT
     @Path(value = "/create")
     public Response create() {
-        Person u = new Person();
-        u.setUsername("FOOUSER");
+        User u = new User();
+        u.setUsername("Henk");
         Kweet k = new Kweet();
         k.setAuthor(u);
         k.setBody("bar kweet content donald trump 2022");

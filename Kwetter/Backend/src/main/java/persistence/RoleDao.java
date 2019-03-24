@@ -1,11 +1,11 @@
 package persistence;
 
-import model.PersonGroup;
+import model.Role;
 
 /**
  *
  * @author Jeroen Roovers
  */
-public interface RoleDao extends IBaseDao<PersonGroup> {
+public interface RoleDao extends IBaseDao<Role> {
 
 }

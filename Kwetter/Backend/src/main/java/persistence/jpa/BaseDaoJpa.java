@@ -13,13 +13,17 @@ public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
 
     @PersistenceContext(unitName = "kwetterPU")
     private EntityManager em;
+    
+    protected Class<T> entityClass;
 
-    private Class<T> entityClass;
+    public Class<T> getEntityClass(){
+        return entityClass;
+    }
 
     @Override
     public List<T> getAll() {
         javax.persistence.criteria.CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
+        cq.select(cq.from(getEntityClass()));
         return em.createQuery(cq).getResultList();
     }
 
@@ -29,8 +33,8 @@ public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
     }
 
     @Override
-    public void update(T entity) {
-        em.merge(entity);
+    public T update(T entity) {
+        return em.merge(entity);
     }
 
     @Override
@@ -40,7 +44,11 @@ public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
 
     @Override
     public T getById(Long id) {
-        return em.find(entityClass, id);
+        return em.find(getEntityClass(), id);
+    }
+
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
 }

@@ -2,8 +2,8 @@ package persistence.memory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
-import model.PersonGroup;
-import persistence.Memory;
+import model.Role;
+import persistence.qualifiers.Memory;
 import persistence.RoleDao;
 
 /**
@@ -12,7 +12,7 @@ import persistence.RoleDao;
  */
 @Stateless
 @Memory
-public class RoleDaoCollectionImpl extends BaseDaoCollection<PersonGroup> implements RoleDao {
+public class RoleDaoCollectionImpl extends BaseDaoCollection<Role> implements RoleDao {
 
     private Long counter;
 
@@ -22,7 +22,7 @@ public class RoleDaoCollectionImpl extends BaseDaoCollection<PersonGroup> implem
     }
 
     @Override
-    public void save(PersonGroup role) {
+    public void save(Role role) {
         if (getObjectById(role.getId()) != null) {
             throw new EntityExistsException();
         }
@@ -32,20 +32,21 @@ public class RoleDaoCollectionImpl extends BaseDaoCollection<PersonGroup> implem
     }
 
     @Override
-    public PersonGroup getById(Long id) {
+    public Role getById(Long id) {
         return getObjectById(id);
     }
 
     @Override
-    public void update(PersonGroup role) {
+    public Role update(Role role) {
         if (getObjectById(role.getId()) == null) {
             throw new IllegalArgumentException();
         }
         getObjectStorage().put(role.getId(), role);
+        return getObjectStorage().get(role.getId());
     }
 
     @Override
-    public void delete(PersonGroup role) {
+    public void delete(Role role) {
         getObjectStorage().remove(role.getId());
     }
 

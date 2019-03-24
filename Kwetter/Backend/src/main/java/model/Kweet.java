@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.xml.bind.annotation.XmlRootElement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,17 +20,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@XmlRootElement
 public class Kweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Person author;
+    private User author;
     private String body;
     private ZonedDateTime createdTime;
-    private List<Person> mentions;
-    private List<Person> likedBy;
+    private List<User> mentions;
+    private List<User> likedBy;
     private List<String> tags;
 }

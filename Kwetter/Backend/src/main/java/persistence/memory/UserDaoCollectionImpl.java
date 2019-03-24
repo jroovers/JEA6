@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
-import model.Person;
-import persistence.Memory;
+import model.User;
+import persistence.qualifiers.Memory;
 import persistence.UserDao;
 
 /**
@@ -14,7 +14,7 @@ import persistence.UserDao;
  */
 @Stateless
 @Memory
-public class UserDaoCollectionImpl extends BaseDaoCollection<Person> implements UserDao {
+public class UserDaoCollectionImpl extends BaseDaoCollection<User> implements UserDao {
 
     private Long counter;
 
@@ -24,7 +24,7 @@ public class UserDaoCollectionImpl extends BaseDaoCollection<Person> implements 
     }
 
     @Override
-    public void save(Person user) {
+    public void save(User user) {
         if (getObjectById(user.getId()) != null) {
             throw new EntityExistsException();
         }
@@ -34,26 +34,27 @@ public class UserDaoCollectionImpl extends BaseDaoCollection<Person> implements 
     }
 
     @Override
-    public Person getById(Long id) {
+    public User getById(Long id) {
         return getObjectById(id);
     }
 
     @Override
-    public void update(Person user) {
+    public User update(User user) {
         if (getObjectById(user.getId()) == null) {
             throw new IllegalArgumentException();
         }
         getObjectStorage().put(user.getId(), user);
+        return getObjectStorage().get(user.getId());
     }
 
     @Override
-    public void delete(Person user) {
+    public void delete(User user) {
         getObjectStorage().remove(user.getId());
     }
 
     @Override
-    public Person getByUsername(String username) {
-        List<Person> users = getObjectStorage().values().stream()
+    public User getByUsername(String username) {
+        List<User> users = getObjectStorage().values().stream()
                 .filter(user -> user.getUsername().toLowerCase().equals(username.toLowerCase()))
                 .collect(Collectors.toList());
         if (users.size() != 1) {

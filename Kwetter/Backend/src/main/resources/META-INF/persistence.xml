@@ -3,12 +3,12 @@
   <persistence-unit name="kwetterPU" transaction-type="JTA">
     <jta-data-source>jdbc/kwetter</jta-data-source>
     <class>model.Kweet</class>
-    <class>model.Person</class>
-    <class>model.Privilege</class>
-    <class>model.PersonGroup</class>
-    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <class>model.User</class>
+    <class>model.Permission</class>
+    <class>model.Role</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>
