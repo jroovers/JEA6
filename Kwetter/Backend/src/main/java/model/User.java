@@ -51,7 +51,7 @@ public class User implements Serializable {
     private String website;
     private String biography;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "follower"),
@@ -59,7 +59,7 @@ public class User implements Serializable {
     )
     private List<User> followers;
 
-    @ManyToMany(mappedBy = "followers", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "followers")
     private List<User> following;
 
     @OneToMany(mappedBy = "author")
