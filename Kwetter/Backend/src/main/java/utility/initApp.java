@@ -1,12 +1,15 @@
 package utility;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import model.Kweet;
 import model.Permission;
 import model.Role;
 import model.User;
@@ -122,7 +125,7 @@ public class initApp implements Serializable {
 
         Role adminRole = rDao.getByName("SUPERADMIN");
         Role moderatorRole = rDao.getByName("MODERATOR");
-        
+
         adminUser.getRoles().add(adminRole);
         moderatorUser.getRoles().add(moderatorRole);
         uDao.update(adminUser);
@@ -130,7 +133,79 @@ public class initApp implements Serializable {
     }
 
     public void createKweets() {
+        List<User> allUsers = uDao.getAll();
+        for (User u : allUsers) {
+            kDao.save(randomKweet(u));
+            kDao.save(randomKweet(u));
+        }
 
+    }
+
+    private Kweet randomKweet(User author) {
+        String[] greetings = {
+            "Hoi",
+            "Hi",
+            "Jongens,",
+            "Hey"};
+        String[] crazyBody = {
+            "REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",
+            "java.lang.StackOverflowError ;)",
+            "(╯°□°）╯︵ ┻━┻)",
+            "┬─┬ ノ( ゜-゜ノ)",
+            "Curse you Perry the Platypus. Curse you Perry the Platypus. CURSE YOU!",
+            "Own a musket for home defense, since that's what the founding fathers intended.",
+            "Ik ben gehard by den Katergeuzen en ben den beste schutter onder den Nederlandsche vlag",
+            "JAAS zit bomvol met goede features Kappa123"
+        };
+        String[] normalBody = {
+            "Zin om even lekker te ontspannen, wie heeft tips?",
+            "Voel me goed vandaag!",
+            "Iemand zin om iets te doen?",
+            "Work hard, play hard",
+            "Ik heb echt mega veel zin in een broodje van hizmet. Alles erop maatje?!"};
+        String[] lookAtThisBody = {
+            "Interessant artikel op NU.nl: https://www.nu.nl/algemeen",
+            "Mooi item op Tweakers: https://tweakers.net/nieuws/",
+            "Boeiende uiteg in de Oracle docs: https://www.oracle.com/technical-resources/",
+            "Check NOS voor dat laatste nieuws :X"};
+        String[] goodbye = {
+            "oke doei",
+            "bye",
+            "challaz",
+            "hasta la vista",
+            "houdoe",
+            "doei",
+            "groetjes"};
+
+        Random r = new Random();
+        StringBuilder nonsense = new StringBuilder();
+        if (r.nextBoolean()) {
+            nonsense.append(greetings[r.nextInt(greetings.length)]);
+            nonsense.append(' ');
+        }
+        switch (r.nextInt(3)) {
+            case 0:
+                nonsense.append(crazyBody[r.nextInt(crazyBody.length)]);
+                nonsense.append(' ');
+                break;
+            case 1:
+                nonsense.append(normalBody[r.nextInt(normalBody.length)]);
+                nonsense.append(' ');
+                break;
+            case 2:
+                nonsense.append(lookAtThisBody[r.nextInt(lookAtThisBody.length)]);
+                nonsense.append(' ');
+                break;
+            default:
+                break;
+        }
+        if (r.nextBoolean()) {
+            nonsense.append(goodbye[r.ints(0, goodbye.length).findFirst().getAsInt()]);
+        }
+
+        String randomNonsense = nonsense.toString();
+
+        return new Kweet(author, randomNonsense);
     }
 
 }

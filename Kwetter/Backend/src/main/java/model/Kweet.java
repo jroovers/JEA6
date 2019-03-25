@@ -27,7 +27,8 @@ public class Kweet implements Serializable {
         this.body = body;
         this.createdTime = ZonedDateTime.now();
         // keep at end of constructor
-        this.author.getKweets().add(this);
+        // okay this isn't actually needed because item is the owning side of the relationship...
+        // this.author.getKweets().add(this);
     }
 
     @Id

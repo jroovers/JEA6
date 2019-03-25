@@ -5,6 +5,7 @@ import jsf.util.JsfUtil;
 import jsf.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -17,6 +18,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import model.Role;
+import org.primefaces.model.DualListModel;
+import persistence.RoleDao;
 import persistence.UserDao;
 import persistence.qualifiers.JPA;
 
@@ -28,8 +32,33 @@ public class UserController implements Serializable {
     @JPA
     private UserDao userCrud;
 
+    @Inject
+    @JPA
+    private RoleDao roleCrud;
+
     private List<User> items = null;
     private User selected;
+
+    //roles viewer
+    private DualListModel<Role> notusedRoles;
+
+    public DualListModel<Role> getRoles() {
+        if (selected != null) {
+            List<Role> allRoles = roleCrud.getAll();
+            List<Role> setRoles = new ArrayList<>(userCrud.getById(selected.getId()).getRoles());
+            for(Role r : setRoles){
+                allRoles.remove(r);
+            }
+            return new DualListModel<>(allRoles, setRoles);
+        } else {
+            return new DualListModel<>(new ArrayList<>(), new ArrayList<>());
+
+        }
+    }
+
+    public void setRoles(DualListModel<Role> roles) {
+        // dont do aynthing dont care lol
+    }
 
     public UserController() {
     }
@@ -164,5 +193,4 @@ public class UserController implements Serializable {
         }
 
     }
-
 }
