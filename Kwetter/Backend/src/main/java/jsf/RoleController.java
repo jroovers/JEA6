@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import org.primefaces.model.DualListModel;
 import persistence.RoleDao;
 import persistence.qualifiers.JPA;
 
@@ -27,6 +28,11 @@ public class RoleController implements Serializable {
     @Inject
     @JPA
     private RoleDao roleCrud;
+    
+    private DualListModel<Role> roles;
+    
+    
+    
 
     private List<Role> items = null;
     private Role selected;

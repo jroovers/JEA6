@@ -1,5 +1,7 @@
 package persistence.memory;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import model.Role;
@@ -48,6 +50,18 @@ public class RoleDaoCollectionImpl extends BaseDaoCollection<Role> implements Ro
     @Override
     public void delete(Role role) {
         getObjectStorage().remove(role.getId());
+    }
+
+    @Override
+    public Role getByName(String name) {
+        List<Role> roles = getObjectStorage().values().stream()
+                .filter(role -> role.getName().toLowerCase().equals(name.toLowerCase()))
+                .collect(Collectors.toList());
+        if (roles.size() != 1) {
+            return null;
+        } else {
+            return roles.get(0);
+        }
     }
 
 }

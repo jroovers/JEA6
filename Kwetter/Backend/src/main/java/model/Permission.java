@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.TreeSet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,13 +20,23 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Permission implements Serializable {
+public class Permission implements Serializable, Comparable<Permission> {
+
+    public Permission(String name) {
+        this.name = name;
+        this.roles = new TreeSet<>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
+    @ManyToMany(mappedBy = "permissions")
     private Set<Role> roles;
+
+    @Override
+    public int compareTo(Permission o) {
+        return this.name.compareTo(o.name);
+    }
 }

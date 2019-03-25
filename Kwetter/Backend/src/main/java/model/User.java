@@ -34,6 +34,11 @@ import lombok.Setter;
 })
 public class User implements Serializable {
 
+    public User(String username, String passwordHash) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
+    
     // non optionals
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +56,7 @@ public class User implements Serializable {
     private String website;
     private String biography;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "followers",
             joinColumns = @JoinColumn(name = "follower"),
@@ -59,10 +64,10 @@ public class User implements Serializable {
     )
     private List<User> followers;
 
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
     private List<User> following;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Kweet> kweets;
 
     @Override

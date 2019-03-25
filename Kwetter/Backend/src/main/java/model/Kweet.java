@@ -22,6 +22,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Kweet implements Serializable {
 
+    public Kweet(User author, String body) {
+        this.author = author;
+        this.body = body;
+        this.createdTime = ZonedDateTime.now();
+        // keep at end of constructor
+        this.author.getKweets().add(this);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
