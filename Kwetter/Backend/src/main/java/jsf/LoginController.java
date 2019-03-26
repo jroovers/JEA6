@@ -51,7 +51,8 @@ public class LoginController {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.login(this.username, checkPassword(this.username, this.password));
-            return "admin/kweet/list?faces-redirect=true";
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + this.username, username));
+            return "admin/admin_index.xhtml?faces-redirect=true";
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Login failed.", username));
             return "error";
