@@ -6,6 +6,7 @@ import jsf.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,7 +20,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import model.Role;
-import org.primefaces.model.DualListModel;
 import persistence.RoleDao;
 import persistence.UserDao;
 import persistence.qualifiers.JPA;
@@ -39,28 +39,40 @@ public class UserController implements Serializable {
     private List<User> items = null;
     private User selected;
 
-    //roles viewer
-    private DualListModel<Role> notusedRoles;
-
-    public DualListModel<Role> getRoles() {
-        if (selected != null) {
-            List<Role> allRoles = roleCrud.getAll();
-            List<Role> setRoles = new ArrayList<>(userCrud.getById(selected.getId()).getRoles());
-            for(Role r : setRoles){
-                allRoles.remove(r);
-            }
-            return new DualListModel<>(allRoles, setRoles);
-        } else {
-            return new DualListModel<>(new ArrayList<>(), new ArrayList<>());
-
-        }
-    }
-
-    public void setRoles(DualListModel<Role> roles) {
-        // dont do aynthing dont care lol
-    }
+    private List<String> selectedRoles;
+    private List<String> allRoles;
 
     public UserController() {
+    }
+
+    public List<String> getSelectedRoles() {
+        if (this.selectedRoles == null) {
+            this.selectedRoles = new ArrayList<>();
+        }
+        // here be dragons :(
+        int size = this.selected.getRoles().size();
+        if (this.selectedRoles.size() != size) {
+            this.selectedRoles.clear();
+            for (Role r : this.selected.getRoles()) {
+                this.selected.getRoles();
+                this.selectedRoles.add(r.getName());
+            }
+        }
+        return selectedRoles;
+    }
+
+    public void setSelectedRoles(List<String> selectedRoles) {
+        this.selectedRoles = selectedRoles;
+    }
+
+    public List<String> getAllRoles() {
+        if (this.allRoles == null) {
+            this.allRoles = new ArrayList<>();
+            for (Role r : roleCrud.getAll()) {
+                this.allRoles.add(r.getName());
+            }
+        }
+        return this.allRoles;
     }
 
     public User getSelected() {
@@ -72,6 +84,13 @@ public class UserController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        HashSet<Role> newroles = new HashSet<>();
+        for (Role r : roleCrud.getAll()) {
+            if (selectedRoles.contains(r.getName())) {
+                newroles.add(r);
+            }
+        }
+        this.selected.setRoles(newroles);
     }
 
     protected void initializeEmbeddableKey() {
@@ -151,6 +170,7 @@ public class UserController implements Serializable {
 
     public List<User> getItemsAvailableSelectOne() {
         return getDao().getAll();
+
     }
 
     @FacesConverter(forClass = User.class)

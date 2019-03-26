@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
         <p:dialog id="UserViewDlg" widgetVar="UserViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.ViewUserTitle}">
@@ -27,10 +28,17 @@
                         <h:outputText value="#{userController.selected.website}" title="#{text.ViewUserTitle_website}"/>
                         <h:outputText value="#{text.ViewUserLabel_biography}"/>
                         <h:outputText value="#{userController.selected.biography}" title="#{text.ViewUserTitle_biography}"/>
+                        <h:outputText value="roles"/>
+                        <p:outputPanel>
+                            <p:panelGrid columns="1">
+                                <c:forEach items="#{userController.selected.roles}" var="item">
+                                    <h:outputText value="#{item.name}"/>
+                                </c:forEach>
+                            </p:panelGrid>
+                        </p:outputPanel>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="UserViewDialog.hide()"/>
                 </h:panelGroup>
-                <p:pickList id="pickList" value="#{userController.roles}" var="roles" itemLabel="#{roles}" itemValue="#{roles}" />
             </h:form>
         </p:dialog>
     </ui:composition>

@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import model.Kweet;
 import model.User;
-import persistence.IBaseDao;
 import persistence.qualifiers.JPA;
 import persistence.KweetDao;
 
@@ -47,8 +45,7 @@ public class KweetServiceImpl implements KweetService {
         for (Kweet k : allKweets) {
             // If authorname or body contains query or matches a tag. add it.
             if (k.getAuthor().getUsername().contains(query)
-                    || k.getBody().contains(query)
-                    || k.getTags().contains(query)) {
+                    || k.getBody().contains(query)) {
                 returnlist.add(k);
             }
         }
