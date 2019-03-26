@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserEditDlg" widgetVar="UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.EditUserTitle}">
+            <h:form id="UserEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userController.selected != null}">
+
+                        <p:outputLabel value="#{text.EditUserLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{userController.selected.username}" title="#{text.EditUserTitle_username}" />
+
+                        <p:outputLabel value="#{text.EditUserLabel_passwordHash}"/>
+                        <p:outputLabel value="#{userController.selected.passwordHash}" title="#{text.EditUserTitle_passwordHash}" />
+
+                        <p:outputLabel value="#{text.EditUserLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{userController.selected.name}" title="#{text.EditUserTitle_name}" />
+
+                        <p:outputLabel value="#{text.EditUserLabel_location}" for="location" />
+                        <p:inputText id="location" value="#{userController.selected.location}" title="#{text.EditUserTitle_location}" />
+
+                        <p:outputLabel value="#{text.EditUserLabel_website}" for="website" />
+                        <p:inputText id="website" value="#{userController.selected.website}" title="#{text.EditUserTitle_website}" />
+
+                        <p:outputLabel value="#{text.EditUserLabel_biography}" for="biography" />
+                        <p:inputText id="biography" value="#{userController.selected.biography}" title="#{text.EditUserTitle_biography}" />
+
+                        <p:outputLabel id="roles" value="Roles" for="roleCheckBoxes"/>
+                        <p:selectManyCheckbox id="roleCheckBoxes" value="#{userController.selectedRoles}" layout="grid" columns="1">
+                            <f:selectItems value="#{userController.allRoles}"/>
+                        </p:selectManyCheckbox>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.update}" value="#{text.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserEditDialog');"/>
+                    <p:commandButton value="#{text.Cancel}" onclick="UserEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

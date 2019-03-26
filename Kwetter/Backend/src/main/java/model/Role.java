@@ -1,66 +1,85 @@
 package model;
 
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  *
  * @author Jeroen Roovers
  */
-public class Role {
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@NamedQueries({
+    @NamedQuery(name = "role.FindByName", query = "Select r From Role r WHERE r.name = :name")
+})
+public class Role implements Serializable, Comparable<Role> {
 
-    private int id;
-    private boolean allowedToViewUsers;
-    private boolean allowedToDeleteKweets;
-    private boolean allowedToManageRoles;
-    private boolean allowedToAssignRoles;
-
-    private Role() {
-
+    public Role(String name) {
+        this.name = name;
+        this.permissions = new TreeSet<>();
     }
 
-    public Role(boolean viewUsers, boolean deleteKweets, boolean manageRoles, boolean assignRoles) {
-        this.allowedToViewUsers = viewUsers;
-        this.allowedToDeleteKweets = deleteKweets;
-        this.allowedToManageRoles = manageRoles;
-        this.allowedToAssignRoles = assignRoles;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
+    @ManyToMany
+    private Set<Permission> permissions;
+
+    @Override
+    public int compareTo(Role o) {
+        return this.name.compareTo(o.name);
     }
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
-    public boolean isAllowedToViewUsers() {
-        return allowedToViewUsers;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Role other = (Role) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
-
-    public void setAllowedToViewUsers(boolean allowedToViewUsers) {
-        this.allowedToViewUsers = allowedToViewUsers;
-    }
-
-    public boolean isAllowedToDeleteKweets() {
-        return allowedToDeleteKweets;
-    }
-
-    public void setAllowedToDeleteKweets(boolean allowedToDeleteKweets) {
-        this.allowedToDeleteKweets = allowedToDeleteKweets;
-    }
-
-    public boolean isAllowedToManageRoles() {
-        return allowedToManageRoles;
-    }
-
-    public void setAllowedToManageRoles(boolean allowedToManageRoles) {
-        this.allowedToManageRoles = allowedToManageRoles;
-    }
-
-    public boolean isAllowedToAssignRoles() {
-        return allowedToAssignRoles;
-    }
-
-    public void setAllowedToAssignRoles(boolean allowedToAssignRoles) {
-        this.allowedToAssignRoles = allowedToAssignRoles;
-    }
-
+    
+    
 }

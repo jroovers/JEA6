@@ -1,0 +1,128 @@
+{
+	"info": {
+		"_postman_id": "374517e7-08dc-4780-9b9a-fcfaef452378",
+		"name": "Kwetter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Kweets",
+			"item": [
+				{
+					"name": "Kwetter - POST timeline",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"followedByUsers\": [],\n    \"followingOtherUsers\": [],\n    \"id\": 0,\n    \"kweets\": [],\n    \"role\": {\n        \"allowedToAssignRoles\": true,\n        \"allowedToDeleteKweets\": true,\n        \"allowedToManageRoles\": true,\n        \"allowedToViewUsers\": true,\n        \"id\": 0\n    },\n    \"username\": \"foouser\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/Backend/rest/kweets/timeline",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Backend",
+								"rest",
+								"kweets",
+								"timeline"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kwetter - PUT kweet",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/Backend/rest/kweets/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Backend",
+								"rest",
+								"kweets",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Kwetter - GET user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/Backend/rest/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Backend",
+								"rest",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Kwetter - PUT user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/Backend/rest/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Backend",
+								"rest",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -12,7 +12,7 @@ import persistence.IBaseDao;
  */
 public abstract class BaseDaoCollection<T> implements IBaseDao<T> {
 
-    private HashMap<Integer, T> objects;
+    private HashMap<Long, T> objects;
 
     public BaseDaoCollection() {
         objects = new HashMap<>();
@@ -23,11 +23,11 @@ public abstract class BaseDaoCollection<T> implements IBaseDao<T> {
         return new ArrayList<T>(objects.values());
     }
 
-    protected T getObjectById(Integer id) {
+    protected T getObjectById(Long id) {
         return objects.get(id);
     }
 
-    protected Map<Integer, T> getObjectStorage() {
+    protected Map<Long, T> getObjectStorage() {
         return objects;
     }
 }

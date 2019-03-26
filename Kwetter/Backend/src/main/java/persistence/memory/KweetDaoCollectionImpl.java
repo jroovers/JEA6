@@ -4,7 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 import model.Kweet;
 import persistence.KweetDao;
-import persistence.Memory;
+import persistence.qualifiers.Memory;
 
 /**
  *
@@ -14,8 +14,11 @@ import persistence.Memory;
 @Memory
 public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements KweetDao {
 
+    private Long counter;
+
     public KweetDaoCollectionImpl() {
         super();
+        counter = 0l;
     }
 
     @Override
@@ -23,25 +26,28 @@ public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements 
         if (getObjectById(kweet.getId()) != null) {
             throw new EntityExistsException();
         }
+        counter++;
+        kweet.setId(counter);
         getObjectStorage().put(kweet.getId(), kweet);
     }
 
     @Override
-    public Kweet get(Integer id) {
-        return getObjectById(id);
-    }
-
-    @Override
-    public void update(Kweet kweet) {
+    public Kweet update(Kweet kweet) {
         if (getObjectById(kweet.getId()) == null) {
             throw new IllegalArgumentException();
         }
         getObjectStorage().put(kweet.getId(), kweet);
+        return getObjectStorage().get(kweet.getId());
     }
 
     @Override
     public void delete(Kweet kweet) {
         getObjectStorage().remove(kweet.getId());
+    }
+
+    @Override
+    public Kweet getById(Long id) {
+        return getObjectById(id);
     }
 
 }

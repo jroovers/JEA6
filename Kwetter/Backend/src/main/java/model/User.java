@@ -1,143 +1,77 @@
 package model;
 
-import java.awt.image.BufferedImage;
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
  * @author Jeroen Roovers
  */
-public class User {
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+@NamedQueries({
+    @NamedQuery(name = "user.FindByUsername", query = "Select u From User u WHERE u.username = :username")
+})
+public class User implements Serializable {
 
-    private int id;
+    public User(String username, String passwordHash) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
+    
+    // non optionals
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String username;
-    private Role role;
-    private BufferedImage image;
+    private String passwordHash;
+    @ManyToMany
+    private Set<Role> roles;
+
+    // optionals
+    @Lob
+    private Byte[] image;
     private String name;
     private String location;
     private String website;
     private String biography;
 
-    private List<User> followedByUsers;
-    private List<User> followingOtherUsers;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "followers",
+            joinColumns = @JoinColumn(name = "follower"),
+            inverseJoinColumns = @JoinColumn(name = "following")
+    )
+    private List<User> followers;
 
+    @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
+    private List<User> following;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Kweet> kweets;
 
-    public User() {
-
-    }
-
-    public User(String username, Role role) {
-        this.username = username;
-        this.role = role;
-        this.followedByUsers = new LinkedList<>();
-        this.followingOtherUsers = new LinkedList<>();
-        this.kweets = new LinkedList<>();
-    }
-
-    public void followUser(User user) {
-        this.followingOtherUsers.add(user);
-    }
-
-    public void unfollowUser(User user) {
-        this.followingOtherUsers.remove(user);
-    }
-
-    public void addFollower(User user) {
-        this.followedByUsers.add(user);
-    }
-
-    public void removeFollower(User user) {
-        this.followedByUsers.remove(user);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
+    @Override
+    public String toString() {
         return username;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getBiography() {
-        return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
-    }
-
-    public List<User> getFollowedByUsers() {
-        return followedByUsers;
-    }
-
-    public void setFollowedByUsers(List<User> followedByUsers) {
-        this.followedByUsers = followedByUsers;
-    }
-
-    public List<User> getFollowingOtherUsers() {
-        return followingOtherUsers;
-    }
-
-    public void setFollowingOtherUsers(List<User> followingOtherUsers) {
-        this.followingOtherUsers = followingOtherUsers;
-    }
-
-    public List<Kweet> getKweets() {
-        return kweets;
-    }
-
-    public void setKweets(List<Kweet> kweets) {
-        this.kweets = kweets;
-    }
-
 }
