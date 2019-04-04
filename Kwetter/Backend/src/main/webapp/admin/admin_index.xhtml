@@ -1,22 +1,20 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Administration Index</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-        Hello, administrator.
-        <br />
-        <h:link outcome="kweet/List" value="Show All Kweet Items"/>
-        <br />
-        <h:link outcome="user/List" value="Show All User Items"/>
-        <br />
-        <h:link outcome="role/List" value="Show All Role Items"/>
-        <br />
-        <h:link outcome="permission/List" value="Show All Permission Items"/>
-        <p:growl id="growl" life="3000" />
-    </h:body>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/WEB-INF/templates/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{text.ListUserTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h1>
+                Hello, administrator.
+            </h1>
+        </ui:define>
+    </ui:composition>
 </html>

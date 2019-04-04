@@ -76,7 +76,7 @@ public class LoginController {
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Login failed.", username));
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-            return "error";
+            return "nlogin";
         }
     }
 
