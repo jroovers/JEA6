@@ -46,4 +46,12 @@ public interface KweetService {
      */
     public List<Kweet> getKweetOverviewForUser(User u);
 
+    /**
+     * Get a generic selection of kweets. This method returns any kweets placed
+     * by anyone and are not personalised to the logged in user.
+     *
+     * @return list of kweets
+     */
+    public List<Kweet> getKweetOverview();
+
 }

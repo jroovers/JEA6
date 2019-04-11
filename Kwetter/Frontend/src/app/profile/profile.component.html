@@ -1,3 +1,57 @@
-<p>
-  profile works!
-</p>
+<div class="row">
+  <div class="col col-6">
+    <div class="padding-small centered">
+      <div class="row">
+        <div class="col col-12">
+          <div class="padding-small centered">
+            <h3>Me</h3>
+            image - {{user.username}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <div class="padding-small centered">
+          <h3>My tweets</h3>
+          list of tweets
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col col-6">
+    <div class="padding-small centered">
+      <div class="row">
+        <div class="col col-12">
+          <div class="padding-small centered">
+            <h3>My details</h3>
+            {{user.name}}<br>
+            {{user.location}}<br>
+            {{user.website}}<br>
+            {{user.biography}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-12">
+          <div class="padding-small centered">
+            <h3>My stats </h3>
+            following: ##
+            followers: ##
+            tweets: ##
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-12">
+          <div class="padding-small centered">
+            <h3> Following </h3>
+            User 1
+            user 2
+            user 3
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

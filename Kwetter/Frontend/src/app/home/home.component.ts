@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   getKweets(): void {
-    this.kweetService.getMockKweets().
+    this.kweetService.getKweetOverview().
       subscribe(kweets => this.kweets = kweets);
   }
 

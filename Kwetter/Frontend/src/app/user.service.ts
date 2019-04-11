@@ -1,36 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Kweet } from './models/kweet';
-import { KWEETS } from './mockdata/mock-kweets';
-import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './models/user';
+import { environment } from 'src/environments/environment';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class KweetService {
+export class UserService {
 
-  constructor(private http: HttpClient, ) { }
+  constructor(private http: HttpClient) { }
 
-  getMockKweets(): Observable<Kweet[]> {
-    return of(KWEETS);
-  }
-
-  getKweetOverview(): Observable<Kweet[]> {
-    const url = `${environment.apiUrl}/kweets`;
-    return this.http.get<Kweet[]>(url)
+  getUser(username: string) {
+    const url = `${environment.apiUrl}/users/` + username;
+    return this.http.get<User>(url)
       .pipe(
-        catchError(this.handleError<Kweet[]>('getKweetOverview', []))
-      );
-  }
-
-  getKweetOverviewByUser(user: User): Observable<Kweet[]> {
-    const url = `${environment.apiUrl}/kweets`;
-    return this.http.post<Kweet[]>(url, user, httpOptions)
-      .pipe(
-        catchError(this.handleError<Kweet[]>('getKweetOverviewByUser', []))
+        catchError(this.handleError<User>('getUser(username: string)'))
       );
   }
 

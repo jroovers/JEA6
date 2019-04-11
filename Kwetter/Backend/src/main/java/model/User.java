@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,14 +39,17 @@ public class User implements Serializable {
         this.username = username;
         this.passwordHash = passwordHash;
     }
-    
+
     // non optionals
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+    @JsonbTransient
     private String passwordHash;
+
     @ManyToMany
+    @JsonbTransient
     private Set<Role> roles;
 
     // optionals
@@ -62,9 +66,11 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "follower"),
             inverseJoinColumns = @JoinColumn(name = "following")
     )
+    @JsonbTransient
     private List<User> followers;
 
     @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
+    @JsonbTransient
     private List<User> following;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)

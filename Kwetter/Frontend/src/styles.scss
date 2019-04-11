@@ -1,4 +1,60 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-    font-family: 'Courier New', Courier, monospace;
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.container {
+  width: 1190px;
+  margin: 0 auto;
+}
+
+.col {
+  float: left;
+}
+
+.col-3 {
+  width: 25%;
+}
+
+.col-4 {
+  width: 33.33%;
+}
+
+.col-6 {
+  width: 50%;
+}
+
+.col-8 {
+  width: 66.66%;
+}
+
+.col-9 {
+  width: 75%;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.padding-small {
+  padding: 4px;
+}
+
+.centered {
+  text-align: center;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }

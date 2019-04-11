@@ -1,14 +1,14 @@
 package rest;
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import model.Kweet;
+import javax.ws.rs.core.Response;
+import model.User;
+import service.UserService;
 
 /**
  * REST Web Service
@@ -16,10 +16,11 @@ import model.Kweet;
  * @author Jeroen Roovers
  */
 @Path("/users")
+@Stateless
 public class UserResource {
 
-    @Context
-    private UriInfo context;
+    @Inject
+    private UserService userService;
 
     /**
      * Creates a new instance of UserResource
@@ -28,22 +29,19 @@ public class UserResource {
     }
 
     /**
-     * Retrieves representation of an instance of rest.UserResource
+     * Retrieve an user by username
+     *
+     * @param username
      * @return an instance of model.Kweet
      */
     @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public Kweet getXml() {
+    @Path(value = "/{username}")
+    public Response getUserByUsername(@PathParam(value = "username") String username) {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of UserResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(Kweet content) {
+        User u = userService.getUserbyUsername(username);
+        return Response
+                .ok(u, MediaType.APPLICATION_JSON_TYPE)
+                .header("Access-Control-Allow-Origin", "*")
+                .build();
     }
 }

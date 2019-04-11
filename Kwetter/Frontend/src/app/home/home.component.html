@@ -1,8 +1,9 @@
-<p>
-  home works!
-</p>
-<ul class="kweets">
-  <li *ngFor="let kweet of kweets">
-    {{kweet.author.name}} &#6; {{kweet.body}}
-  </li>
-</ul>
+<h2>Look what people are kweeting about:</h2>
+<div class="kweets">
+  <div class="card" *ngFor="let kweet of kweets">
+    <div class="content">
+      <b>{{kweet.author.username}}</b>
+      <p>{{kweet.body}}</p>
+    </div>
+  </div>
+</div>

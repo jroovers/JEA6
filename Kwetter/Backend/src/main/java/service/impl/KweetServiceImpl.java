@@ -2,6 +2,7 @@ package service.impl;
 
 import service.KweetService;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.Stateless;
@@ -61,21 +62,20 @@ public class KweetServiceImpl implements KweetService {
 
     @Override
     public List<Kweet> getKweetOverviewForUser(User u) {
+        List<Kweet> timeline = new LinkedList<>();
+        // to do query all followers
+        return timeline;
+    }
+
+    @Override
+    public List<Kweet> getKweetOverview() {
         List<Kweet> everything = kweetDao.getAll();
         return everything;
-//        List<Kweet> timeline = new LinkedList();
-//        for(Kweet k : everything){
-//            timeline.addAll(
-//            u.getFollowingOtherUsers().stream()
-//                    .filter(id -> id.getId() == k.getAuthor().getId())
-//                    .collect(Collectors.toList())
-//            );
-//        }
     }
-    
-    
+
     public boolean deleteKweet(Kweet kweet) {
         kweetDao.delete(kweet);
         return true;
     }
+
 }

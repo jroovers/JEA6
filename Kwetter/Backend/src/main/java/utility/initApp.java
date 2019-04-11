@@ -43,9 +43,12 @@ public class initApp implements Serializable {
     @PostConstruct
     public void init() {
         System.out.println("INITAPP.JAVA:: Executing app initialization.....");
+        long start = System.currentTimeMillis();
         createPermissionsAndRoles();
         createUsers();
         createKweets();
+        long end = System.currentTimeMillis();
+        System.out.println("INITAPP.JAVA:: Done! Operation took " + (end - start) + " ms");
     }
 
     public void createPermissionsAndRoles() {
@@ -119,6 +122,12 @@ public class initApp implements Serializable {
         uDao.save(new User("Victor", safePasswordHash("password")));
         uDao.save(new User("Willem", safePasswordHash("password")));
         uDao.save(new User("Youssef", safePasswordHash("password")));
+        User u = new User("Antonio", safePasswordHash("password"));
+        u.setBiography("Really excited for the next MLP friendship is magic!");
+        u.setWebsite("https://github.com/Tonii123");
+        u.setLocation("Rachelsmolen");
+        u.setName("A Mijic");
+        uDao.save(u);
 
         User adminUser = uDao.getByUsername("Admin");
         User moderatorUser = uDao.getByUsername("Jeroen");

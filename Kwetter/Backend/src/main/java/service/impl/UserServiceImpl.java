@@ -133,4 +133,9 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         }
     }
 
+    @Override
+    public User getUserbyUsername(String username) {
+        return userDao.getByUsername(username);
+    }
+
 }

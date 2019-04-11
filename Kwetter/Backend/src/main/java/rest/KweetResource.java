@@ -4,6 +4,7 @@ import service.KweetService;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -26,7 +27,7 @@ public class KweetResource {
 
     @Inject
     private KweetService kweetService;
-    
+
     @Inject
     private UserService userService;
 
@@ -39,11 +40,23 @@ public class KweetResource {
     public KweetResource() {
     }
 
+    @GET
+    public Response getKweetOverview() {
+        User u = null;
+
+        return Response
+                .ok(kweetService.getKweetOverview(), MediaType.APPLICATION_JSON_TYPE)
+                .header("Access-Control-Allow-Origin", "*")
+                .build();
+    }
+
     @POST
-    @Path(value = "/timeline")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response find(User user) {
-        return Response.ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE).build();
+    public Response getKweetOverviewByUser(User user) {
+        return Response
+                .ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE)
+                .header("Access-Control-Allow-Origin", "*")
+                .build();
     }
 
     @PUT

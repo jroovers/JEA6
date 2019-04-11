@@ -1,16 +1,26 @@
-<h2>this is root app component</h2>
-<p>basic navigation:</p>
-<ul>
-  <li>
-    <a href="/home">home</a>
-  </li>
-  <li>
-    <a href="/profile">profile</a>
-  </li>
-  <li>
-    <a href="/login">login</a>
-  </li>
-</ul>
+<div class="container">
+  <h1>Kwetter</h1>
+  <p>Navigation:</p>
+  <ul>
+    <li>
+      <input type="text" placeholder="Search...." />
+      <input type="button" value="Go" />
+    </li>
+    <li>
+      <a href="/">home</a>
+    </li>
+    <li>
+      <a href="/profile">profile</a>
+    </li>
+    <li>
+      <a href="/login">login</a>
+    </li>
+    <li>
+      <a href="/login">log out</a>
+    </li>
+  </ul>
+</div>
 <hr>
-<h2>this is routed content:</h2>
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
