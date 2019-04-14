@@ -9,15 +9,15 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import model.Kweet;
-import model.Permission;
-import model.Role;
-import model.User;
-import persistence.KweetDao;
-import persistence.PermissionDao;
-import persistence.RoleDao;
-import persistence.UserDao;
-import persistence.qualifiers.JPA;
+import domain.model.Kweet;
+import domain.model.Permission;
+import domain.model.Role;
+import domain.model.User;
+import domain.dao.KweetDao;
+import domain.dao.PermissionDao;
+import domain.dao.RoleDao;
+import domain.dao.UserDao;
+import domain.dao.qualifiers.JPA;
 
 /**
  *

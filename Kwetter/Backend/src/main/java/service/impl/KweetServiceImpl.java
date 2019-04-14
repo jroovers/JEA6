@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Kweet;
-import model.User;
-import persistence.qualifiers.JPA;
-import persistence.KweetDao;
+import domain.model.Kweet;
+import domain.model.User;
+import domain.dao.qualifiers.JPA;
+import domain.dao.KweetDao;
 
 /**
  *

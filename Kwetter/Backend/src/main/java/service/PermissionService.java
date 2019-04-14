@@ -1,7 +1,7 @@
 package service;
 
 import java.util.List;
-import model.Permission;
+import domain.model.Permission;
 
 /**
  *

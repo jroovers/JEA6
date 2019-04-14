@@ -1,8 +1,8 @@
 package service.impl;
 
 import java.util.List;
-import model.Kweet;
-import model.User;
+import domain.model.Kweet;
+import domain.model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

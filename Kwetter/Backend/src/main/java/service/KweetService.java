@@ -1,8 +1,8 @@
 package service;
 
 import java.util.List;
-import model.Kweet;
-import model.User;
+import domain.model.Kweet;
+import domain.model.User;
 
 /**
  *

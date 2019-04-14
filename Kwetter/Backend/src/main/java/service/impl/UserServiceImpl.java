@@ -7,11 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Role;
-import model.User;
-import persistence.qualifiers.JPA;
-import persistence.qualifiers.Memory;
-import persistence.UserDao;
+import domain.model.Role;
+import domain.model.User;
+import domain.dao.qualifiers.JPA;
+import domain.dao.UserDao;
 import utility.BufferedImageConverter;
 import utility.PasswordStorage;
 

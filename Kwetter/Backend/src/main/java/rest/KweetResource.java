@@ -12,8 +12,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import model.Kweet;
-import model.User;
+import domain.model.Kweet;
+import domain.model.User;
 import service.UserService;
 
 /**
