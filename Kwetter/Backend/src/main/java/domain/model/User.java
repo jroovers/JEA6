@@ -66,13 +66,15 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "follower"),
             inverseJoinColumns = @JoinColumn(name = "following")
     )
+
     @JsonbTransient
     private List<User> followers;
 
-    @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
     @JsonbTransient
+    @ManyToMany(mappedBy = "followers", fetch = FetchType.EAGER)
     private List<User> following;
 
+    @JsonbTransient
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Kweet> kweets;
 
