@@ -18,6 +18,7 @@ import domain.dao.PermissionDao;
 import domain.dao.RoleDao;
 import domain.dao.UserDao;
 import domain.dao.qualifiers.JPA;
+import java.util.ArrayList;
 
 /**
  *
@@ -131,6 +132,14 @@ public class initApp implements Serializable {
 
         User adminUser = uDao.getByUsername("Admin");
         User moderatorUser = uDao.getByUsername("Jeroen");
+
+        User ant = uDao.getByUsername("Antonio");
+        if (ant.getFollowers() == null) {
+            ant.setFollowing(new ArrayList<>());
+        }
+        ant.getFollowing().add(adminUser);
+        ant.getFollowing().add(moderatorUser);
+        uDao.save(u);
 
         Role adminRole = rDao.getByName("SUPERADMIN");
         Role moderatorRole = rDao.getByName("MODERATOR");
