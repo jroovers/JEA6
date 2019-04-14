@@ -4,6 +4,7 @@ import { User } from './models/user';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Profile } from './models/dto/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(username: string) {
+  getProfile(username: string) {
     const url = `${environment.apiUrl}/users/` + username;
-    return this.http.get<User>(url)
+    return this.http.get<Profile>(url)
       .pipe(
-        catchError(this.handleError<User>('getUser(username: string)'))
+        catchError(this.handleError<Profile>('getUser(username: string)'))
       );
   }
 
