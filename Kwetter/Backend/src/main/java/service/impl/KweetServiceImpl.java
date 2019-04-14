@@ -4,7 +4,6 @@ import service.KweetService;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import domain.model.Kweet;
@@ -25,14 +24,7 @@ public class KweetServiceImpl implements KweetService {
 
     @Override
     public List<Kweet> getKweetsByUser(User user) {
-        Long userid = user.getId();
-        List<Kweet> returnlist = new ArrayList<>();
-        List<Kweet> allKweets = kweetDao.getAll();
-        for (Kweet k : allKweets) {
-            if (Objects.equals(k.getAuthor().getId(), userid)) {
-                returnlist.add(k);
-            }
-        }
+        List<Kweet> returnlist = kweetDao.getKweetsByUserId(user.getId());
         return returnlist;
     }
 

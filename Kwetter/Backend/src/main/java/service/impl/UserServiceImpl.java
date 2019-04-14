@@ -125,16 +125,11 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
 
     private boolean checkIfUserExistsByUsername(String username) {
         User find = userDao.getByUsername(username);
-        if (find == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return find != null;
     }
 
     @Override
     public User getUserbyUsername(String username) {
         return userDao.getByUsername(username);
     }
-
 }

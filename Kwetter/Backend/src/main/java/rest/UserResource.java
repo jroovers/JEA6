@@ -1,5 +1,6 @@
 package rest;
 
+import domain.model.Kweet;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -8,6 +9,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import domain.model.User;
+import java.util.List;
+import rest.dto.UserProfileDTO;
+import service.KweetService;
 import service.UserService;
 
 /**
@@ -21,6 +25,9 @@ public class UserResource {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private KweetService kweetService;
 
     /**
      * Creates a new instance of UserResource
@@ -36,12 +43,21 @@ public class UserResource {
      */
     @GET
     @Path(value = "/{username}")
-    public Response getUserByUsername(@PathParam(value = "username") String username) {
-        //TODO return proper representation object
+    public Response getUserProfileByUsername(@PathParam(value = "username") String username) {
         User u = userService.getUserbyUsername(username);
-        return Response
-                .ok(u, MediaType.APPLICATION_JSON_TYPE)
-                .header("Access-Control-Allow-Origin", "*")
-                .build();
+        if (u != null) {
+            List<Kweet> kweets = kweetService.getKweetsByUser(u);
+            List<User> followers = userService.getFollowersByUser(u);
+            List<User> following = userService.getUsersFollowedByUser(u);
+            UserProfileDTO reply = new UserProfileDTO(u, kweets, following, followers);
+            return Response
+                    .ok(reply, MediaType.APPLICATION_JSON_TYPE)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .build();
+        } else {
+            return Response
+                    .status(404)
+                    .build();
+        }
     }
 }
