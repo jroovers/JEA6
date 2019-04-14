@@ -5,6 +5,7 @@ import javax.persistence.EntityExistsException;
 import domain.model.Kweet;
 import domain.dao.KweetDao;
 import domain.dao.qualifiers.Memory;
+import java.util.List;
 
 /**
  *
@@ -48,6 +49,11 @@ public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements 
     @Override
     public Kweet getById(Long id) {
         return getObjectById(id);
+    }
+
+    @Override
+    public List<Kweet> getKweetsByUserId(Long id) {
+        throw new UnsupportedOperationException("Memory DAO does not support this method: getKweetsByUserId(Long id)");
     }
 
 }
