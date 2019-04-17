@@ -47,6 +47,7 @@ public class initApp implements Serializable {
         long start = System.currentTimeMillis();
         createPermissionsAndRoles();
         createUsers();
+        followUsers();
         createKweets();
         long end = System.currentTimeMillis();
         System.out.println("INITAPP.JAVA:: Done! Operation took " + (end - start) + " ms");
@@ -64,6 +65,7 @@ public class initApp implements Serializable {
         manageUsers = pDao.update(manageUsers);
         manageModerators = pDao.update(manageModerators);
         manageAdmins = pDao.update(manageAdmins);
+        pDao.clearCache();
 
         Role superadmin, admin, moderator, user;
 
@@ -88,6 +90,7 @@ public class initApp implements Serializable {
         rDao.save(moderator);
         rDao.save(admin);
         rDao.save(superadmin);
+        rDao.clearCache();
     }
 
     private String safePasswordHash(String password) {
@@ -129,25 +132,25 @@ public class initApp implements Serializable {
         u.setLocation("Rachelsmolen");
         u.setName("A Mijic");
         uDao.save(u);
+        uDao.clearCache();
+    }
 
+    public void followUsers() {
         User adminUser = uDao.getByUsername("Admin");
         User moderatorUser = uDao.getByUsername("Jeroen");
-
         User ant = uDao.getByUsername("Antonio");
-        if (ant.getFollowers() == null) {
-            ant.setFollowing(new ArrayList<>());
-        }
+        ant.setFollowing(new ArrayList<>());
         ant.getFollowing().add(adminUser);
         ant.getFollowing().add(moderatorUser);
-        uDao.save(u);
-
+        uDao.save(ant);
         Role adminRole = rDao.getByName("SUPERADMIN");
         Role moderatorRole = rDao.getByName("MODERATOR");
-
+        adminUser.getRoles().add(adminRole);
         adminUser.getRoles().add(adminRole);
         moderatorUser.getRoles().add(moderatorRole);
         uDao.update(adminUser);
         uDao.update(moderatorUser);
+        uDao.clearCache();
     }
 
     public void createKweets() {
