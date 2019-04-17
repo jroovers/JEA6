@@ -8,7 +8,19 @@
         </property>
     </jsp-config>
     <security-role-mapping>
-        <role-name>admin</role-name>
+        <role-name>superadmin</role-name>
         <group-name>SUPERADMIN</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>admin</role-name>
+        <group-name>ADMIN</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>moderator</role-name>
+        <group-name>MODERATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>user</role-name>
+        <group-name>USER</group-name>
     </security-role-mapping>
 </glassfish-web-app>
