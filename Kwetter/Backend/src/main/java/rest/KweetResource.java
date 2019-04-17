@@ -46,7 +46,6 @@ public class KweetResource {
 
         return Response
                 .ok(kweetService.getKweetOverview(), MediaType.APPLICATION_JSON_TYPE)
-                .header("Access-Control-Allow-Origin", "*")
                 .build();
     }
 
@@ -55,7 +54,6 @@ public class KweetResource {
     public Response getKweetOverviewByUser(User user) {
         return Response
                 .ok(kweetService.getKweetOverviewForUser(user), MediaType.APPLICATION_JSON_TYPE)
-                .header("Access-Control-Allow-Origin", "*")
                 .build();
     }
 

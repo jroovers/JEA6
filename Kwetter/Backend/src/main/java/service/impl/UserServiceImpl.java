@@ -24,6 +24,9 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
     @Inject
     @JPA
     private UserDao userDao;
+    
+    @Inject
+    private transient Logger logger;
 
     @Override
     public User registerUser(String username, String password) throws IllegalArgumentException {
@@ -57,7 +60,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
                 throw new IllegalArgumentException("There is no User with this username");
             }
         } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, "Failed not verify hash", ex);
+            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, "Failed to verify hash", ex);
             return null;
         }
     }
