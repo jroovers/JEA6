@@ -19,6 +19,16 @@ public abstract class BaseDaoCollection<T> implements IBaseDao<T> {
     }
 
     @Override
+    public void flush() {
+        System.out.println("Flush called on memory DAO. Ignoring.");
+    }
+
+    @Override
+    public void clearCache() {
+        System.out.println("Flush called on memory DAO. Ignoring.");
+    }
+
+    @Override
     public List<T> getAll() {
         return new ArrayList<T>(objects.values());
     }

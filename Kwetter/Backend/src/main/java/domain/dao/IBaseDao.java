@@ -10,6 +10,10 @@ import java.util.List;
  */
 public interface IBaseDao<T> {
 
+    public void flush();
+
+    public void clearCache();
+
     public List<T> getAll();
 
     public void save(T entity);

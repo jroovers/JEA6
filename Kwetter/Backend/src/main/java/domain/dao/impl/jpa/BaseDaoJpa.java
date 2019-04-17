@@ -11,13 +11,22 @@ import domain.dao.IBaseDao;
  */
 public abstract class BaseDaoJpa<T> implements IBaseDao<T> {
 
-    @PersistenceContext(unitName = "kwetterPU")
+    @PersistenceContext(unitName = "kwetterHibernate")
     private EntityManager em;
-    
+
     protected Class<T> entityClass;
 
-    public Class<T> getEntityClass(){
+    public Class<T> getEntityClass() {
         return entityClass;
+    }
+
+    public void flush() {
+        this.em.flush();
+    }
+
+    public void clearCache() {
+        this.flush();
+        this.em.clear();
     }
 
     @Override
