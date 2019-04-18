@@ -68,25 +68,26 @@ public class UserResource {
 
     /**
      *
-     * @param login
+     * @param username
      * @param password
      * @return
      */
     @POST
     @Path("/login")
     @Consumes(APPLICATION_FORM_URLENCODED)
-    public Response authenticateUser(@FormParam("login") String login,
+    public Response authenticateUser(@FormParam("username") String username,
             @FormParam("password") String password) {
         try {
-            logger.info("#### login/password : " + login + "/" + password);
+            logger.info("#### login/password : " + username + "/" + password);
             // Authenticate the user using the credentials provided
-            User u = this.userService.login(login, password);
+            User u = this.userService.login(username, password);
             // Issue a token for the user
             String token = issueToken(u.getUsername());
             // Return the token on the response
             return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.status(UNAUTHORIZED).build();
         }
     }
@@ -141,16 +142,17 @@ public class UserResource {
         }
     }
 
-    private String issueToken(String login) {
-        Key key = keyGenerator.generateKey();
-        String jwtToken = Jwts.builder()
-                .setSubject(login)
-                .setIssuer(uriInfo.getAbsolutePath().toString())
-                .setIssuedAt(new Date())
-                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
-                .signWith(SignatureAlgorithm.HS512, key)
-                .compact();
-        return jwtToken;
+    private String issueToken(String login) throws Exception {
+            Key key = keyGenerator.generateKey();
+            String jwtToken = Jwts.builder()
+                    .setSubject(login)
+                    .setIssuer(uriInfo.getAbsolutePath().toString())
+                    .setIssuedAt(new Date())
+                    .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                    .signWith(key)
+                    .compact();
+            logger.info("#### generating token for a key : " + jwtToken + " - " + key);
+            return jwtToken;
     }
 
     private Date toDate(LocalDateTime localDateTime) {
