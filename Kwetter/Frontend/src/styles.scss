@@ -1,7 +1,21 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 /* You can add global styles to this file, and also import other style files */
+html,
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 100%;;
+  background-color: #FAFAFA;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.small-icon {
+  padding: 0 14px;
+}
+
+.navbar-spacer {
+  flex: 1 1 auto;
 }
 
 h1,
@@ -14,7 +28,7 @@ h5 {
 
 .container {
   width: 1190px;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .col {
@@ -62,10 +76,10 @@ h5 {
 
 .card {
   /* Add shadows to create the "card" effect */
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   //box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
   //box-shadow:inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
-  box-shadow: 0 2px rgba(0,0,0,0.17);
+  box-shadow: 0 2px rgba(0, 0, 0, 0.17);
   transition: 0.3s;
   margin: 8px auto auto auto;
   max-width: 450px;
@@ -74,17 +88,57 @@ h5 {
 /* On mouse-over, add a deeper shadow */
 .card:hover {
   // box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  background-color: #FAFAFA;
-  box-shadow: 0 4px rgba(0,0,0,0.17);
+  background-color: #fafafa;
+  box-shadow: 0 4px rgba(0, 0, 0, 0.17);
   transform: translateY(-2px);
 }
 
 /* Add some padding inside the card container */
 .card .content {
   padding: 2px 8px;
-  margin: bottom
+  margin: bottom;
 }
 
-.card:first{
-    margin-top: 0px;
+.card:first {
+  margin-top: 0px;
+}
+
+.login-card {
+  top: 50%;
+  text-align: center;
+  min-width: 400px;
+  max-width: 400px;
+  margin: auto;
+  vertical-align: middle;
+}
+
+.login-spacer {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  min-height: 50vh;
+  position: relative;
+}
+
+.login-spacer,
+.login-spacer:before,
+.login-spacer:after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.login-spacer::before,
+.login-spacer::after {
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  content: "";
+  display: block;
+  height: 24px;
+  min-height: 24px;
 }

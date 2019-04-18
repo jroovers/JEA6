@@ -12,7 +12,7 @@ import { User } from './models/user';
 })
 export class KweetService {
 
-  constructor(private http: HttpClient, ) { }
+  constructor(private http: HttpClient) { }
 
   getMockKweets(): Observable<Kweet[]> {
     return of(KWEETS);
