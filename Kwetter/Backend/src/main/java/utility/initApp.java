@@ -139,10 +139,12 @@ public class initApp implements Serializable {
         User adminUser = uDao.getByUsername("Admin");
         User moderatorUser = uDao.getByUsername("Jeroen");
         User ant = uDao.getByUsername("Antonio");
-        ant.setFollowing(new ArrayList<>());
-        ant.getFollowing().add(adminUser);
-        ant.getFollowing().add(moderatorUser);
-        uDao.save(ant);
+        adminUser.followThisUser(ant);
+        moderatorUser.followThisUser(ant);
+        ant.followThisUser(moderatorUser);
+        uDao.update(adminUser);
+        uDao.update(moderatorUser);
+        uDao.update(ant);
         Role adminRole = rDao.getByName("SUPERADMIN");
         Role moderatorRole = rDao.getByName("MODERATOR");
         adminUser.getRoles().add(adminRole);
