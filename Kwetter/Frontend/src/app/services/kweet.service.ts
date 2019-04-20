@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Kweet } from './models/kweet';
-import { KWEETS } from './mockdata/mock-kweets';
+import { Kweet } from '../models/kweet';
+import { KWEETS } from '../mockdata/mock-kweets';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { User } from './models/user';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'

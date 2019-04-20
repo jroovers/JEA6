@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-sm"></div>
+  <div class="col-md-5">
+    <h3>
+      Kweets.<br>
+      <small class="text-muted">Kijk waar anderen het over hebben</small>
+    </h3>
+    <mat-card class="kweet-card" *ngFor="let kweet of kweets">
+      <mat-card-header>
+        <div mat-card-avatar class="kweet-card-header-image"></div>
+        <mat-card-title>
+          <a routerLink="/{{kweet.author.username}}">
+            <b>{{kweet.author.username}}</b>
+          </a>
+        </mat-card-title>
+        <mat-card-subtitle>{{kweet.createdTime | date: 'medium'}}</mat-card-subtitle>
+      </mat-card-header>
+      <!-- optional image here? -->
+      <mat-card-content>
+        <p>
+          {{kweet.body}}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+        <button mat-button>REPORT</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="col-sm"></div>
+</div>

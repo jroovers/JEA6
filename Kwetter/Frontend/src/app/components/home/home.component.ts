@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Kweet } from '../models/kweet';
-import { KweetService } from '../kweet.service';
+import { Kweet } from '../../models/kweet';
+import { KweetService } from '../../services/kweet.service';
 
 @Component({
   selector: 'app-home',

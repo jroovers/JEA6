@@ -1,0 +1,27 @@
+.avatar {
+  height: 200px;
+  max-width: 200px;
+}
+
+:host /deep/ .mat-list-base[dense] .mat-list-item .mat-list-item-content {
+  padding: 0 !important;
+}
+
+a .profile-stat-label {
+  color: #657786;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+a .profile-stat {
+  text-align: center;
+  display: block;
+}
+
+a .profile-stat-value {
+  font-weight: bold;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content :hover {
+  cursor: pointer;
+}

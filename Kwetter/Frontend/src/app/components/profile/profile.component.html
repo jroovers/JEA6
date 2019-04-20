@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-3">
+    <h3></h3>
+    <img src="assets/img/img_avatar.png" class="avatar">
+    <h3>
+      <span *ngIf="profile.user.name">{{profile.user.name}}<br></span>
+      <small class="text-muted">@{{profile.user.username}}</small>
+    </h3>
+    <p *ngIf="profile.user.biography" class="m-0">
+      {{profile.user.biography}}
+    </p>
+    <mat-list dense class="p-0 !important">
+      <mat-list-item *ngIf="profile.user.location">
+        <mat-icon aria-hidden="true">location_on</mat-icon>
+        {{profile.user.location}}
+      </mat-list-item>
+      <mat-list-item *ngIf="profile.user.website" class="p-0">
+        <mat-icon aria-hidden="true">link</mat-icon>
+        <a href="{{profile.user.website}}" target="_blank">{{profile.user.website}}</a>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col">
+        <hr>
+        <ul class="nav justify-content-between">
+          <li class="nav-item">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Volgend</span>
+              <span class="profile-stat profile-stat-value">{{profile.following.length}}</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Volgers</span>
+              <span class="profile-stat profile-stat-value">{{profile.followers.length}}</span>
+            </a>
+          </li>
+          <li class="nav-item mr-auto">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Tweets</span>
+              <span class="profile-stat profile-stat-value"> {{profile.kweets.length}}</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <button mat-raised-button>Volgen</button>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <h3>Tweets</h3>
+        <mat-card class="kweet-card" *ngFor="let kweet of profile.kweets">
+          <mat-card-header>
+            <div mat-card-avatar class="kweet-card-header-image"></div>
+            <mat-card-title>
+              <a routerLink="/{{kweet.author.username}}">
+                <b>{{kweet.author.username}}</b>
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{kweet.createdTime | date: 'medium'}}</mat-card-subtitle>
+          </mat-card-header>
+          <!-- optional image here? -->
+          <mat-card-content>
+            <p>
+              {{kweet.body}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+            <button mat-button>REPORT</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div class="col-4">
+        <h3>Volgend</h3>
+        <mat-card>
+          <mat-nav-list>
+            <a mat-list-item *ngFor="let user of profile.following" href="/{{user.username}}"
+              class="text-muted">@{{user.username}}</a>
+          </mat-nav-list>
+        </mat-card>
+        <hr>
+        <h3>Volgers</h3>
+        <mat-card>
+          <mat-nav-list>
+            <a mat-list-item *ngFor="let user of profile.followers" href="/{{user.username}}"
+              class="text-muted">@{{user.username}}</a>
+          </mat-nav-list>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

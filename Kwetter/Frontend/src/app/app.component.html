@@ -1,51 +1,27 @@
-<!-- <mat-toolbar class="mat-primary container" role="heading">
-  <a mat-button routerLink="/">KWETTER</a>
-  <a mat-button routerLink="/">Home</a>
-  <span class="navbar-spacer"></span>
-  <a mat-button href="/Antonio">Mijn profiel</a>
-  <a mat-button routerLink="/login">Inloggen</a>
-  <a mat-button href="/admin">Uitloggen</a>
-</mat-toolbar>
-<div class="container">
-  <mat-toolbar>
-    <span class="navbar-spacer"></span>
-    <span>
-      <mat-search-bar></mat-search-bar>
-    </span>
-    <span>
-      <form class="example-form">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-      </form>
-    </span>
-    <span class="navbar-spacer"></span>
-  </mat-toolbar>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class=container>
+    <a class="navbar-brand mb-0 h1" routerLink="/">KWETTER</a>
+    <form class="form-inline m-auto">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav">
+      <li class="nav-item"> <a class="nav-item nav-link" *ngIf="currentUser"
+          routerLink="/{{currentUser.username}}">{{currentUser.username}}</a></li>
+      <li class="nav-item"><a class="nav-item nav-link" *ngIf="currentUser" (click)="logout()">Logout</a></li>
+      <li class="nav-item"> <a class="nav-item nav-link" *ngIf="!currentUser" href="/login">Login</a></li>
+    </ul>
+  </div>
+</nav>
+<!-- main app container -->
+<div class="jumbotron">
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-<div class="container">
-  <h1>Kwetter</h1>
-  <p>Navigation:</p>
-  <ul>
-    <li>
-      <input type="text" placeholder="Search...." />
-      <input type="button" value="Go" />
-    </li>
-    <li>
-      <a href="/">home</a>
-    </li>
-    <li>
-      <a href="/antonio">antonio's profiel</a>
-    </li>
-    <li>
-      <a href="/login">login</a>
-    </li>
-    <li>
-      <a href="/login">log out</a>
-    </li>
-  </ul>
+<!-- credits -->
+<div class="text-center">
+  <p>
+    <a href="http://github.com/jroovers" target="_blank">jroovers @ github</a>
+  </p>
 </div>
-<hr>
-<div class="container">
-
-</div> -->
-<router-outlet></router-outlet>

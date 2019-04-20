@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { Profile } from '../models/dto/profile';
+import { Profile } from '../../models/dto/profile';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
       this.username = params.get("username")
     })
     this.getProfile(this.username);
+
   }
 
   getProfile(username: string): void {

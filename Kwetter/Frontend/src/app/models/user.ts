@@ -6,6 +6,7 @@ export class User {
     public location: string;
     public name: string;
     public website: string;
+    public token?: string;
 
     constructor(id?: number, username?: string) {
         this.id = id;

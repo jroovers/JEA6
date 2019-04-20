@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <div class="login-spacer">
+      <mat-card class="login-card">
+        <mat-card-header>
+          <mat-card-title>Inloggen op Kwetter
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form class="my-form">
+            <mat-form-field class="full-width">
+              <mat-label>Gebruikersnaam</mat-label>
+              <input matInput [(ngModel)]="model.username" type="text" placeholder="Gebruikersnaam" name="username">
+            </mat-form-field>
+            <br>
+            <mat-form-field class="full-width">
+              <mat-label>Wachtwoord</mat-label>
+              <input matInput [(ngModel)]="model.password" type="password" placeholder="Wachtwoord" name="password">
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="login()" color="primary">Inloggen</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
