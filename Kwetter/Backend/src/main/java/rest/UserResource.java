@@ -84,7 +84,7 @@ public class UserResource {
             // Issue a token for the user
             String token = issueToken(u.getUsername());
             // Return the token on the response
-            return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+            return Response.ok(u).header(AUTHORIZATION, "Bearer " + token).build();
 
         } catch (Exception e) {
             e.printStackTrace();

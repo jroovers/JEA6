@@ -2,6 +2,7 @@ package domain.model;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,5 +40,6 @@ public class Kweet implements Serializable {
     @ManyToOne
     private User author;
     private String body;
+    @JsonbDateFormat(value = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private ZonedDateTime createdTime;
 }
