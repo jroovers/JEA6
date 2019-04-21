@@ -17,16 +17,11 @@
 <!-- main app container -->
 <div class="jumbotron h-100">
   <div class="container">
-    <div class="loading-overlay w-100 align-items-center" *ngIf="loading">
-      <mat-spinner class="m-auto"></mat-spinner>
-    </div>
-    <div *ngIf="!loading">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </div>
 <!-- credits -->
-<div class="text-center" *ngIf="!loading">
+<div class="text-center">
   <p>
     <a href="http://github.com/jroovers" target="_blank">jroovers @ github</a>
   </p>

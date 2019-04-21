@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.model.username != null && this.model.password != null) {
       this.authenticationService.login(this.model.username, this.model.password);
-      this.router.navigate(['']);
     }
   }
 }
