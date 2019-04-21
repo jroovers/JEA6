@@ -31,6 +31,16 @@
       Kweets.<br>
       <small class="text-muted">Kijk waar anderen het over hebben</small>
     </h3>
+    <mat-card *ngIf="kweets.length == 0" class="kweet-card">
+      <mat-card-header>
+        <mat-card-title>
+          <b>Het is hier nogal leeg.</b>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Begin met het volgen van mensen. Dan komen hier hun kweets te staan.</p>
+      </mat-card-content>
+    </mat-card>
     <mat-card class="kweet-card" *ngFor="let kweet of kweets">
       <mat-card-header>
         <div mat-card-avatar class="kweet-card-header-image"></div>

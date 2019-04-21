@@ -3,6 +3,7 @@ import { Kweet } from '../../models/kweet';
 import { KweetService } from '../../services/kweet.service';
 import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,23 +13,41 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HomeComponent implements OnInit {
 
   model: any = { "message": "" };
-  kweets: Kweet[];
+  kweets: Kweet[] = [];
   currentUser: User;
 
   constructor(
     private kweetService: KweetService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
-    this.getKweets();
+    if (this.currentUser) {
+      this.getPersonalisedKweets();
+    }
+    else {
+      this.getKweets();
+    }
   }
 
   getKweets(): void {
     this.kweetService.getKweetOverview().
-      subscribe(kweets => this.kweets = kweets);
+      subscribe(kweets => {
+        this.kweets = kweets;
+      });
+  }
+
+  getPersonalisedKweets(): void {
+    this.kweetService.getKweetOverviewByUser(this.currentUser)
+      .subscribe(kweets => {
+        this.kweets = kweets;
+      });
   }
 
   place() {
