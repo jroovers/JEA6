@@ -34,7 +34,7 @@ public interface KweetService {
      * @param kweet kweet to be saved
      * @return the created kweet
      */
-    public Kweet createKweet(User author, Kweet kweet);
+    public Kweet createKweet(User author, String body);
 
     /**
      * Get a personal selection of kweets for an user. This method should return

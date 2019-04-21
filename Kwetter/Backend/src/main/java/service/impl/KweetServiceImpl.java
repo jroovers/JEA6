@@ -46,8 +46,8 @@ public class KweetServiceImpl implements KweetService {
     }
 
     @Override
-    public Kweet createKweet(User author, Kweet kweet) {
-        kweet.setAuthor(author);
+    public Kweet createKweet(User author, String body) {
+        Kweet kweet = new Kweet(author, body);
         kweetDao.save(kweet);
         return kweet;
     }
