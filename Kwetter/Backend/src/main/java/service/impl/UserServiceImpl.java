@@ -24,7 +24,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
     @Inject
     @JPA
     private UserDao userDao;
-    
+
     @Inject
     private transient Logger logger;
 
@@ -92,7 +92,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
 
     @Override
     public User updateProfileDetails(User user) {
-        User savedUser = userDao.getById(user.getId());
+        User savedUser = userDao.getByUsername(user.getUsername());
         savedUser.setName(user.getName());
         savedUser.setLocation(user.getLocation());
         savedUser.setWebsite(user.getWebsite());

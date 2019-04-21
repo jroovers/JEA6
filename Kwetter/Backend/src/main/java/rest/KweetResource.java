@@ -75,12 +75,9 @@ public class KweetResource {
     @Consumes(APPLICATION_FORM_URLENCODED)
     public Response create(@Context ContainerRequestContext requestContext, @FormParam("body") String body) {
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        String token = authorizationHeader.substring("Bearer".length()).trim();
-        System.out.println(body);
-        
+        String token = authorizationHeader.substring("Bearer".length()).trim();   
         Key key = keyGenerator.generateKey();
         String username = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
-
         User author = this.userService.getUserbyUsername(username);
         this.kweetService.createKweet(author, body);
         return Response.status(Response.Status.CREATED).build();

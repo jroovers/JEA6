@@ -20,7 +20,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import rest.dto.UserProfileDTO;
 import rest.jwt.filter.JWTTokenNeeded;
 import service.KweetService;
@@ -142,17 +144,32 @@ public class UserResource {
         }
     }
 
+    @POST
+    @JWTTokenNeeded
+    public Response updateUserProfile(@Context ContainerRequestContext requestContext, User user) {
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Key key = keyGenerator.generateKey();
+        String securedUsername = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        if (securedUsername.equalsIgnoreCase(user.getUsername())) {
+            User updatedUser = this.userService.updateProfileDetails(user);
+            return Response.accepted(updatedUser).build();
+        } else {
+            return Response.status(403).build();
+        }
+    }
+
     private String issueToken(String login) throws Exception {
-            Key key = keyGenerator.generateKey();
-            String jwtToken = Jwts.builder()
-                    .setSubject(login)
-                    .setIssuer(uriInfo.getAbsolutePath().toString())
-                    .setIssuedAt(new Date())
-                    .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
-                    .signWith(key)
-                    .compact();
-            logger.info("#### generating token for a key : " + jwtToken + " - " + key);
-            return jwtToken;
+        Key key = keyGenerator.generateKey();
+        String jwtToken = Jwts.builder()
+                .setSubject(login)
+                .setIssuer(uriInfo.getAbsolutePath().toString())
+                .setIssuedAt(new Date())
+                .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
+                .signWith(key)
+                .compact();
+        logger.info("#### generating token for a key : " + jwtToken + " - " + key);
+        return jwtToken;
     }
 
     private Date toDate(LocalDateTime localDateTime) {
