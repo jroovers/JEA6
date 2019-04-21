@@ -14,6 +14,7 @@ import { MaterialModule } from './modules/material.module';
 import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ProfileEditDialogComponent } from './components/profile-edit-dialog/profile-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     HomeComponent,
     TestnavComponent,
     TestformComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProfileEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     FormsModule,
     LayoutModule,
     ReactiveFormsModule
+  ],
+  entryComponents: [
+    ProfileEditDialogComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

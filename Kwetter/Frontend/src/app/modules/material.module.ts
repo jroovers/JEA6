@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatSelectModule, MatRadioModule, MatProgressSpinner, MatProgressSpinnerModule } from '@angular/material';
-import { NgMatSearchBarModule } from 'ng-mat-search-bar';
+import { MatToolbarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatSidenavModule, MatListModule, MatSelectModule, MatRadioModule, MatDialogModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -16,8 +15,7 @@ import { NgMatSearchBarModule } from 'ng-mat-search-bar';
     MatListModule,
     MatSelectModule,
     MatRadioModule,
-    NgMatSearchBarModule,
-    MatProgressSpinnerModule
+    MatDialogModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -31,8 +29,7 @@ import { NgMatSearchBarModule } from 'ng-mat-search-bar';
     MatListModule,
     MatSelectModule,
     MatRadioModule,
-    NgMatSearchBarModule,
-    MatProgressSpinnerModule
+    MatDialogModule
   ]
 })
 export class MaterialModule { }

@@ -46,6 +46,12 @@
           <li *ngIf="currentUser && currentUser.username != profile.user.username" class="nav-item">
             <button mat-raised-button>Volgen</button>
           </li>
+          <li *ngIf="currentUser && currentUser.username == profile.user.username" class="nav-item">
+            <button mat-raised-button color="accent" (click)="openDialog()">
+              <mat-icon aria-label="Edit button">edit</mat-icon>
+              Aanpassen
+            </button>
+          </li>
         </ul>
         <hr>
       </div>
@@ -58,7 +64,7 @@
             <div mat-card-avatar class="kweet-card-header-image"></div>
             <mat-card-title>
               <a routerLink="/{{kweet.author.username}}">
-                <b>{{kweet.author.username}}</b>
+                <b>@{{kweet.author.username}}</b>
               </a>
             </mat-card-title>
             <mat-card-subtitle>{{kweet.createdTime |  date: "d-MMM-''yy @ HH:mm"}}</mat-card-subtitle>
@@ -80,7 +86,7 @@
         <h3>Volgend</h3>
         <mat-card>
           <mat-nav-list>
-            <a mat-list-item *ngFor="let user of profile.following" href="/{{user.username}}"
+            <a mat-list-item *ngFor="let user of profile.following" routerLink="/{{user.username}}"
               class="text-muted">@{{user.username}}</a>
           </mat-nav-list>
         </mat-card>
@@ -88,7 +94,7 @@
         <h3>Volgers</h3>
         <mat-card>
           <mat-nav-list>
-            <a mat-list-item *ngFor="let user of profile.followers" href="/{{user.username}}"
+            <a mat-list-item *ngFor="let user of profile.followers" routerLink="/{{user.username}}"
               class="text-muted">@{{user.username}}</a>
           </mat-nav-list>
         </mat-card>

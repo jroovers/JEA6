@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Profile } from '../models/dto/profile';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,15 @@ export class UserService {
       .pipe(
         catchError(this.handleError<Profile>('getUser(username: string)'))
       );
+  }
+
+  updateUser(user: User) {
+    const url = `${environment.apiUrl}/users`;
+    return this.http.post<User>(url, user)
+      .pipe(
+        catchError(this.handleError<User>('updateUser(user: User)'))
+      );
+
   }
 
   /**
