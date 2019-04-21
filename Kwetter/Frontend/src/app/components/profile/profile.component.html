@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col">
         <hr>
-        <ul class="nav justify-content-between">
+        <ul class="nav justify-content-between align-items-center">
           <li class="nav-item">
             <a class="nav-link profile-stat" href="#">
               <span class="profile-stat profile-stat-label">Volgend</span>
@@ -43,8 +43,9 @@
               <span class="profile-stat profile-stat-value"> {{profile.kweets.length}}</span>
             </a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="currentUser && currentUser.username != profile.user.username" class="nav-item">
             <button mat-raised-button>Volgen</button>
+          </li>
         </ul>
         <hr>
       </div>
@@ -60,7 +61,7 @@
                 <b>{{kweet.author.username}}</b>
               </a>
             </mat-card-title>
-            <mat-card-subtitle>{{kweet.createdTime | date: 'medium'}}</mat-card-subtitle>
+            <mat-card-subtitle>{{kweet.createdTime |  date: "d-MMM-''yy @ HH:mm"}}</mat-card-subtitle>
           </mat-card-header>
           <!-- optional image here? -->
           <mat-card-content>

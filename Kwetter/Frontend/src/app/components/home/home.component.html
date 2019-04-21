@@ -1,5 +1,31 @@
 <div class="row">
-  <div class="col-sm"></div>
+  <div class="col-sm">
+    <h3 *ngIf="currentUser">
+      Deel.<br>
+      <small class=" text-muted">Wat wil je delen?</small>
+    </h3>
+    <form *ngIf="currentUser">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Kweet plaatsen</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <mat-form-field class="w-100">
+                <textarea matInput minlength="3" maxlength="255" [(ngModel)]="model.message"
+                  placeholder="Jouw bericht..." name="message"></textarea>
+                <mat-hint align="end">{{model.message.length}} / 255</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="place()" type="submit">Plaatsen</button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
   <div class="col-md-5">
     <h3>
       Kweets.<br>
@@ -10,15 +36,15 @@
         <div mat-card-avatar class="kweet-card-header-image"></div>
         <mat-card-title>
           <a routerLink="/{{kweet.author.username}}">
-            <b>{{kweet.author.username}}</b>
+            <b>@{{kweet.author.username}}</b>
           </a>
         </mat-card-title>
-        <mat-card-subtitle>{{kweet.createdTime | date: 'medium'}}</mat-card-subtitle>
+        <mat-card-subtitle>{{kweet.createdTime | date: "d-MMM-''yy @ HH:mm"}}</mat-card-subtitle>
       </mat-card-header>
       <!-- optional image here? -->
       <mat-card-content>
         <p>
-          {{kweet.body}}}
+          {{kweet.body}}
         </p>
       </mat-card-content>
       <mat-card-actions>
@@ -28,5 +54,18 @@
       </mat-card-actions>
     </mat-card>
   </div>
-  <div class="col-sm"></div>
+  <div class="col-sm">
+    <h3 *ngIf="currentUser">
+      Hallo, <span *ngIf="currentUser.name">{{currentUser.name}}</span>
+      <span *ngIf="!currentUser.name"> @{{currentUser.username}}</span>.<br>
+      <small class="text-muted">Jouw statistieken</small>
+    </h3>
+    <mat-card *ngIf="currentUser">
+      Your last kweet.
+      <br>
+      Your followers and stuff
+      <br>
+      Maybe trends?
+    </mat-card>
+  </div>
 </div>

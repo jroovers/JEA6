@@ -3,7 +3,7 @@ import { Kweet } from '../models/kweet';
 import { KWEETS } from '../mockdata/mock-kweets';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 
@@ -28,10 +28,18 @@ export class KweetService {
 
   getKweetOverviewByUser(user: User): Observable<Kweet[]> {
     const url = `${environment.apiUrl}/kweets`;
-    return this.http.post<Kweet[]>(url, user, httpOptions)
+    return this.http.post<Kweet[]>(url, user)
       .pipe(
         catchError(this.handleError<Kweet[]>('getKweetOverviewByUser', []))
       );
+  }
+
+  createKweet(body: string): Observable<any> {
+    console.log("entering createkweet method")
+    const url = `${environment.apiUrl}/kweets/create`;
+    const params = new HttpParams()
+      .set(`body`, body);
+    return this.http.post(url, params);
   }
 
   /**
@@ -42,22 +50,12 @@ export class KweetService {
  */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
-
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 }
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'my-auth-token'
-  })
-};
