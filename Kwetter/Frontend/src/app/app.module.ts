@@ -15,6 +15,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileEditDialogComponent } from './components/profile-edit-dialog/profile-edit-dialog.component';
+import { BackendUnreachableComponent } from './components/backend-unreachable/backend-unreachable.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ProfileEditDialogComponent } from './components/profile-edit-dialog/pro
     TestnavComponent,
     TestformComponent,
     PageNotFoundComponent,
-    ProfileEditDialogComponent
+    ProfileEditDialogComponent,
+    BackendUnreachableComponent
   ],
   imports: [
     BrowserModule,
