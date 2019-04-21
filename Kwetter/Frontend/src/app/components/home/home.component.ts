@@ -32,14 +32,13 @@ export class HomeComponent implements OnInit {
   }
 
   place() {
-    if (this.model.message != null && this.model.message.length > 2 && this.model.message.length <= 255) {
-      console.log("Entry valid, placing");
+    if (this.model.message != null && this.model.message.length >= 2 && this.model.message.length <= 255) {
       this.kweetService.createKweet(this.model.message).subscribe(
         data => {
+          this.model.message = "";
           this.ngOnInit();
         }
       )
-      this.model.message = "";
     }
   }
 }
