@@ -19,5 +19,11 @@ public class KweetDaoJpaImpl extends BaseDaoJpa<Kweet> implements KweetDao {
         List<Kweet> result = getEntityManager().createNamedQuery("kweet.getByUserId", Kweet.class).setParameter("userId", id).getResultList();
         return result;
     }
+    
+    @Override
+    public List<Kweet> getAll() {
+        List<Kweet> result = getEntityManager().createNamedQuery("kweet.getAll", Kweet.class).getResultList();
+        return result;
+    }
 
 }

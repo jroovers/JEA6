@@ -23,7 +23,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @NamedQueries({
-    @NamedQuery(name = "kweet.getByUserId", query = "SELECT k from Kweet k WHERE k.author.id = :userId ORDER BY k.id")
+    @NamedQuery(name = "kweet.getByUserId", query = "SELECT k from Kweet k WHERE k.author.id = :userId ORDER BY k.createdTime DESC")
+    ,
+     @NamedQuery(name = "kweet.getAll", query = "SELECT k from Kweet k ORDER BY k.createdTime DESC")
 })
 public class Kweet implements Serializable {
 
