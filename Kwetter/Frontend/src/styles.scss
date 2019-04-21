@@ -1,8 +1,14 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 /* You can add global styles to this file, and also import other style files */
 
+$theme-colors: (
+  "primary": #673ab7
+);
+@import "../node_modules/bootstrap/scss/bootstrap";
+
 .kweet-card {
   margin: 8px auto auto auto;
+  word-break: break-all;
 }
 
 .kweet-card-header-image {
