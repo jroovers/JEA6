@@ -18,8 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +36,7 @@ import lombok.Setter;
 public class User implements Serializable {
 
     public User(String username, String passwordHash) {
-        this.username = username;
+        this.username = username.toLowerCase();
         this.passwordHash = passwordHash;
     }
 
