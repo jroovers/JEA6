@@ -2,26 +2,27 @@
   <div class="col-md-6 offset-md-3">
     <div class="login-spacer">
       <mat-card class="login-card">
-        <mat-card-header>
-          <mat-card-title>Inloggen op Kwetter
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <form class="my-form">
+        <form (ngSubmit)="login()" class="my-form">
+          <mat-card-header>
+            <mat-card-title>Inloggen op Kwetter
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
             <mat-form-field class="full-width">
               <mat-label>Gebruikersnaam</mat-label>
-              <input matInput [(ngModel)]="model.username" type="text" placeholder="Gebruikersnaam" name="username">
+              <input autofocus matInput [(ngModel)]="model.username" type="text" placeholder="Gebruikersnaam"
+                name="username">
             </mat-form-field>
             <br>
             <mat-form-field class="full-width">
               <mat-label>Wachtwoord</mat-label>
               <input matInput [(ngModel)]="model.password" type="password" placeholder="Wachtwoord" name="password">
             </mat-form-field>
-          </form>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button (click)="login()" color="primary" type="submit">Inloggen</button>
-        </mat-card-actions>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">Inloggen</button>
+          </mat-card-actions>
+        </form>
       </mat-card>
     </div>
   </div>
