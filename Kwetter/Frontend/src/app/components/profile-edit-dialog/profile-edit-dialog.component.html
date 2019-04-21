@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Hallo, @{{data.username}}</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col">
+      <p>Wat wil je op je profiel?</p>
+      <mat-form-field>
+        <input matInput placeholder="Naam" [(ngModel)]="data.name">
+        <mat-icon matPrefix>face</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="Biografie" [(ngModel)]="data.bio">
+        <mat-hint>max 255 karakters</mat-hint>
+        <mat-icon matPrefix>library_books</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="Locatie" [(ngModel)]="data.location">
+        <mat-icon matPrefix>location_on</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input matInput placeholder="Website" [(ngModel)]="data.website">
+        <mat-icon matPrefix>link</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Nee, bedankt</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
