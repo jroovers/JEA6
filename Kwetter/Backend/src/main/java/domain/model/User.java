@@ -65,10 +65,11 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "followers",
-            joinColumns = @JoinColumn(name = "follower"),
-            inverseJoinColumns = @JoinColumn(name = "following")
+            joinColumns = {
+                @JoinColumn(name = "follower")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "following")}
     )
-
     @JsonbTransient
     private List<User> followers;
 

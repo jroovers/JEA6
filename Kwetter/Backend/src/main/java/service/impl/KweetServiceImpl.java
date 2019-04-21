@@ -55,8 +55,7 @@ public class KweetServiceImpl implements KweetService {
     @Override
     public List<Kweet> getKweetOverviewForUser(User u) {
         List<Kweet> timeline = new LinkedList<>();
-        // to do query all followers
-        return timeline;
+        return kweetDao.getKweetsForUserByUsername(u.getUsername());
     }
 
     @Override

@@ -56,4 +56,9 @@ public class KweetDaoCollectionImpl extends BaseDaoCollection<Kweet> implements 
         throw new UnsupportedOperationException("Memory DAO does not support this method: getKweetsByUserId(Long id)");
     }
 
+    @Override
+    public List<Kweet> getKweetsForUserByUsername(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

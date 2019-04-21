@@ -11,4 +11,5 @@ public interface KweetDao extends IBaseDao<Kweet> {
     
     public List<Kweet> getKweetsByUserId(Long id);
     
+    public List<Kweet> getKweetsForUserByUsername(String username);
 }
