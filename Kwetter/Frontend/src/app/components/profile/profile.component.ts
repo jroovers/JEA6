@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { User } from 'src/app/models/user';
 import { MatDialog } from '@angular/material';
 import { ProfileEditDialogComponent } from '../profile-edit-dialog/profile-edit-dialog.component';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-profile',
@@ -51,6 +52,14 @@ export class ProfileComponent implements OnInit {
       .subscribe(updateduser => this.profile.user = updateduser);
   }
 
+  followUser(username: string) {
+    this.userService.followUser(username)
+      .subscribe(response => {
+        console.log(response);
+        this.ngOnInit();
+      });
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(ProfileEditDialogComponent, {
       data: {
@@ -72,5 +81,19 @@ export class ProfileComponent implements OnInit {
       user.website = result.website;
       this.updateUser(user);
     });
+  }
+
+  isFollowing(): boolean {
+    if (this.profile.followers) {
+      const result = this.profile.followers.find(user => user.username === this.currentUser.username);
+      if (result) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  followThisUser(): void {
+    this.followUser(this.profile.user.username);
   }
 }

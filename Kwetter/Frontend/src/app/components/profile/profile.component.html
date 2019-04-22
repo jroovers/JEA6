@@ -44,7 +44,18 @@
             </a>
           </li>
           <li *ngIf="currentUser && currentUser.username != profile.user.username" class="nav-item">
-            <button mat-raised-button>Volgen</button>
+            <div *ngIf="!isFollowing()">
+              <button mat-raised-button (click)="followThisUser()">
+                <mat-icon aria-label="Follow button">person_add</mat-icon>
+                Volgen
+              </button>
+            </div>
+            <div *ngIf="isFollowing()">
+              <button mat-raised-button (click)="followThisUser()">
+                <mat-icon aria-label="Unfollow button">person_add_disabled</mat-icon>
+                Stop met volgen
+              </button>
+            </div>
           </li>
           <li *ngIf="currentUser && currentUser.username == profile.user.username" class="nav-item">
             <button mat-raised-button color="accent" (click)="openDialog()">

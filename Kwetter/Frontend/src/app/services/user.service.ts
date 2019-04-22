@@ -27,7 +27,15 @@ export class UserService {
       .pipe(
         catchError(this.handleError<User>('updateUser(user: User)'))
       );
+  }
 
+  followUser(username: string): Observable<{}> {
+    const url = `${environment.apiUrl}/users/follow`;
+    var body = { "username": username };
+    return this.http.post<{}>(url, body)
+      .pipe(
+        catchError(this.handleError<{}>('followUser(username: string)'))
+      );
   }
 
   /**
