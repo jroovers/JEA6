@@ -16,6 +16,8 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ProfileEditDialogComponent } from './components/profile-edit-dialog/profile-edit-dialog.component';
 import { BackendUnreachableComponent } from './components/backend-unreachable/backend-unreachable.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptorService } from './helpers/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { BackendUnreachableComponent } from './components/backend-unreachable/ba
     TestformComponent,
     PageNotFoundComponent,
     ProfileEditDialogComponent,
-    BackendUnreachableComponent
+    BackendUnreachableComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,8 @@ import { BackendUnreachableComponent } from './components/backend-unreachable/ba
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

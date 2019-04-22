@@ -30,10 +30,13 @@ export class AuthenticationService {
     const url = `${environment.apiUrl}/users/login`;
     this.http.post<User>(url, params, { observe: 'response' })
       .subscribe(response => {
+        console.log("Received response")
         let user: User = { ...response.body };
         if (response.headers.get('authorization')) {
+          console.log("Found auth header")
           let bearerHeader = response.headers.get('authorization');
           if (bearerHeader.startsWith('Bearer ')) {
+            console.log("login OK, setting local storage!")
             user.token = bearerHeader.replace('Bearer ', '');
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
