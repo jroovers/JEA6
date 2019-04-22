@@ -135,4 +135,12 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
     public User getUserbyUsername(String username) {
         return userDao.getByUsername(username);
     }
+
+    @Override
+    public boolean followUser(User follower, User userToFollow) {
+        boolean result = userToFollow.followThisUser(follower);
+        this.userDao.update(follower);
+        this.userDao.update(userToFollow);
+        return result;
+    }
 }

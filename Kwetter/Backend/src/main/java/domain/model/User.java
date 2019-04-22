@@ -81,11 +81,15 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private List<Kweet> kweets;
 
-    public void followThisUser(User follower) {
+    public boolean followThisUser(User follower) {
         if (this.followers.contains(follower)) {
+            this.followers.remove(follower);
+            follower.getFollowing().remove(this);
+            return false;
         } else {
             this.followers.add(follower);
             follower.getFollowing().add(this);
+            return true;
         }
     }
 

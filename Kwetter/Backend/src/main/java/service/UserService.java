@@ -104,4 +104,6 @@ public interface UserService {
      * @return single user
      */
     public User getUserbyUsername(String username);
+    
+    public boolean followUser(User follower, User userToFollow);
 }

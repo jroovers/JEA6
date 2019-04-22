@@ -11,12 +11,16 @@ import domain.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.InvalidKeyException;
+import java.math.BigDecimal;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -30,6 +34,7 @@ import service.KweetService;
 import service.UserService;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
+import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
@@ -161,6 +166,30 @@ public class UserResource {
         } else {
             return Response.status(403).build();
         }
+    }
+
+    @POST
+    @JWTTokenNeeded
+    @Path("/follow")
+    @Produces(value = {MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Consumes(value = {MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public Response followUserByUsername(@Context ContainerRequestContext requestContext, JsonObject body) {
+        String username = body.getString("username");
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Key key = keyGenerator.generateKey();
+        String securedUsername = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        User follower = this.userService.getUserbyUsername(securedUsername);
+        User toFollow = this.userService.getUserbyUsername(username);
+        if (follower != null && toFollow != null) {
+            JsonObject reply = Json.createObjectBuilder().add("message", "follow status changed").build();
+            if (this.userService.followUser(follower, toFollow)) {
+                return Response.ok(reply).build();
+            } else {
+                return Response.ok(reply).build();
+            }
+        }
+        return Response.status(400, "Invalid username to follow").build();
     }
 
     private String issueToken(String login) throws InvalidKeyException {
