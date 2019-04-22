@@ -18,6 +18,7 @@ import { ProfileEditDialogComponent } from './components/profile-edit-dialog/pro
 import { BackendUnreachableComponent } from './components/backend-unreachable/backend-unreachable.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderInterceptorService } from './helpers/loader.interceptor';
+import { SimpleSnackBarComponent } from './components/simple-snack-bar/simple-snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoaderInterceptorService } from './helpers/loader.interceptor';
     PageNotFoundComponent,
     ProfileEditDialogComponent,
     BackendUnreachableComponent,
-    LoaderComponent
+    LoaderComponent,
+    SimpleSnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import { LoaderInterceptorService } from './helpers/loader.interceptor';
     ProfileEditDialogComponent
   ],
   providers: [
+    SimpleSnackBarComponent,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true }

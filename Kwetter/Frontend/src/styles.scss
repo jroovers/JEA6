@@ -15,3 +15,13 @@ $theme-colors: (
   background-image: url("./assets/img/img_avatar.png");
   background-size: cover;
 }
+
+.dark-snackbar {
+  background: #343a40;
+}
+.ok-snackbar {
+  background: #673ab7;
+}
+.warn-snackbar {
+  background: #dc3545;
+}
