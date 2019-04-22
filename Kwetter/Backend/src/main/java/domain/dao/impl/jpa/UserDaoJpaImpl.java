@@ -6,6 +6,7 @@ import domain.model.User;
 import domain.dao.qualifiers.JPA;
 import domain.dao.UserDao;
 import domain.model.MutualFriendDTO;
+import java.util.ArrayList;
 
 @Stateless
 @JPA
@@ -38,6 +39,9 @@ public class UserDaoJpaImpl extends BaseDaoJpa<User> implements UserDao {
     @Override
     public List<MutualFriendDTO> getMutualFriends(String username) {
         User user = this.getByUsername(username);
+        if (user == null) {
+            return new ArrayList<>();
+        }
         Long id = user.getId();
         List<MutualFriendDTO> result = getEntityManager().createNativeQuery(SQL_GET_MUTUAL_FRIENDS, "MutualFriendMapper")
                 .setParameter(1, id)

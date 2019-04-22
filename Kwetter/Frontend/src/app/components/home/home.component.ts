@@ -4,6 +4,8 @@ import { KweetService } from '../../services/kweet.service';
 import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { MutualFriend } from 'src/app/models/dto/mutual-friend';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +14,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  currentUser: User;
   model: any = { "message": "" };
   kweets: Kweet[] = [];
-  currentUser: User;
+  suggestions: MutualFriend[] = [];
+  
 
   constructor(
+    private userService: UserService,
     private kweetService: KweetService,
     private authenticationService: AuthenticationService,
     private router: Router
@@ -30,6 +35,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (this.currentUser) {
       this.getPersonalisedKweets();
+      this.getFriendSuggestions();
     }
     else {
       this.getKweets();
@@ -48,6 +54,14 @@ export class HomeComponent implements OnInit {
       .subscribe(kweets => {
         this.kweets = kweets;
       });
+  }
+
+  getFriendSuggestions(): void{
+      this.userService.getFriendSuggestions()
+      .subscribe(result => 
+        {
+          this.suggestions = result;
+        });
   }
 
   place() {

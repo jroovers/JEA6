@@ -192,6 +192,17 @@ public class UserResource {
         return Response.status(400, "Invalid username to follow").build();
     }
 
+    @GET
+    @JWTTokenNeeded
+    @Path("/suggest")
+    public Response getMutualFriends(@Context ContainerRequestContext requestContext) {
+        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        Key key = keyGenerator.generateKey();
+        String securedUsername = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        return Response.ok(this.userService.getFriendSuggestions(securedUsername)).build();
+    }
+
     private String issueToken(String login) throws InvalidKeyException {
         Key key = keyGenerator.generateKey();
         String jwtToken = Jwts.builder()

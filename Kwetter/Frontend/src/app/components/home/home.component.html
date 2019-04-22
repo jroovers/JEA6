@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm">
+  <div class="col">
     <h3 *ngIf="currentUser">
       Deel.<br>
       <small class=" text-muted">Wat wil je delen?</small>
@@ -26,7 +26,7 @@
       </mat-card>
     </form>
   </div>
-  <div class="col-md-5">
+  <div class="col-5">
     <h3>
       Kweets.<br>
       <small class="text-muted">Kijk waar anderen het over hebben</small>
@@ -64,18 +64,34 @@
       </mat-card-actions>
     </mat-card>
   </div>
-  <div class="col-sm">
+  <div class="col">
     <h3 *ngIf="currentUser">
       Hallo, <span *ngIf="currentUser.name">{{currentUser.name}}</span>
       <span *ngIf="!currentUser.name"> @{{currentUser.username}}</span>.<br>
       <small class="text-muted">Jouw statistieken</small>
     </h3>
     <mat-card *ngIf="currentUser">
-      Your last kweet.
+      TO-DO: show last kweet
       <br>
-      Your followers and stuff
-      <br>
-      Maybe trends?
+      TO-DO: show follower count
+    </mat-card>
+    <br>
+    <h4 *ngIf="currentUser">
+      Suggesties voor jou:<br>
+      <small class="text-muted">Op basis van mensen die je volgt.</small>
+    </h4>
+    <mat-card *ngIf="currentUser" class="user-list-card">
+      <mat-nav-list *ngIf="suggestions.length == 0">
+        <a mat-list-item class="text-muted">Geen suggesties</a>
+      </mat-nav-list>
+      <mat-nav-list *ngIf="suggestions.length > 0">
+        <a mat-list-item *ngFor="let user of suggestions" routerLink="/{{user.username}}">
+          <span>
+            @{{user.username}}<br>
+            <small class="text-muted">Gevolgd door {{user.nr}} vrienden</small>
+          </span>
+        </a>
+      </mat-nav-list>
     </mat-card>
   </div>
 </div>

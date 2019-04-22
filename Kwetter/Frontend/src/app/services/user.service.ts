@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Profile } from '../models/dto/profile';
 import { User } from '../models/user';
+import { MutualFriend } from '../models/dto/mutual-friend';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,14 @@ export class UserService {
     return this.http.post<{}>(url, body)
       .pipe(
         catchError(this.handleError<{}>('followUser(username: string)'))
+      );
+  }
+
+  getFriendSuggestions(): Observable<MutualFriend[]> {
+    const url = `${environment.apiUrl}/users/suggest`;
+    return this.http.get<MutualFriend[]>(url)
+      .pipe(
+        catchError(this.handleError<MutualFriend[]>('getFriendSuggestions()'))
       );
   }
 
