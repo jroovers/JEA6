@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import domain.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.InvalidKeyException;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -83,13 +84,16 @@ public class UserResource {
             logger.info("#### login/password : " + username + "/" + password);
             // Authenticate the user using the credentials provided
             User u = this.userService.login(username, password);
+            if (u == null) {
+                throw new NullPointerException("Login failed");
+            }
             // Issue a token for the user
             String token = issueToken(u.getUsername());
             // Return the token on the response
             return Response.ok(u).header(AUTHORIZATION, "Bearer " + token).build();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (NullPointerException | InvalidKeyException ex) {
+            logger.warning(ex.getMessage());
             return Response.status(UNAUTHORIZED).build();
         }
     }
@@ -159,7 +163,7 @@ public class UserResource {
         }
     }
 
-    private String issueToken(String login) throws Exception {
+    private String issueToken(String login) throws InvalidKeyException {
         Key key = keyGenerator.generateKey();
         String jwtToken = Jwts.builder()
                 .setSubject(login)

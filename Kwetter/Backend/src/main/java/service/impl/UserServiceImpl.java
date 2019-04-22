@@ -20,14 +20,14 @@ import utility.PasswordStorage;
  */
 @Stateless
 public class UserServiceImpl extends BufferedImageConverter implements UserService {
-
+    
     @Inject
     @JPA
     private UserDao userDao;
-
+    
     @Inject
     private transient Logger logger;
-
+    
     @Override
     public User registerUser(String username, String password) throws IllegalArgumentException {
         try {
@@ -45,7 +45,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             return null;
         }
     }
-
+    
     @Override
     public User login(String username, String password) {
         try {
@@ -59,17 +59,17 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             } else {
                 throw new IllegalArgumentException("There is no User with this username");
             }
-        } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, "Failed to verify hash", ex);
+        } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException | IllegalArgumentException ex) {
+            logger.warning(ex.getMessage());
             return null;
         }
     }
-
+    
     @Override
     public boolean logout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public User changeUserName(User user, String newName) throws IllegalArgumentException {
         if (checkIfUserExistsByUsername(newName)) {
@@ -81,7 +81,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             return savedUser;
         }
     }
-
+    
     @Override
     public User changeProfilePhoto(User user, BufferedImage image) {
         User savedUser = userDao.getById(user.getId());
@@ -89,7 +89,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.update(savedUser);
         return savedUser;
     }
-
+    
     @Override
     public User updateProfileDetails(User user) {
         User savedUser = userDao.getByUsername(user.getUsername());
@@ -100,24 +100,24 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.update(savedUser);
         return savedUser;
     }
-
+    
     @Override
     public List<User> getFollowersByUser(User user) {
         User savedUser = userDao.getById(user.getId());
         return savedUser.getFollowers();
     }
-
+    
     @Override
     public List<User> getUsersFollowedByUser(User user) {
         User savedUser = userDao.getById(user.getId());
         return savedUser.getFollowing();
     }
-
+    
     @Override
     public List<User> getAllUsers() {
         return userDao.getAll();
     }
-
+    
     @Override
     public User setUserRoles(User user, List<Role> roles) {
         User savedUser = userDao.getById(user.getId());
@@ -125,12 +125,12 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.save(savedUser);
         return savedUser;
     }
-
+    
     private boolean checkIfUserExistsByUsername(String username) {
         User find = userDao.getByUsername(username);
         return find != null;
     }
-
+    
     @Override
     public User getUserbyUsername(String username) {
         return userDao.getByUsername(username);
