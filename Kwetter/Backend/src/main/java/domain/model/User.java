@@ -50,7 +50,7 @@ public class User implements Serializable {
     @JsonbTransient
     private String passwordHash;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonbTransient
     private Set<Role> roles;
 
