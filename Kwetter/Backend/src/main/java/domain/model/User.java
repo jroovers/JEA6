@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.Set;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +36,18 @@ import lombok.Setter;
 @NamedQueries({
     @NamedQuery(name = "user.FindByUsername", query = "Select u From User u WHERE u.username = :username")
 })
+@SqlResultSetMapping(
+        name = "MutualFriendMapper",
+        classes = @ConstructorResult(
+                targetClass = MutualFriendDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "biography"),
+                    @ColumnResult(name = "location"),
+                    @ColumnResult(name = "name"),
+                    @ColumnResult(name = "username"),
+                    @ColumnResult(name = "website"),
+                    @ColumnResult(name = "nr", type = Long.class)}))
 public class User implements Serializable {
 
     public User(String username, String passwordHash) {

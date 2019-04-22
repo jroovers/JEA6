@@ -11,6 +11,7 @@ import domain.model.Role;
 import domain.model.User;
 import domain.dao.qualifiers.JPA;
 import domain.dao.UserDao;
+import domain.model.MutualFriendDTO;
 import utility.BufferedImageConverter;
 import utility.PasswordStorage;
 
@@ -142,5 +143,10 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         this.userDao.update(follower);
         this.userDao.update(userToFollow);
         return result;
+    }
+
+    @Override
+    public List<MutualFriendDTO> getFriendSuggestions(String username) {
+        return this.userDao.getMutualFriends(username);
     }
 }

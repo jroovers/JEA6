@@ -7,6 +7,7 @@ import javax.persistence.EntityExistsException;
 import domain.model.User;
 import domain.dao.qualifiers.Memory;
 import domain.dao.UserDao;
+import domain.model.MutualFriendDTO;
 
 /**
  *
@@ -62,6 +63,11 @@ public class UserDaoCollectionImpl extends BaseDaoCollection<User> implements Us
         } else {
             return users.get(0);
         }
+    }
+
+    @Override
+    public List<MutualFriendDTO> getMutualFriends(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

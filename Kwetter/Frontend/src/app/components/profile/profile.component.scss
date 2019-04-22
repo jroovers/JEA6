@@ -25,3 +25,8 @@ a .profile-stat-value {
 .mat-list-base .mat-list-item .mat-list-item-content :hover {
   cursor: pointer;
 }
+
+.follower-card {
+  max-height: 50%;
+  overflow-y: auto;
+}

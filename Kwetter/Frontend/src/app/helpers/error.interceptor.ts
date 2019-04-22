@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }),
             catchError(err => {
                 console.log(err);
-                let message = "Something went wrong... (${err.status})";
+                let message = "Something went wrong... (" + err.status + ")";
                 if (err.status === 0) {
                     this.authenticationService.logout();
                     this.router.navigateByUrl("/500", { replaceUrl: true });

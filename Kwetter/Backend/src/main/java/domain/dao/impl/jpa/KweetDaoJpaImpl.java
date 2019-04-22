@@ -10,7 +10,12 @@ import java.util.List;
 @JPA
 public class KweetDaoJpaImpl extends BaseDaoJpa<Kweet> implements KweetDao {
 
-    private final String SQL_KWEETS_FOR_USER = "SELECT k.* FROM kweet k, followers f, user u WHERE k.author_id = f.follower AND f.following = u.id AND u.username = ? UNION SELECT  k.* FROM kweet k, user u WHERE k.author_id = u.id AND u.username = ? ORDER BY createdTime DESC";
+    private final String SQL_KWEETS_FOR_USER = 
+            "SELECT k.* FROM kweet k, followers f, user u "
+            + "WHERE k.author_id = f.follower AND f.following = u.id AND u.username = ? "
+            + "UNION SELECT  k.* FROM kweet k, user u "
+            + "WHERE k.author_id = u.id AND u.username = ? "
+            + "ORDER BY createdTime DESC";
 
     public KweetDaoJpaImpl() {
         super.entityClass = Kweet.class;

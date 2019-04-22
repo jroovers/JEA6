@@ -94,17 +94,29 @@
         </mat-card>
       </div>
       <div class="col-4">
-        <h3>Volgend</h3>
-        <mat-card>
-          <mat-nav-list>
+        <h3>Volgend ({{profile.following.length}})</h3>
+        <mat-card class="follower-card">
+          <mat-nav-list *ngIf="profile.following.length == 0">
+            <span *ngIf="profile.user.name" mat-list-item class="text-muted">{{profile.user.name}} volgt nog
+              niemand.</span>
+            <span *ngIf="!profile.user.name" mat-list-item class="text-muted">@{{profile.user.username}} volgt nog
+              niemand.</span>
+          </mat-nav-list>
+          <mat-nav-list *ngIf="profile.following.length > 0">
             <a mat-list-item *ngFor="let user of profile.following" routerLink="/{{user.username}}"
               class="text-muted">@{{user.username}}</a>
           </mat-nav-list>
         </mat-card>
         <hr>
-        <h3>Volgers</h3>
-        <mat-card>
-          <mat-nav-list>
+        <h3>Volgers ({{profile.followers.length}})</h3>
+        <mat-card class="follower-card">
+          <mat-nav-list *ngIf="profile.followers.length == 0">
+            <span *ngIf="profile.user.name" mat-list-item class="text-muted">{{profile.user.name}} heeft geen
+              volgers.</span>
+            <span *ngIf="!profile.user.name" mat-list-item class="text-muted">@{{profile.user.username}} heeft geen
+              volgers.</span>
+          </mat-nav-list>
+          <mat-nav-list *ngIf="profile.followers.length > 0">
             <a mat-list-item *ngFor="let user of profile.followers" routerLink="/{{user.username}}"
               class="text-muted">@{{user.username}}</a>
           </mat-nav-list>

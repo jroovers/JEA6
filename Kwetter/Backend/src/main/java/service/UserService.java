@@ -1,5 +1,6 @@
 package service;
 
+import domain.model.MutualFriendDTO;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import domain.model.Role;
@@ -106,4 +107,6 @@ public interface UserService {
     public User getUserbyUsername(String username);
     
     public boolean followUser(User follower, User userToFollow);
+    
+    public List<MutualFriendDTO> getFriendSuggestions(String username);
 }

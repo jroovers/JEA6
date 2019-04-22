@@ -1,6 +1,8 @@
 package domain.dao;
 
+import domain.model.MutualFriendDTO;
 import domain.model.User;
+import java.util.List;
 
 /**
  *
@@ -15,5 +17,7 @@ public interface UserDao extends IBaseDao<User> {
      * @return the user if found, otherwise null
      */
     public User getByUsername(String username);
+    
+    public List<MutualFriendDTO> getMutualFriends(String username);
 
 }
