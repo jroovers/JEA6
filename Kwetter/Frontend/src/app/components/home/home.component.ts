@@ -1,30 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Kweet } from '../../models/kweet';
 import { KweetService } from '../../services/kweet.service';
 import { User } from 'src/app/models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, Route, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { MutualFriend } from 'src/app/models/dto/mutual-friend';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewChecked {
 
   currentUser: User;
   model: any = { "message": "" };
   kweets: Kweet[] = [];
   suggestions: MutualFriend[] = [];
-  
+
+  fragment: String;
+
 
   constructor(
     private userService: UserService,
     private kweetService: KweetService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private activedRoute: ActivatedRoute,
+    private scroller: ViewportScroller
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -42,6 +47,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked(): void {
+    this.activedRoute.fragment.subscribe(fragment => {
+      console.log(fragment);
+      let kweet = this.kweets.find(kweet => kweet.id == Number(fragment));
+      kweet.isActive = true;
+      this.scroller.setOffset([0, 100]);
+      this.scroller.scrollToAnchor(fragment);
+
+    }
+    )
+  }
+
   getKweets(): void {
     this.kweetService.getKweetOverview().
       subscribe(kweets => {
@@ -56,12 +73,11 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  getFriendSuggestions(): void{
-      this.userService.getFriendSuggestions()
-      .subscribe(result => 
-        {
-          this.suggestions = result;
-        });
+  getFriendSuggestions(): void {
+    this.userService.getFriendSuggestions()
+      .subscribe(result => {
+        this.suggestions = result;
+      });
   }
 
   place() {

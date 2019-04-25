@@ -41,7 +41,7 @@
         <p>Begin met het volgen van mensen. Dan komen hier hun kweets te staan.</p>
       </mat-card-content>
     </mat-card>
-    <mat-card class="kweet-card" *ngFor="let kweet of kweets">
+    <mat-card class="kweet-card" *ngFor="let kweet of kweets" id="{{kweet.id}}" [class.highlighted]="kweet.isActive">
       <mat-card-header>
         <div mat-card-avatar class="kweet-card-header-image"></div>
         <mat-card-title>
