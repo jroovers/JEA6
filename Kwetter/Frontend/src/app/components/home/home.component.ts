@@ -51,7 +51,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     this.activedRoute.fragment.subscribe(fragment => {
       console.log(fragment);
       let kweet = this.kweets.find(kweet => kweet.id == Number(fragment));
-      kweet.isActive = true;
+      if (kweet != null) {
+        kweet.isActive = true;
+      }
       this.scroller.setOffset([0, 100]);
       this.scroller.scrollToAnchor(fragment);
 
