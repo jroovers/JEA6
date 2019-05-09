@@ -19,8 +19,10 @@ export class WebsocketService {
       if (this.client != null) {
         this.client.disconnect();
       }
-      this.client = new WebsocketClient('ws', 'localhost', 8080, '/Backend/wss')
-      this.client.connect();
+      if (this.currentUser != null) {
+        this.client = new WebsocketClient('ws', 'localhost', 8080, '/Backend/wss')
+        this.client.connect();
+      }
     });
   }
 
