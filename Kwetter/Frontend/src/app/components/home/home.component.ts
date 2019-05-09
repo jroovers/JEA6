@@ -7,6 +7,7 @@ import { Router, Route, ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { MutualFriend } from 'src/app/models/dto/mutual-friend';
 import { ViewportScroller } from '@angular/common';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +20,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   model: any = { "message": "" };
   kweets: Kweet[] = [];
   suggestions: MutualFriend[] = [];
-
   fragment: String;
-
 
   constructor(
     private userService: UserService,
@@ -29,7 +28,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     private authenticationService: AuthenticationService,
     private router: Router,
     private activedRoute: ActivatedRoute,
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
+    private socketServce: WebsocketService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     this.activedRoute.fragment.subscribe(fragment => {
-      console.log(fragment);
       let kweet = this.kweets.find(kweet => kweet.id == Number(fragment));
       if (kweet != null) {
         kweet.isActive = true;
@@ -86,6 +85,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     if (this.model.message != null && this.model.message.length >= 2 && this.model.message.length <= 255) {
       this.kweetService.createKweet(this.model.message).subscribe(
         data => {
+          this.socketServce.sendMessage("poop")
           this.model.message = "";
           this.ngOnInit();
         }
