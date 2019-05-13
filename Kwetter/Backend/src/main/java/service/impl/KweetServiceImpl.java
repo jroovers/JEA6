@@ -10,6 +10,7 @@ import domain.model.Kweet;
 import domain.model.User;
 import domain.dao.qualifiers.JPA;
 import domain.dao.KweetDao;
+import domain.dao.UserDao;
 
 /**
  *
@@ -21,6 +22,10 @@ public class KweetServiceImpl implements KweetService {
     @Inject
     @JPA
     private KweetDao kweetDao;
+
+    @Inject
+    @JPA
+    private UserDao userDao;
 
     @Override
     public List<Kweet> getKweetsByUser(User user) {
@@ -50,6 +55,18 @@ public class KweetServiceImpl implements KweetService {
         Kweet kweet = new Kweet(author, body);
         kweetDao.save(kweet);
         return kweet;
+    }
+
+    @Override
+    public Kweet createKweet(String username, String body) {
+        User u = userDao.getByUsername(username);
+        if (u != null) {
+            Kweet kweet = new Kweet(u, body);
+            kweetDao.save(kweet);
+            return kweet;
+        } else {
+            return null;
+        }
     }
 
     @Override

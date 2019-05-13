@@ -1,3 +1,5 @@
+import { KweetService } from '../services/kweet.service';
+
 export class WebsocketClient {
     private webSocket = null;
     private protocol: string = "";
@@ -32,7 +34,7 @@ export class WebsocketClient {
             }
             this.webSocket.onmessage = function (event) {
                 var msg = event.data;
-                console.log('onmessage::' + JSON.stringify(msg, null, 4));
+                console.log('onmessage::' + msg);
             }
             this.webSocket.onclose = function (event) {
                 console.log('onclose::' + JSON.stringify(event, null, 4));
@@ -48,6 +50,10 @@ export class WebsocketClient {
 
     getStatus() {
         return this.webSocket.readyState;
+    }
+
+    getWebSocket() : WebSocket{
+        return this.webSocket;
     }
 
     send(message) {

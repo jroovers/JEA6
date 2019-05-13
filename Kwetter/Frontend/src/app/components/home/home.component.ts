@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private activedRoute: ActivatedRoute,
     private scroller: ViewportScroller,
-    private socketServce: WebsocketService
+    private socketService: WebsocketService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -83,13 +83,19 @@ export class HomeComponent implements OnInit, AfterViewChecked {
 
   place() {
     if (this.model.message != null && this.model.message.length >= 2 && this.model.message.length <= 255) {
-      this.kweetService.createKweet(this.model.message).subscribe(
-        data => {
-          this.socketServce.sendMessage("poop")
-          this.model.message = "";
-          this.ngOnInit();
-        }
-      )
+      let message = {
+        username: this.currentUser.username,
+        token: this.currentUser.token,
+        body: this.model.message
+      }
+      this.socketService.sendMessage(JSON.stringify(message));
+      this.model.message= "";
+      // this.kweetService.createKweet(this.model.message).subscribe(
+      //   data => {
+      //     this.model.message = "";
+      //     this.ngOnInit();
+      //   }
+      // )
     }
   }
 }
