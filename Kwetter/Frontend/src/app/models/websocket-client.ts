@@ -1,4 +1,6 @@
 import { KweetService } from '../services/kweet.service';
+import { Subject } from 'rxjs';
+import { Kweet } from './kweet';
 
 export class WebsocketClient {
     private webSocket = null;
@@ -6,6 +8,8 @@ export class WebsocketClient {
     private hostname: string = "";
     private port: number = 0;
     private endpoint: string = "";
+
+    public currentKweetSubject: Subject<Kweet>;
 
     constructor(
         protocol: string,
@@ -33,8 +37,9 @@ export class WebsocketClient {
                 console.log('onopen::' + JSON.stringify(event, null, 4));
             }
             this.webSocket.onmessage = function (event) {
-                var msg = event.data;
-                console.log('onmessage::' + msg);
+                let kweet: Kweet = { ...event.data };
+                this.currentKweetSubject.next(kweet);
+                console.log('onmessage::' + kweet);
             }
             this.webSocket.onclose = function (event) {
                 console.log('onclose::' + JSON.stringify(event, null, 4));
@@ -52,7 +57,7 @@ export class WebsocketClient {
         return this.webSocket.readyState;
     }
 
-    getWebSocket() : WebSocket{
+    getWebSocket(): WebSocket {
         return this.webSocket;
     }
 

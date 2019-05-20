@@ -1,6 +1,5 @@
 package wss;
 
-import com.google.gson.Gson;
 import domain.model.Kweet;
 import java.io.IOException;
 import java.io.StringReader;
@@ -15,6 +14,7 @@ import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import service.KweetService;
 
@@ -22,20 +22,22 @@ import service.KweetService;
  *
  * @author Jeroen Roovers
  */
-@ServerEndpoint("/wss")
+@ServerEndpoint("/wss/{username}")
 public class WebSocket {
 
     @Inject
-    KweetService kweetService;
+    WebsocketService wsService;
 
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(@PathParam("username") String username, Session session) {
         System.out.println("onOpen::" + session.getId());
+        wsService.registerSession(username, session);
     }
 
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(@PathParam("username") String username, Session session) {
         System.out.println("onClose::" + session.getId());
+        wsService.removeSession(username, session);
     }
 
     @OnMessage
@@ -51,25 +53,10 @@ public class WebSocket {
             String token = object.getString("token");
             String body = object.getString("body");
 
-            Kweet k = kweetService.createKweet(username, body);
-            if (k != null) {
-                try {
-                    Jsonb jsonb = JsonbBuilder.create();
-                    String msg = jsonb.toJson(k);
-                    System.out.println(msg);
-                    session.getBasicRemote().sendText(msg);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    session.getBasicRemote().sendText("Kweet invalid!");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            wsService.handleOnMessage(username, session, body);
         } catch (NullPointerException | ClassCastException ex) {
             System.out.println("Invalid websocket message.");
+
             ex.printStackTrace();
         }
 

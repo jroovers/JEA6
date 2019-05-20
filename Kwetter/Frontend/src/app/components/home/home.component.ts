@@ -55,9 +55,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       }
       this.scroller.setOffset([0, 100]);
       this.scroller.scrollToAnchor(fragment);
-
-    }
-    )
+    })
   }
 
   getKweets(): void {
@@ -89,13 +87,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
         body: this.model.message
       }
       this.socketService.sendMessage(JSON.stringify(message));
-      this.model.message= "";
-      // this.kweetService.createKweet(this.model.message).subscribe(
-      //   data => {
-      //     this.model.message = "";
-      //     this.ngOnInit();
-      //   }
-      // )
+      this.model.message = "";
     }
   }
 }
