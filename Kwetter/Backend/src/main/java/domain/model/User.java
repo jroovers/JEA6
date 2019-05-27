@@ -21,6 +21,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
+import javax.persistence.Transient;
+import javax.ws.rs.core.Link;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -76,6 +79,10 @@ public class User implements Serializable {
     private String location;
     private String website;
     private String biography;
+
+    @Transient
+    @XmlJavaTypeAdapter(Link.JaxbAdapter.class)
+    private List<UriLink> links;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

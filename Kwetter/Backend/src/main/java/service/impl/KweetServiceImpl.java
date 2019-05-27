@@ -86,4 +86,9 @@ public class KweetServiceImpl implements KweetService {
         return true;
     }
 
+    @Override
+    public Kweet getKweetById(Long id) {
+        return kweetDao.getById(id);
+    }
+
 }

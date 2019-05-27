@@ -35,9 +35,10 @@ public interface KweetService {
      * @return the created kweet
      */
     public Kweet createKweet(User author, String body);
-    
+
     /**
      * Creates a new kweet
+     *
      * @param username username of user
      * @param body text to be contained in kweet
      * @return created kweet
@@ -61,5 +62,13 @@ public interface KweetService {
      * @return list of kweets
      */
     public List<Kweet> getKweetOverview();
+
+    /**
+     * Get a single kweet by its ID value.
+     *
+     * @param id id to filter by
+     * @return kweet with given ID
+     */
+    public Kweet getKweetById(Long id);
 
 }
