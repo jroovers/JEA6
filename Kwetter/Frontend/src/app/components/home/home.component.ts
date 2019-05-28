@@ -35,6 +35,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       return false;
     };
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    if (this.currentUser) {
+      this.socketService.getKweetSubject().subscribe(x => { this.getKweets() });
+    }
   }
 
   ngOnInit() {

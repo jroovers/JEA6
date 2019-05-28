@@ -38,8 +38,9 @@ export class WebsocketService {
     this.client.send(message);
   }
 
-  getKweetSubject(): Subject<Kweet> {
-    if (this.client == null) {
+  getKweetSubject(): Observable<Kweet> {
+    return this.client.GetInstanceStatus();
+    if (this.client == null || this.client.getWebSocket() == null) {
       return null;
     }
     return this.client.currentKweetSubject;

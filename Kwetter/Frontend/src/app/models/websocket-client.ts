@@ -1,6 +1,7 @@
 import { KweetService } from '../services/kweet.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Kweet } from './kweet';
+import { ObserveOnSubscriber } from 'rxjs/internal/operators/observeOn';
 
 export class WebsocketClient {
     private webSocket = null;
@@ -9,7 +10,7 @@ export class WebsocketClient {
     private port: number = 0;
     private endpoint: string = "";
 
-    public currentKweetSubject: Subject<Kweet>;
+    public currentKweetSubject: Observable<Kweet>;
 
     constructor(
         protocol: string,
@@ -59,6 +60,15 @@ export class WebsocketClient {
 
     getWebSocket(): WebSocket {
         return this.webSocket;
+    }
+
+    public GetInstanceStatus(): Observable<Kweet> {
+        return Observable.create(observer => {
+            this.webSocket.onmessage = (event) => {
+                let kweet: Kweet = { ...event.data };
+                observer.next(kweet);
+            };
+        })
     }
 
     send(message) {
