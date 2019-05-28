@@ -1,6 +1,7 @@
 package rest;
 
 import domain.model.Kweet;
+import domain.model.UriLink;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -9,18 +10,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import domain.model.User;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.InvalidKeyException;
-import java.math.BigDecimal;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -37,8 +36,8 @@ import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import javax.ws.rs.core.MediaType;
 import static javax.ws.rs.core.MediaType.APPLICATION_FORM_URLENCODED;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
+import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import rest.jwt.util.KeyGenerator;
 
@@ -114,9 +113,13 @@ public class UserResource {
     public Response getUserProfileByUsername(@PathParam(value = "username") String username) {
         User u = userService.getUserbyUsername(username);
         if (u != null) {
+            initLinks(u, uriInfo, "/users/" + u.getUsername());
             List<Kweet> kweets = kweetService.getKweetsByUser(u);
+            kweets.forEach(k -> initLinks(k, uriInfo, "/kweets/" + k.getId().toString()));
             List<User> followers = userService.getFollowersByUser(u);
+            followers.forEach(f -> initLinks(f, uriInfo, "/users/" + f.getUsername()));
             List<User> following = userService.getUsersFollowedByUser(u);
+            following.forEach(f -> initLinks(f, uriInfo, "/users/" + f.getUsername()));
             UserProfileDTO reply = new UserProfileDTO(u, kweets, following, followers);
             return Response
                     .ok(reply)
@@ -218,5 +221,27 @@ public class UserResource {
 
     private Date toDate(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    private void initLinks(User user, UriInfo uriInfo, String path) {
+        //create self link
+        UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+        if (path != null) {
+            uriBuilder = uriBuilder.path(path);
+        }
+        String url = uriBuilder.build().toASCIIString();
+        String rel = "self";
+        user.setLinks(Arrays.asList(new UriLink(rel, url)));
+    }
+
+    private void initLinks(Kweet kweet, UriInfo uriInfo, String path) {
+        //create self link
+        UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
+        if (path != null) {
+            uriBuilder = uriBuilder.path(path);
+        }
+        String url = uriBuilder.build().toASCIIString();
+        String rel = "self";
+        kweet.setLinks(Arrays.asList(new UriLink(rel, url)));
     }
 }

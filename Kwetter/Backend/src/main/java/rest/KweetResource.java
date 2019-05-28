@@ -62,7 +62,6 @@ public class KweetResource {
     @GET
     public Response getKweetOverview() {
         List<Kweet> kweets = kweetService.getKweetOverview();
-        List<Link> linkArray = new ArrayList<>();
         kweets.forEach((k) -> initLinks(k, context, k.getId().toString()));
         Link self = Link.fromUriBuilder(context.getAbsolutePathBuilder())
                 .rel("self").build();
@@ -121,16 +120,17 @@ public class KweetResource {
     private void initLinks(Kweet kweet, UriInfo uriInfo, String path) {
         //create self link
         UriBuilder uriBuilder = uriInfo.getRequestUriBuilder();
-        if(path != null){
+        if (path != null) {
             uriBuilder = uriBuilder.path(path);
         }
         String url = uriBuilder.build().toASCIIString();
         String rel = "self";
-        //Link.Builder linkBuilder = Link.fromUriBuilder(uriBuilder);
-        //Link selfLink = linkBuilder.rel("self").build();
-        //also we can add other meta-data by using: linkBuilder.param(..),
-        // linkBuilder.type(..), linkBuilder.title(..)
         kweet.setLinks(Arrays.asList(new UriLink(rel, url)));
+        
+        UriBuilder authorUriBuilder = uriInfo.getBaseUriBuilder();
+        authorUriBuilder = authorUriBuilder.path("/users/" + kweet.getAuthor().getUsername());
+        String authorUrl = authorUriBuilder.build().toASCIIString();
+        kweet.getAuthor().setLinks(Arrays.asList(new UriLink(rel, authorUrl)));
     }
 
 }
