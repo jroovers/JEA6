@@ -4,10 +4,9 @@ import service.RoleService;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Role;
-import persistence.qualifiers.JPA;
-import persistence.qualifiers.Memory;
-import persistence.RoleDao;
+import domain.model.Role;
+import domain.dao.qualifiers.JPA;
+import domain.dao.RoleDao;
 
 /**
  *

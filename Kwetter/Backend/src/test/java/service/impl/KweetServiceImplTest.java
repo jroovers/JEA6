@@ -1,8 +1,8 @@
 package service.impl;
 
 import java.util.List;
-import model.Kweet;
-import model.User;
+import domain.model.Kweet;
+import domain.model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -74,10 +74,10 @@ public class KweetServiceImplTest {
     public void testCreateKweet() throws Exception {
         System.out.println("createKweet");
         User author = null;
-        Kweet kweet = null;
+        String body = "";
         KweetServiceImpl instance = new KweetServiceImpl();
         Kweet expResult = null;
-        Kweet result = instance.createKweet(author, kweet);
+        Kweet result = instance.createKweet(author, body);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

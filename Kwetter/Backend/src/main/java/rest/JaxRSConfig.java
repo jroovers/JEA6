@@ -5,7 +5,7 @@ import javax.ws.rs.core.Application;
 
 /**
  *
- * @author jeroe
+ * @author Jeroen Roovers
  */
 @ApplicationPath("/rest")
 public class JaxRSConfig extends Application {

@@ -26,6 +26,7 @@
                             <p:menuitem value="Roles" outcome="/admin/role/List.xhtml" />
                             <p:menuitem value="Users" outcome="/admin/user/List.xhtml" />
                         </p:submenu>
+                        <p:menuitem value="#{text['login.logout']}" action="#{loginController.logout()}" ajax="false"/>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

@@ -2,14 +2,15 @@ package service.impl;
 
 import service.KweetService;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Kweet;
-import model.User;
-import persistence.qualifiers.JPA;
-import persistence.KweetDao;
+import domain.model.Kweet;
+import domain.model.User;
+import domain.dao.qualifiers.JPA;
+import domain.dao.KweetDao;
+import domain.dao.UserDao;
 
 /**
  *
@@ -22,16 +23,13 @@ public class KweetServiceImpl implements KweetService {
     @JPA
     private KweetDao kweetDao;
 
+    @Inject
+    @JPA
+    private UserDao userDao;
+
     @Override
     public List<Kweet> getKweetsByUser(User user) {
-        Long userid = user.getId();
-        List<Kweet> returnlist = new ArrayList<>();
-        List<Kweet> allKweets = kweetDao.getAll();
-        for (Kweet k : allKweets) {
-            if (Objects.equals(k.getAuthor().getId(), userid)) {
-                returnlist.add(k);
-            }
-        }
+        List<Kweet> returnlist = kweetDao.getKweetsByUserId(user.getId());
         return returnlist;
     }
 
@@ -53,29 +51,44 @@ public class KweetServiceImpl implements KweetService {
     }
 
     @Override
-    public Kweet createKweet(User author, Kweet kweet) {
-        kweet.setAuthor(author);
+    public Kweet createKweet(User author, String body) {
+        Kweet kweet = new Kweet(author, body);
         kweetDao.save(kweet);
         return kweet;
     }
 
     @Override
+    public Kweet createKweet(String username, String body) {
+        User u = userDao.getByUsername(username);
+        if (u != null) {
+            Kweet kweet = new Kweet(u, body);
+            kweetDao.save(kweet);
+            return kweet;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public List<Kweet> getKweetOverviewForUser(User u) {
+        List<Kweet> timeline = new LinkedList<>();
+        return kweetDao.getKweetsForUserByUsername(u.getUsername());
+    }
+
+    @Override
+    public List<Kweet> getKweetOverview() {
         List<Kweet> everything = kweetDao.getAll();
         return everything;
-//        List<Kweet> timeline = new LinkedList();
-//        for(Kweet k : everything){
-//            timeline.addAll(
-//            u.getFollowingOtherUsers().stream()
-//                    .filter(id -> id.getId() == k.getAuthor().getId())
-//                    .collect(Collectors.toList())
-//            );
-//        }
     }
-    
-    
+
     public boolean deleteKweet(Kweet kweet) {
         kweetDao.delete(kweet);
         return true;
     }
+
+    @Override
+    public Kweet getKweetById(Long id) {
+        return kweetDao.getById(id);
+    }
+
 }

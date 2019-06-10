@@ -1,8 +1,8 @@
 package service;
 
 import java.util.List;
-import model.Kweet;
-import model.User;
+import domain.model.Kweet;
+import domain.model.User;
 
 /**
  *
@@ -31,10 +31,19 @@ public interface KweetService {
      * Creates a new kweet
      *
      * @param author user that posts the kweet
-     * @param kweet kweet to be saved
+     * @param body text to be contained in kweet
      * @return the created kweet
      */
-    public Kweet createKweet(User author, Kweet kweet);
+    public Kweet createKweet(User author, String body);
+
+    /**
+     * Creates a new kweet
+     *
+     * @param username username of user
+     * @param body text to be contained in kweet
+     * @return created kweet
+     */
+    public Kweet createKweet(String username, String body);
 
     /**
      * Get a personal selection of kweets for an user. This method should return
@@ -45,5 +54,21 @@ public interface KweetService {
      * @return list of kweets
      */
     public List<Kweet> getKweetOverviewForUser(User u);
+
+    /**
+     * Get a generic selection of kweets. This method returns any kweets placed
+     * by anyone and are not personalised to the logged in user.
+     *
+     * @return list of kweets
+     */
+    public List<Kweet> getKweetOverview();
+
+    /**
+     * Get a single kweet by its ID value.
+     *
+     * @param id id to filter by
+     * @return kweet with given ID
+     */
+    public Kweet getKweetById(Long id);
 
 }

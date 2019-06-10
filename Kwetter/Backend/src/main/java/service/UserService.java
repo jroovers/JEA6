@@ -1,14 +1,10 @@
 package service;
 
+import domain.model.MutualFriendDTO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import javax.imageio.ImageIO;
-import model.Role;
-import model.User;
+import domain.model.Role;
+import domain.model.User;
 
 /**
  *
@@ -101,4 +97,16 @@ public interface UserService {
      * @return the updated user
      */
     public User setUserRoles(User user, List<Role> role);
+
+    /**
+     * Gets an user by known username
+     *
+     * @param username
+     * @return single user
+     */
+    public User getUserbyUsername(String username);
+    
+    public boolean followUser(User follower, User userToFollow);
+    
+    public List<MutualFriendDTO> getFriendSuggestions(String username);
 }

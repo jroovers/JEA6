@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-3">
+    <h3></h3>
+    <img src="assets/img/img_avatar.png" class="avatar">
+    <h3>
+      <span *ngIf="profile.user.name">{{profile.user.name}}<br></span>
+      <small class="text-muted">@{{profile.user.username}}</small>
+    </h3>
+    <p *ngIf="profile.user.biography" class="m-0">
+      {{profile.user.biography}}
+    </p>
+    <mat-list dense class="p-0 !important">
+      <mat-list-item *ngIf="profile.user.location">
+        <mat-icon aria-hidden="true">location_on</mat-icon>
+        {{profile.user.location}}
+      </mat-list-item>
+      <mat-list-item *ngIf="profile.user.website" class="p-0">
+        <mat-icon aria-hidden="true">link</mat-icon>
+        <a href="{{profile.user.website}}" target="_blank">{{profile.user.website}}</a>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col">
+        <hr>
+        <ul class="nav justify-content-between align-items-center">
+          <li class="nav-item">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Volgend</span>
+              <span class="profile-stat profile-stat-value">{{profile.following.length}}</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Volgers</span>
+              <span class="profile-stat profile-stat-value">{{profile.followers.length}}</span>
+            </a>
+          </li>
+          <li class="nav-item mr-auto">
+            <a class="nav-link profile-stat" href="#">
+              <span class="profile-stat profile-stat-label">Tweets</span>
+              <span class="profile-stat profile-stat-value"> {{profile.kweets.length}}</span>
+            </a>
+          </li>
+          <li *ngIf="currentUser && currentUser.username != profile.user.username" class="nav-item">
+            <div *ngIf="!isFollowing()">
+              <button mat-raised-button (click)="followThisUser()">
+                <mat-icon aria-label="Follow button">person_add</mat-icon>
+                Volgen
+              </button>
+            </div>
+            <div *ngIf="isFollowing()">
+              <button mat-raised-button (click)="followThisUser()">
+                <mat-icon aria-label="Unfollow button">person_add_disabled</mat-icon>
+                Stop met volgen
+              </button>
+            </div>
+          </li>
+          <li *ngIf="currentUser && currentUser.username == profile.user.username" class="nav-item">
+            <button mat-raised-button color="accent" (click)="openDialog()">
+              <mat-icon aria-label="Edit button">edit</mat-icon>
+              Aanpassen
+            </button>
+          </li>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8">
+        <h3>Tweets</h3>
+        <mat-card class="kweet-card" *ngFor="let kweet of profile.kweets">
+          <mat-card-header>
+            <div mat-card-avatar class="kweet-card-header-image"></div>
+            <mat-card-title>
+              <a routerLink="/{{kweet.author.username}}">
+                <b>@{{kweet.author.username}}</b>
+              </a>
+            </mat-card-title>
+            <mat-card-subtitle>{{kweet.createdTime |  date: "d-MMM-''yy @ HH:mm"}}</mat-card-subtitle>
+          </mat-card-header>
+          <!-- optional image here? -->
+          <mat-card-content>
+            <p>
+              {{kweet.body}}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+            <button mat-button>REPORT</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div class="col-4">
+        <h3>Volgend ({{profile.following.length}})</h3>
+        <mat-card class="user-list-card">
+          <mat-nav-list *ngIf="profile.following.length == 0">
+            <span *ngIf="profile.user.name" mat-list-item class="text-muted">{{profile.user.name}} volgt nog
+              niemand.</span>
+            <span *ngIf="!profile.user.name" mat-list-item class="text-muted">@{{profile.user.username}} volgt nog
+              niemand.</span>
+          </mat-nav-list>
+          <mat-nav-list *ngIf="profile.following.length > 0">
+            <a mat-list-item *ngFor="let user of profile.following" routerLink="/{{user.username}}"
+              class="text-muted">@{{user.username}}</a>
+          </mat-nav-list>
+        </mat-card>
+        <hr>
+        <h3>Volgers ({{profile.followers.length}})</h3>
+        <mat-card class="user-list-card">
+          <mat-nav-list *ngIf="profile.followers.length == 0">
+            <span *ngIf="profile.user.name" mat-list-item class="text-muted">{{profile.user.name}} heeft geen
+              volgers.</span>
+            <span *ngIf="!profile.user.name" mat-list-item class="text-muted">@{{profile.user.username}} heeft geen
+              volgers.</span>
+          </mat-nav-list>
+          <mat-nav-list *ngIf="profile.followers.length > 0">
+            <a mat-list-item *ngFor="let user of profile.followers" routerLink="/{{user.username}}"
+              class="text-muted">@{{user.username}}</a>
+          </mat-nav-list>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 package service.impl;
 
 import java.util.List;
-import model.Role;
+import domain.model.Role;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

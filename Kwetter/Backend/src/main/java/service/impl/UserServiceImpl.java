@@ -7,11 +7,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import model.Role;
-import model.User;
-import persistence.qualifiers.JPA;
-import persistence.qualifiers.Memory;
-import persistence.UserDao;
+import domain.model.Role;
+import domain.model.User;
+import domain.dao.qualifiers.JPA;
+import domain.dao.UserDao;
+import domain.model.MutualFriendDTO;
 import utility.BufferedImageConverter;
 import utility.PasswordStorage;
 
@@ -21,11 +21,14 @@ import utility.PasswordStorage;
  */
 @Stateless
 public class UserServiceImpl extends BufferedImageConverter implements UserService {
-
+    
     @Inject
     @JPA
     private UserDao userDao;
-
+    
+    @Inject
+    private transient Logger logger;
+    
     @Override
     public User registerUser(String username, String password) throws IllegalArgumentException {
         try {
@@ -43,7 +46,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             return null;
         }
     }
-
+    
     @Override
     public User login(String username, String password) {
         try {
@@ -57,17 +60,17 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             } else {
                 throw new IllegalArgumentException("There is no User with this username");
             }
-        } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, "Failed not verify hash", ex);
+        } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException | IllegalArgumentException ex) {
+            logger.warning(ex.getMessage());
             return null;
         }
     }
-
+    
     @Override
     public boolean logout() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public User changeUserName(User user, String newName) throws IllegalArgumentException {
         if (checkIfUserExistsByUsername(newName)) {
@@ -79,7 +82,7 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
             return savedUser;
         }
     }
-
+    
     @Override
     public User changeProfilePhoto(User user, BufferedImage image) {
         User savedUser = userDao.getById(user.getId());
@@ -87,10 +90,10 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.update(savedUser);
         return savedUser;
     }
-
+    
     @Override
     public User updateProfileDetails(User user) {
-        User savedUser = userDao.getById(user.getId());
+        User savedUser = userDao.getByUsername(user.getUsername());
         savedUser.setName(user.getName());
         savedUser.setLocation(user.getLocation());
         savedUser.setWebsite(user.getWebsite());
@@ -98,24 +101,24 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.update(savedUser);
         return savedUser;
     }
-
+    
     @Override
     public List<User> getFollowersByUser(User user) {
         User savedUser = userDao.getById(user.getId());
         return savedUser.getFollowers();
     }
-
+    
     @Override
     public List<User> getUsersFollowedByUser(User user) {
         User savedUser = userDao.getById(user.getId());
         return savedUser.getFollowing();
     }
-
+    
     @Override
     public List<User> getAllUsers() {
         return userDao.getAll();
     }
-
+    
     @Override
     public User setUserRoles(User user, List<Role> roles) {
         User savedUser = userDao.getById(user.getId());
@@ -123,14 +126,27 @@ public class UserServiceImpl extends BufferedImageConverter implements UserServi
         userDao.save(savedUser);
         return savedUser;
     }
-
+    
     private boolean checkIfUserExistsByUsername(String username) {
         User find = userDao.getByUsername(username);
-        if (find == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return find != null;
+    }
+    
+    @Override
+    public User getUserbyUsername(String username) {
+        return userDao.getByUsername(username);
     }
 
+    @Override
+    public boolean followUser(User follower, User userToFollow) {
+        boolean result = userToFollow.followThisUser(follower);
+        this.userDao.update(follower);
+        this.userDao.update(userToFollow);
+        return result;
+    }
+
+    @Override
+    public List<MutualFriendDTO> getFriendSuggestions(String username) {
+        return this.userDao.getMutualFriends(username);
+    }
 }

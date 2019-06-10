@@ -9,15 +9,16 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import model.Kweet;
-import model.Permission;
-import model.Role;
-import model.User;
-import persistence.KweetDao;
-import persistence.PermissionDao;
-import persistence.RoleDao;
-import persistence.UserDao;
-import persistence.qualifiers.JPA;
+import domain.model.Kweet;
+import domain.model.Permission;
+import domain.model.Role;
+import domain.model.User;
+import domain.dao.KweetDao;
+import domain.dao.PermissionDao;
+import domain.dao.RoleDao;
+import domain.dao.UserDao;
+import domain.dao.qualifiers.JPA;
+import java.util.ArrayList;
 
 /**
  *
@@ -43,9 +44,13 @@ public class initApp implements Serializable {
     @PostConstruct
     public void init() {
         System.out.println("INITAPP.JAVA:: Executing app initialization.....");
+        long start = System.currentTimeMillis();
         createPermissionsAndRoles();
         createUsers();
+        followUsers();
         createKweets();
+        long end = System.currentTimeMillis();
+        System.out.println("INITAPP.JAVA:: Done! Operation took " + (end - start) + " ms");
     }
 
     public void createPermissionsAndRoles() {
@@ -60,6 +65,7 @@ public class initApp implements Serializable {
         manageUsers = pDao.update(manageUsers);
         manageModerators = pDao.update(manageModerators);
         manageAdmins = pDao.update(manageAdmins);
+        pDao.clearCache();
 
         Role superadmin, admin, moderator, user;
 
@@ -84,6 +90,7 @@ public class initApp implements Serializable {
         rDao.save(moderator);
         rDao.save(admin);
         rDao.save(superadmin);
+        rDao.clearCache();
     }
 
     private String safePasswordHash(String password) {
@@ -119,17 +126,33 @@ public class initApp implements Serializable {
         uDao.save(new User("Victor", safePasswordHash("password")));
         uDao.save(new User("Willem", safePasswordHash("password")));
         uDao.save(new User("Youssef", safePasswordHash("password")));
+        User u = new User("Antonio", safePasswordHash("password"));
+        u.setBiography("Really excited for the next MLP friendship is magic!");
+        u.setWebsite("https://github.com/Tonii123");
+        u.setLocation("Rachelsmolen");
+        u.setName("A Mijic");
+        uDao.save(u);
+        uDao.clearCache();
+    }
 
+    public void followUsers() {
         User adminUser = uDao.getByUsername("Admin");
         User moderatorUser = uDao.getByUsername("Jeroen");
-
+        User ant = uDao.getByUsername("Antonio");
+        adminUser.followThisUser(ant);
+        moderatorUser.followThisUser(ant);
+        ant.followThisUser(moderatorUser);
+        uDao.update(adminUser);
+        uDao.update(moderatorUser);
+        uDao.update(ant);
         Role adminRole = rDao.getByName("SUPERADMIN");
         Role moderatorRole = rDao.getByName("MODERATOR");
-
+        adminUser.getRoles().add(adminRole);
         adminUser.getRoles().add(adminRole);
         moderatorUser.getRoles().add(moderatorRole);
         uDao.update(adminUser);
         uDao.update(moderatorUser);
+        uDao.clearCache();
     }
 
     public void createKweets() {

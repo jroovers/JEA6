@@ -2,8 +2,8 @@ package service.impl;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
-import model.Role;
-import model.User;
+import domain.model.Role;
+import domain.model.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

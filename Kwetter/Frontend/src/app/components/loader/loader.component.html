@@ -1,0 +1,6 @@
+<div *ngIf="show">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+<div *ngIf="!show">
+  <mat-progress-bar *ngIf="!show" mode="determinate" value="100"></mat-progress-bar>
+</div>
