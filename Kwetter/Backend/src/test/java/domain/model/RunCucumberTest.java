@@ -1,4 +1,4 @@
-package model;
+package domain.model;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;

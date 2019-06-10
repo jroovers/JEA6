@@ -1,6 +1,7 @@
 package domain.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -44,12 +45,18 @@ import lombok.Setter;
         classes = @ConstructorResult(
                 targetClass = MutualFriendDTO.class,
                 columns = {
-                    @ColumnResult(name = "id", type = Long.class),
-                    @ColumnResult(name = "biography"),
-                    @ColumnResult(name = "location"),
-                    @ColumnResult(name = "name"),
-                    @ColumnResult(name = "username"),
-                    @ColumnResult(name = "website"),
+                    @ColumnResult(name = "id", type = Long.class)
+                    ,
+                    @ColumnResult(name = "biography")
+                    ,
+                    @ColumnResult(name = "location")
+                    ,
+                    @ColumnResult(name = "name")
+                    ,
+                    @ColumnResult(name = "username")
+                    ,
+                    @ColumnResult(name = "website")
+                    ,
                     @ColumnResult(name = "nr", type = Long.class)}))
 public class User implements Serializable {
 
@@ -104,6 +111,13 @@ public class User implements Serializable {
     private List<Kweet> kweets;
 
     public boolean followThisUser(User follower) {
+        if (this.followers == null) {
+            this.followers = new ArrayList<>();
+        }
+        if (follower.getFollowing() == null) {
+            follower.setFollowing(new ArrayList<>());
+        }
+        
         if (this.followers.contains(follower)) {
             this.followers.remove(follower);
             follower.getFollowing().remove(this);
