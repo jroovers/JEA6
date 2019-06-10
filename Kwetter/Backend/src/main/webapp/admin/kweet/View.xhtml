@@ -3,23 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
 
-        <p:dialog id="KweetViewDlg" widgetVar="KweetViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.ViewKweetTitle}">
+        <p:dialog id="KweetViewDlg" widgetVar="KweetViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.Kweet}">
             <h:form id="KweetViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{kweetController.selected != null}">
-                        <h:outputText value="#{text.ViewKweetLabel_id}"/>
-                        <h:outputText value="#{kweetController.selected.id}" title="#{text.ViewKweetTitle_id}"/>
-                        <h:outputText value="#{text.ViewKweetLabel_author}"/>
-                        <h:outputText value="#{kweetController.selected.author}" title="#{text.ViewKweetTitle_author}"/>
-                        <h:outputText value="#{text.ViewKweetLabel_body}"/>
-                        <h:outputText value="#{kweetController.selected.body}" title="#{text.ViewKweetTitle_body}"/>
-                        <h:outputText value="#{text.ViewKweetLabel_createdTime}"/>
-                        <h:outputText value="#{kweetController.selected.createdTime}" title="#{text.ViewKweetTitle_createdTime}"/>
+                        <h:outputText value="#{text.Id}"/>
+                        <h:outputText value="#{kweetController.selected.id}" title="#{text.Id}"/>
+                        <h:outputText value="#{text.Author}"/>
+                        <h:outputText value="#{kweetController.selected.author}" title="#{text.Author}"/>
+                        <h:outputText value="#{text.Kweet_Body}"/>
+                        <h:outputText value="#{kweetController.selected.body}" title="#{text.Kweet_Body}"/>
+                        <h:outputText value="#{text.CreatedTime}"/>
+                        <h:outputText value="#{kweetController.selected.createdTime}" title="#{text.CreatedTime}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="KweetViewDialog.hide()"/>
                 </h:panelGroup>

@@ -12,10 +12,10 @@
             <h:form id="RoleViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{roleController.selected != null}">
-                        <h:outputText value="#{text.ViewRoleLabel_id}"/>
-                        <h:outputText value="#{roleController.selected.id}" title="#{text.ViewRoleTitle_id}"/>
-                        <h:outputText value="#{text.ViewRoleLabel_name}"/>
-                        <h:outputText value="#{roleController.selected.name}" title="#{text.ViewRoleTitle_name}"/>
+                        <h:outputText value="#{text.Id}"/>
+                        <h:outputText value="#{roleController.selected.id}" title="#{text.Id}"/>
+                        <h:outputText value="#{text.Name}"/>
+                        <h:outputText value="#{roleController.selected.name}" title="#{text.Name}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="RoleViewDialog.hide()"/>
                 </h:panelGroup>

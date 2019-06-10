@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
@@ -21,10 +22,10 @@
                     <p:menubar>
                         <p:menuitem value="#{text.Home}" outcome="/admin/admin_index.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="#{text.Maintenance}">
-                            <p:menuitem value="Kweets" outcome="/admin/kweet/List.xhtml" />
-                            <p:menuitem value="Permissions" outcome="/admin/permission/List.xhtml" />
-                            <p:menuitem value="Roles" outcome="/admin/role/List.xhtml" />
-                            <p:menuitem value="Users" outcome="/admin/user/List.xhtml" />
+                            <p:menuitem value="#{text.KweetManagement}" outcome="/admin/kweet/List.xhtml" />
+                            <p:menuitem value="#{text.PermissionManagement}" outcome="/admin/permission/List.xhtml" />
+                            <p:menuitem value="#{text.RoleManagement}" outcome="/admin/role/List.xhtml" />
+                            <p:menuitem value="#{text.UserManagement}" outcome="/admin/user/List.xhtml" />
                         </p:submenu>
                         <p:menuitem value="#{text['login.logout']}" action="#{loginController.logout()}" ajax="false"/>
                     </p:menubar>

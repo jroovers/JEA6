@@ -8,14 +8,14 @@
 
     <ui:composition>
 
-        <p:dialog id="PermissionEditDlg" widgetVar="PermissionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.EditPermissionTitle}">
+        <p:dialog id="PermissionEditDlg" widgetVar="PermissionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.EditPermission}">
             <h:form id="PermissionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{permissionController.selected != null}">
-                        <p:outputLabel value="#{text.EditPermissionLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{permissionController.selected.id}" title="#{text.EditPermissionTitle_id}" />
-                        <p:outputLabel value="#{text.EditPermissionLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{permissionController.selected.name}" title="#{text.EditPermissionTitle_name}" />
+                        <p:outputLabel value="#{text.Id}" for="id" />
+                        <p:inputText id="id" value="#{permissionController.selected.id}" title="#{text.Id}" />
+                        <p:outputLabel value="#{text.Name}" for="name" />
+                        <p:inputText id="name" value="#{permissionController.selected.name}" title="#{text.Name}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{permissionController.update}" value="#{text.Save}" update="display,:PermissionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PermissionEditDialog');"/>
                     <p:commandButton value="#{text.Cancel}" onclick="PermissionEditDialog.hide()"/>
