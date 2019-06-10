@@ -13,23 +13,23 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
 
-                        <p:outputLabel value="#{text.EditUserLabel_username}" for="username" />
-                        <p:inputText id="username" value="#{userController.selected.username}" title="#{text.EditUserTitle_username}" />
+                        <p:outputLabel value="#{text.Username}" for="username" />
+                        <p:inputText id="username" value="#{userController.selected.username}" title="#{text.Username}" />
 
-                        <p:outputLabel value="#{text.EditUserLabel_passwordHash}"/>
-                        <p:outputLabel value="#{userController.selected.passwordHash}" title="#{text.EditUserTitle_passwordHash}" />
+                        <p:outputLabel value="#{text.Password}"/>
+                        <p:outputLabel value="#{userController.selected.passwordHash}" title="#{text.Password}" />
 
-                        <p:outputLabel value="#{text.EditUserLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{userController.selected.name}" title="#{text.EditUserTitle_name}" />
+                        <p:outputLabel value="#{text.Name}" for="name" />
+                        <p:inputText id="name" value="#{userController.selected.name}" title="#{text.Name}" />
 
-                        <p:outputLabel value="#{text.EditUserLabel_location}" for="location" />
-                        <p:inputText id="location" value="#{userController.selected.location}" title="#{text.EditUserTitle_location}" />
+                        <p:outputLabel value="#{text.Location}" for="location" />
+                        <p:inputText id="location" value="#{userController.selected.location}" title="#{text.Location}" />
 
-                        <p:outputLabel value="#{text.EditUserLabel_website}" for="website" />
-                        <p:inputText id="website" value="#{userController.selected.website}" title="#{text.EditUserTitle_website}" />
+                        <p:outputLabel value="#{text.Website}" for="website" />
+                        <p:inputText id="website" value="#{userController.selected.website}" title="#{text.Website}" />
 
-                        <p:outputLabel value="#{text.EditUserLabel_biography}" for="biography" />
-                        <p:inputText id="biography" value="#{userController.selected.biography}" title="#{text.EditUserTitle_biography}" />
+                        <p:outputLabel value="#{text.Biography}" for="biography" />
+                        <p:inputText id="biography" value="#{userController.selected.biography}" title="#{text.Biography}" />
 
                         <p:outputLabel id="roles" value="Roles" for="roleCheckBoxes"/>
                         <p:selectManyCheckbox id="roleCheckBoxes" value="#{userController.selectedRoles}" layout="grid" columns="1">

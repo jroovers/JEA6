@@ -15,7 +15,7 @@
 
         <ui:define name="body">
             <h:form id="KweetListForm">
-                <p:panel header="#{text.ListKweetTitle}">
+                <p:panel header="#{text.List}">
                     <p:dataTable id="datalist" value="#{kweetController.items}" var="item"
                                  selectionMode="single" selection="#{kweetController.selected}"
                                  paginator="true"
@@ -27,25 +27,25 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{text.ListKweetTitle_id}"/>
+                                <h:outputText value="#{text.Id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{text.ListKweetTitle_author}"/>
+                                <h:outputText value="#{text.Author}"/>
                             </f:facet>
                             <h:outputText value="#{item.author.username}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{text.ListKweetTitle_body}"/>
+                                <h:outputText value="#{text.Kweet_Body}"/>
                             </f:facet>
                             <h:outputText value="#{item.body}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{text.ListKweetTitle_createdTime}"/>
+                                <h:outputText value="#{text.CreatedTime}"/>
                             </f:facet>
                             <h:outputText value="#{item.createdTime}"/>
                         </p:column>

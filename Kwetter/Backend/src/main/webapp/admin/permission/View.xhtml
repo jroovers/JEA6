@@ -12,10 +12,10 @@
             <h:form id="PermissionViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{permissionController.selected != null}">
-                        <h:outputText value="#{text.ViewPermissionLabel_id}"/>
-                        <h:outputText value="#{permissionController.selected.id}" title="#{text.ViewPermissionTitle_id}"/>
-                        <h:outputText value="#{text.ViewPermissionLabel_name}"/>
-                        <h:outputText value="#{permissionController.selected.name}" title="#{text.ViewPermissionTitle_name}"/>
+                        <h:outputText value="#{text.Id}"/>
+                        <h:outputText value="#{permissionController.selected.id}" title="#{text.Id}"/>
+                        <h:outputText value="#{text.Name}"/>
+                        <h:outputText value="#{permissionController.selected.name}" title="#{text.Name}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="PermissionViewDialog.hide()"/>
                 </h:panelGroup>
