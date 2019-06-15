@@ -11,6 +11,11 @@
             <p:growl id="growl" showDetail="true" sticky="false" />  
         </h:form>
         404 not found
+        <br></br>
+        <h:link outcome="/nlogin.xthml">try going to the login page</h:link>
+        <br></br>
+        Or try forcing a log out:
+        <h:button value="#{text['login.logout']}" onclick="#{loginController.logout()}"/>
     </h:body>
 </html>
 

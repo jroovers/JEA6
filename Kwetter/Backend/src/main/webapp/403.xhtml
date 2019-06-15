@@ -7,13 +7,16 @@
 
     <ui:composition template="/WEB-INF/templates/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{text.ListUserTitle}"></h:outputText>
+            <h:outputText value="#{text.AppName}"></h:outputText>
         </ui:define>
 
         <ui:define name="body">
             <h1>
-                #{text.HelloMessage}
+                403
             </h1>
+            <p>
+                Niet voldoende rechten voor die pagina.
+            </p>
         </ui:define>
     </ui:composition>
 </html>
