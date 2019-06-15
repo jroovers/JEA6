@@ -84,7 +84,6 @@ public class initApp implements Serializable {
         admin.getPermissions().add(manageModerators);
 
         moderator.getPermissions().add(manageKweets);
-        moderator.getPermissions().add(manageUsers);
 
         rDao.save(user);
         rDao.save(moderator);

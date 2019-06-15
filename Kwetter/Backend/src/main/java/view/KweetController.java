@@ -41,35 +41,12 @@ public class KweetController implements Serializable {
         this.selected = selected;
     }
 
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
-    }
-
     private KweetDao getDao() {
         return kweetCrud;
     }
 
-    public Kweet prepareCreate() {
-        selected = new Kweet();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/i18n/text").getString("KweetCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
-    }
-
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/i18n/text").getString("KweetUpdated"));
-    }
-
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("KweetDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("DeletedItem"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -85,7 +62,6 @@ public class KweetController implements Serializable {
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
-            setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
                     getDao().update(selected);
