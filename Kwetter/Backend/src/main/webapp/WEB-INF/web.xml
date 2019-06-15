@@ -126,6 +126,6 @@
     </error-page>
 
     <error-page>
-        <location>/error.xhtml</location>
+        <location>/nlogin.xhtml</location>
     </error-page>
 </web-app>
