@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +38,11 @@ public class Role implements Serializable, Comparable<Role> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-    @ManyToMany
+    
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Permission> permissions;
 
     @Override

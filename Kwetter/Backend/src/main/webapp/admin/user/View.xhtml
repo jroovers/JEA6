@@ -12,22 +12,22 @@
             <h:form id="UserViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
-                        <h:outputText value="#{text.ViewUserLabel_id}"/>
-                        <h:outputText value="#{userController.selected.id}" title="#{text.ViewUserTitle_id}"/>
-                        <h:outputText value="#{text.ViewUserLabel_username}"/>
-                        <h:outputText value="#{userController.selected.username}" title="#{text.ViewUserTitle_username}"/>
-                        <h:outputText value="#{text.ViewUserLabel_passwordHash}"/>
-                        <h:outputText value="#{userController.selected.passwordHash}" title="#{text.ViewUserTitle_passwordHash}"/>
-                        <h:outputText value="#{text.ViewUserLabel_image}"/>
-                        <h:outputText value="#{userController.selected.image}" title="#{text.ViewUserTitle_image}"/>
-                        <h:outputText value="#{text.ViewUserLabel_name}"/>
-                        <h:outputText value="#{userController.selected.name}" title="#{text.ViewUserTitle_name}"/>
-                        <h:outputText value="#{text.ViewUserLabel_location}"/>
-                        <h:outputText value="#{userController.selected.location}" title="#{text.ViewUserTitle_location}"/>
-                        <h:outputText value="#{text.ViewUserLabel_website}"/>
-                        <h:outputText value="#{userController.selected.website}" title="#{text.ViewUserTitle_website}"/>
-                        <h:outputText value="#{text.ViewUserLabel_biography}"/>
-                        <h:outputText value="#{userController.selected.biography}" title="#{text.ViewUserTitle_biography}"/>
+                        <h:outputText value="#{text.Id}"/>
+                        <h:outputText value="#{userController.selected.id}" title="#{text.Id}"/>
+                        <h:outputText value="#{text.Username}"/>
+                        <h:outputText value="#{userController.selected.username}" title="#{text.Username}"/>
+                        <h:outputText value="#{text.Password}"/>
+                        <h:outputText value="#{userController.selected.passwordHash}" title="#{text.Password}"/>
+                        <h:outputText value="#{text.ProfileImage}"/>
+                        <h:outputText value="#{userController.selected.image}" title="#{text.ProfileImage}"/>
+                        <h:outputText value="#{text.Name}"/>
+                        <h:outputText value="#{userController.selected.name}" title="#{text.Name}"/>
+                        <h:outputText value="#{text.Location}"/>
+                        <h:outputText value="#{userController.selected.location}" title="#{text.Location}"/>
+                        <h:outputText value="#{text.Website}"/>
+                        <h:outputText value="#{userController.selected.website}" title="#{text.Website}"/>
+                        <h:outputText value="#{text.Biography}"/>
+                        <h:outputText value="#{userController.selected.biography}" title="#{text.Biography}"/>
                         <h:outputText value="roles"/>
                         <p:outputPanel>
                             <p:panelGrid columns="1">

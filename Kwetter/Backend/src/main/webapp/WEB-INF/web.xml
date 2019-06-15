@@ -41,40 +41,91 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>faces/nlogin.xhtml</welcome-file>
+        <welcome-file>nlogin.xhtml</welcome-file>
     </welcome-file-list>
     
+    <!-- SECURITY REALMS AND CONFIGURATION -->
     <security-role>
-        <role-name>superadmin</role-name>
+        <role-name>adminmgmt</role-name>
     </security-role>
     <security-role>
-        <role-name>admin</role-name>
+        <role-name>moderatormgmt</role-name>
     </security-role>
     <security-role>
-        <role-name>moderator</role-name>
+        <role-name>usermgmt</role-name>
+    </security-role>
+    <security-role>
+        <role-name>kweetmgmt</role-name>
     </security-role>
     
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>KwetterSecRealm</realm-name>
         <form-login-config>
-            <form-login-page>/faces/nlogin.xhtml</form-login-page>
-            <form-error-page>/faces/nlogin.xhtml</form-error-page>
+            <form-login-page>/nlogin.xhtml</form-login-page>
+            <form-error-page>/nlogin.xhtml</form-error-page>
         </form-login-config>
     </login-config>
     
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>administrator</web-resource-name>
-            <url-pattern>/faces/admin/*</url-pattern>
+            <url-pattern>/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>moderator</role-name>
-            <role-name>admin</role-name>
-            <role-name>superadmin</role-name>
+            <role-name>adminmgmt</role-name>
+            <role-name>moderatormgmt</role-name>
+            <role-name>usermgmt</role-name>
+            <role-name>kweetmgmt</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>administrator</web-resource-name>
+            <url-pattern>/admin/kweet/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>kweetmgmt</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>administrator</web-resource-name>
+            <url-pattern>/admin/user/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>usermgmt</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>administrator</web-resource-name>
+            <url-pattern>/admin/role/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>adminmgmt</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>administrator</web-resource-name>
+            <url-pattern>/admin/permission/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>adminmgmt</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+    <!-- ERROR PAGE CONFIGURATION -->
+    <error-page>
+        <error-code>403</error-code>
+        <location>/403.xhtml?faces-redirect=true</location>
+    </error-page>
+
+    <error-page>
+        <location>/nlogin.xhtml</location>
+    </error-page>
 </web-app>

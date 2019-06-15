@@ -1,5 +1,6 @@
 package view;
 
+import domain.dao.PermissionDao;
 import domain.model.Role;
 import view.utility.JsfUtil;
 import view.utility.JsfUtil.PersistAction;
@@ -20,6 +21,9 @@ import javax.inject.Inject;
 import org.primefaces.model.DualListModel;
 import domain.dao.RoleDao;
 import domain.dao.qualifiers.JPA;
+import domain.model.Permission;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 @Named("roleController")
 @SessionScoped
@@ -28,16 +32,50 @@ public class RoleController implements Serializable {
     @Inject
     @JPA
     private RoleDao roleCrud;
-    
+
+    @Inject
+    @JPA
+    private PermissionDao permCrud;
+
     private DualListModel<Role> roles;
-    
-    
-    
+
+    private List<String> selectedPermissions;
+    private List<String> allPermissions;
 
     private List<Role> items = null;
     private Role selected;
 
     public RoleController() {
+    }
+
+    public List<String> getSelectedPermissions() {
+        if (this.selectedPermissions == null) {
+            this.selectedPermissions = new ArrayList<>();
+        }
+        // here be dragons :(
+        int size = this.selected.getPermissions().size();
+        if (this.selectedPermissions.size() != size) {
+            this.selectedPermissions.clear();
+            for (Permission p : this.selected.getPermissions()) {
+                this.selected.getPermissions();
+                this.selectedPermissions.add(p.getName());
+            }
+        }
+        return selectedPermissions;
+    }
+
+    public void setSelectedPermissions(List<String> selectedRoles) {
+        this.selectedPermissions = selectedRoles;
+    }
+
+    public List<String> getAllPermissions() {
+        if (this.allPermissions == null) {
+            this.allPermissions = new ArrayList<>();
+            for (Permission p : permCrud.getAll()) {
+                this.allPermissions.add(p.getName());
+            }
+        }
+        return this.allPermissions;
     }
 
     public Role getSelected() {
@@ -49,6 +87,13 @@ public class RoleController implements Serializable {
     }
 
     protected void setEmbeddableKeys() {
+        HashSet<Permission> newPermissions = new HashSet<>();
+        for (Permission p : permCrud.getAll()) {
+            if (selectedPermissions.contains(p.getName())) {
+                newPermissions.add(p);
+            }
+        }
+        this.selected.setPermissions(newPermissions);
     }
 
     protected void initializeEmbeddableKey() {
@@ -65,18 +110,18 @@ public class RoleController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/i18n/text").getString("RoleCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/i18n/text").getString("RoleUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("RoleDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.

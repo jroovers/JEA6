@@ -42,7 +42,7 @@ public class LoginController {
                 // Already logged in, so redirect to some main page.
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + this.username, username));
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-                response.sendRedirect("admin/admin_index.xhtml?faces-redirect=true");
+                response.sendRedirect("http://localhost:8080/Backend/admin/admin_index.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -85,6 +85,7 @@ public class LoginController {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.logout();
+            context.getExternalContext().invalidateSession();
         } catch (ServletException e) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Logout failed.", username));
         }

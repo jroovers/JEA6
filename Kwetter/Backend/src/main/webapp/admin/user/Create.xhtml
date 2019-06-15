@@ -12,22 +12,22 @@
             <h:form id="UserCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{userController.selected != null}">
-                        <p:outputLabel value="#{text.CreateUserLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{userController.selected.id}" title="#{text.CreateUserTitle_id}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_username}" for="username" />
-                        <p:inputText id="username" value="#{userController.selected.username}" title="#{text.CreateUserTitle_username}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_passwordHash}" for="passwordHash" />
-                        <p:inputText id="passwordHash" value="#{userController.selected.passwordHash}" title="#{text.CreateUserTitle_passwordHash}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_image}" for="image" />
-                        <p:inputTextarea rows="4" cols="30" id="image" value="#{userController.selected.image}" title="#{text.CreateUserTitle_image}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{userController.selected.name}" title="#{text.CreateUserTitle_name}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_location}" for="location" />
-                        <p:inputText id="location" value="#{userController.selected.location}" title="#{text.CreateUserTitle_location}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_website}" for="website" />
-                        <p:inputText id="website" value="#{userController.selected.website}" title="#{text.CreateUserTitle_website}" />
-                        <p:outputLabel value="#{text.CreateUserLabel_biography}" for="biography" />
-                        <p:inputText id="biography" value="#{userController.selected.biography}" title="#{text.CreateUserTitle_biography}" />
+                        <p:outputLabel value="#{text.Id}" for="id" />
+                        <p:inputText id="id" value="#{userController.selected.id}" title="#{text.Id}" />
+                        <p:outputLabel value="#{text.Username}" for="username" />
+                        <p:inputText id="username" value="#{userController.selected.username}" title="#{text.Username}" />
+                        <p:outputLabel value="#{text.Password}" for="passwordHash" />
+                        <p:inputText id="passwordHash" value="#{userController.selected.passwordHash}" title="#{text.Password}" />
+                        <p:outputLabel value="#{text.ProfileImage}" for="image" />
+                        <p:inputTextarea rows="4" cols="30" id="image" value="#{userController.selected.image}" title="#{text.ProfileImage}" />
+                        <p:outputLabel value="#{text.Name}" for="name" />
+                        <p:inputText id="name" value="#{userController.selected.name}" title="#{text.Name}" />
+                        <p:outputLabel value="#{text.Location}" for="location" />
+                        <p:inputText id="location" value="#{userController.selected.location}" title="#{text.Location}" />
+                        <p:outputLabel value="#{text.Website}" for="website" />
+                        <p:inputText id="website" value="#{userController.selected.website}" title="#{text.Website}" />
+                        <p:outputLabel value="#{text.Biography}" for="biography" />
+                        <p:inputText id="biography" value="#{userController.selected.biography}" title="#{text.Biography}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{userController.create}" value="#{text.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args,'UserCreateDialog');"/>
                     <p:commandButton value="#{text.Cancel}" onclick="UserCreateDialog.hide()"/>
