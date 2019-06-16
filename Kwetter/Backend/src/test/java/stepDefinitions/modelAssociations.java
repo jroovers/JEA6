@@ -1,8 +1,10 @@
-package domain.model;
+package stepDefinitions;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import domain.model.Kweet;
+import domain.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -11,7 +13,7 @@ import org.junit.Assert;
  *
  * @author Jeroen Roovers
  */
-public class Stepdefs {
+public class modelAssociations {
 
     private List<User> users;
     private List<Kweet> kweets;
