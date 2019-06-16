@@ -18,14 +18,14 @@ import selenium.pages.ProfilePage;
  *
  * @author Jeroen Roovers <jroovers>
  */
-public class frontendProfile {
+public class FrontendProfile {
 
     private WebDriver driver;
     private LoginPage loginPage;
     private HomePage homePage;
     private ProfilePage profilePage;
 
-    public frontendProfile() {
+    public FrontendProfile() {
         this.driver = Hooks.driver;
     }
 

@@ -13,7 +13,7 @@ import org.junit.Assert;
  *
  * @author Jeroen Roovers
  */
-public class modelAssociations {
+public class ModelAssociations {
 
     private List<User> users;
     private List<Kweet> kweets;

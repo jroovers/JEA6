@@ -17,13 +17,13 @@ import selenium.pages.LoginPage;
  *
  * @author Jeroen Roovers <jroovers>
  */
-public class frontendCreateKweet {
+public class FrontendCreateKweet {
     
     private WebDriver driver;
     private LoginPage loginPage;
     private HomePage homePage;
 
-    public frontendCreateKweet() {
+    public FrontendCreateKweet() {
         this.driver = Hooks.driver;
     }
 

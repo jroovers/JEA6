@@ -1,6 +1,5 @@
 package selenium.pages;
 
-import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +34,7 @@ public class HomePage extends PageObject {
     public HomePage submitNewKweet() {
         wait.until(ExpectedConditions.elementToBeClickable(By.id("createKweetButton")));
         this.createKweetButton.click();
+        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'selenium test')]")));
         return this;
     }
 
@@ -44,7 +44,7 @@ public class HomePage extends PageObject {
 
     public String getNewKweetContent(String text) {
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'" + text + "')]")));
-        WebElement eNewKweetContent = driver.findElement(By.xpath("//*[contains(text(),'selenium')]"));
+        WebElement eNewKweetContent = driver.findElement(By.xpath("//*[contains(text(),'" + text + "')]"));
         return eNewKweetContent.getText();
     }
 

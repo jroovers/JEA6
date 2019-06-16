@@ -5,7 +5,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import selenium.pages.HomePage;
 import selenium.pages.LoginPage;
 
@@ -13,13 +12,13 @@ import selenium.pages.LoginPage;
  *
  * @author Jeroen Roovers <jroovers>
  */
-public class frontendLogin {
+public class FrontendLogin {
 
     private WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;
 
-    public frontendLogin() {
+    public FrontendLogin() {
         driver = Hooks.driver;
     }
 
