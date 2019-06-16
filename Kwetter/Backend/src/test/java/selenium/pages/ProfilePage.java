@@ -12,6 +12,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class ProfilePage extends PageObject {
 
+    WebElement profileFollowingCount;
+    WebElement profileFollowerCount;
+    WebElement profileTweetCount;
+
     WebElement changeProfileButton;
     WebElement profileEditName;
     WebElement profileEditBio;
@@ -19,15 +23,23 @@ public class ProfilePage extends PageObject {
     WebElement profileEditWebsite;
     WebElement profileEditConfirm;
 
+    WebElement profileFollowButton;
+    WebElement profileUnFollowButton;
+
     public ProfilePage(WebDriver driver) {
         super(driver);
         wait = new WebDriverWait(this.driver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("changeProfileButton")));
-        this.changeProfileButton = this.driver.findElement(By.id("changeProfileButton"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("profileFollowingCount")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("profileFollowerCount")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("profileTweetCount")));
     }
 
     public void clickChangeProfileButton() {
+        // wait for page to load
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("changeProfileButton")));
+        this.changeProfileButton = this.driver.findElement(By.id("changeProfileButton"));
         changeProfileButton.click();
+        // wait for dialog
         wait.until(ExpectedConditions.elementToBeClickable(By.id("profileEditConfirm")));
         wait.until(ExpectedConditions.elementToBeClickable(By.id("profileEditName")));
         wait.until(ExpectedConditions.elementToBeClickable(By.id("profileEditBio")));
@@ -67,10 +79,28 @@ public class ProfilePage extends PageObject {
         }
     }
 
+    public void clickFollowButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("profileFollowButton")));
+        this.profileFollowButton = this.driver.findElement(By.id("profileFollowButton"));
+        this.profileFollowButton.click();
+    }
+
+    public void clickUnfollowButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("profileUnFollowButton")));
+        this.profileUnFollowButton = this.driver.findElement(By.id("profileUnFollowButton"));
+        this.profileUnFollowButton.click();
+    }
+
     public String getProfileName(String text) {
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(),'" + text + "')]")));
         WebElement profileName = driver.findElement(By.xpath("//*[contains(text(),'" + text + "')]"));
         return profileName.getText();
+    }
+
+    public String getFollowerName(String text) {
+        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(text(), '" + text + "')]")));
+        WebElement followerName = driver.findElement(By.xpath("//div[contains(text(), '" + text + "')]"));
+        return followerName.getText();
     }
 
 }

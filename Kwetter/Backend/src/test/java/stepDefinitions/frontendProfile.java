@@ -35,6 +35,12 @@ public class frontendProfile {
         profilePage = new ProfilePage(driver);
     }
 
+    @Given("on someone else's profile")
+    public void on_someone_else_profile() {
+        driver.get("http://localhost:4200/bob");
+        profilePage = new ProfilePage(driver);
+    }
+
     @When("choose to change my profile")
     public void choose_to_change_my_profile() {
         // Write code here that turns the phrase above into concrete actions
@@ -54,6 +60,17 @@ public class frontendProfile {
     public void confirm_my_changes() {
         // Write code here that turns the phrase above into concrete actions
         profilePage.clickProfileEditConfirmButton();
+    }
+    
+    @When("I choose to follow")
+    public void i_choose_to_follow(){
+        profilePage.clickFollowButton();
+    }
+    
+    @Then("I expect myself to show up in that persons followers list")
+    public void i_expect_myself_to_show_up_in_that_persons_followers_list(){
+        String output = profilePage.getFollowerName("jeroen");
+        Assert.assertEquals("@jeroen", output);
     }
 
     @Then("I expect these values to be visible on my profile")
