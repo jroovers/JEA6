@@ -58,7 +58,7 @@
             </div>
           </li>
           <li *ngIf="currentUser && currentUser.username == profile.user.username" class="nav-item">
-            <button mat-raised-button color="accent" (click)="openDialog()">
+            <button mat-raised-button color="accent" (click)="openDialog()" id="changeProfileButton">
               <mat-icon aria-label="Edit button">edit</mat-icon>
               Aanpassen
             </button>

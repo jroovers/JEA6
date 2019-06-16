@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private titleService: Title
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.titleService.setTitle("Kwetter Login");
   }
 
   ngOnInit() {

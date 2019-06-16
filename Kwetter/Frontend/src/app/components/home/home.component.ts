@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { MutualFriend } from 'src/app/models/dto/mutual-friend';
 import { ViewportScroller } from '@angular/common';
 import { WebsocketService } from 'src/app/services/websocket.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private activedRoute: ActivatedRoute,
     private scroller: ViewportScroller,
-    private socketService: WebsocketService
+    private socketService: WebsocketService,
+    private titleService: Title
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
     if (this.currentUser) {
       this.socketService.getKweetSubject().subscribe(x => { this.getKweets() });
     }
+    this.titleService.setTitle("Kwetter")
   }
 
   ngOnInit() {

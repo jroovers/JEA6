@@ -13,7 +13,7 @@
           <div class="row">
             <div class="col">
               <mat-form-field class="w-100">
-                <textarea matInput minlength="2" maxlength="255" [(ngModel)]="model.message"
+                <textarea id="createKweetTextBox" matInput minlength="2" maxlength="255" [(ngModel)]="model.message"
                   placeholder="Jouw bericht..." name="message"></textarea>
                 <mat-hint align="end">{{model.message.length}} / 255</mat-hint>
               </mat-form-field>
@@ -21,13 +21,13 @@
           </div>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="place()" type="submit">Plaatsen</button>
+          <button mat-raised-button id="createKweetButton" color="primary" (click)="place()" type="submit">Plaatsen</button>
         </mat-card-actions>
       </mat-card>
     </form>
   </div>
   <div class="col-5">
-    <h3>
+    <h3 id="kwetterHomeKweetsTitle">
       Kweets.<br>
       <small class="text-muted">Kijk waar anderen het over hebben</small>
     </h3>
@@ -45,7 +45,7 @@
       <mat-card-header>
         <div mat-card-avatar class="kweet-card-header-image"></div>
         <mat-card-title>
-          <a routerLink="/{{kweet.author.username}}">
+          <a routerLink="/{{kweet.author.username}}" id="profileLink">
             <b>@{{kweet.author.username}}</b>
           </a>
         </mat-card-title>

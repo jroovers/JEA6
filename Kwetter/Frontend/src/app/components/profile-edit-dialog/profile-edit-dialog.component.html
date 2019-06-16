@@ -4,7 +4,7 @@
     <div class="col">
       <p>Wat wil je op je profiel?</p>
       <mat-form-field>
-        <input matInput placeholder="Naam" [(ngModel)]="data.name">
+        <input matInput placeholder="Naam" [(ngModel)]="data.name" id="profileEditName">
         <mat-icon matPrefix>face</mat-icon>
       </mat-form-field>
     </div>
@@ -12,7 +12,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <input matInput placeholder="Biografie" [(ngModel)]="data.bio">
+        <input matInput placeholder="Biografie" [(ngModel)]="data.bio" id="profileEditBio">
         <mat-hint>max 255 karakters</mat-hint>
         <mat-icon matPrefix>library_books</mat-icon>
       </mat-form-field>
@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <input matInput placeholder="Locatie" [(ngModel)]="data.location">
+        <input matInput placeholder="Locatie" [(ngModel)]="data.location" id ="profileEditLocation">
         <mat-icon matPrefix>location_on</mat-icon>
       </mat-form-field>
     </div>
@@ -29,7 +29,7 @@
   <div class="row">
     <div class="col">
       <mat-form-field>
-        <input matInput placeholder="Website" [(ngModel)]="data.website">
+        <input matInput placeholder="Website" [(ngModel)]="data.website" id="profileEditWebsite">
         <mat-icon matPrefix>link</mat-icon>
       </mat-form-field>
     </div>
@@ -37,5 +37,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Nee, bedankt</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial id="profileEditConfirm">Ok</button>
 </div>
