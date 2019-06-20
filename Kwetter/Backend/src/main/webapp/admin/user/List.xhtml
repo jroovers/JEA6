@@ -38,17 +38,29 @@
                             </f:facet>
                             <h:outputText value="#{item.username}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{text.Password}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.passwordHash}"/>
-                        </p:column>
-                        <p:column>
+                        <p:column width="200">
                             <f:facet name="header">
                                 <h:outputText value="#{text.Name}"/>
                             </f:facet>
                             <h:outputText value="#{item.name}"/>
+                        </p:column>
+                        <p:column width="200">
+                            <f:facet name="header">
+                                <h:outputText value="#{text.Website}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.website}"/>
+                        </p:column>
+                        <p:column width="200">
+                            <f:facet name="header">
+                                <h:outputText value="#{text.Location}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.location}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{text.Biography}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.biography}"/>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{text.View}" update=":UserViewForm" oncomplete="PF('UserViewDialog').show()" disabled="#{empty userController.selected}"/>

@@ -15,7 +15,7 @@
                         <p:outputLabel value="#{text.Name}" for="name" />
                         <p:inputText id="name" value="#{roleController.selected.name}" title="#{text.Name}" />
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{roleController.create}" value="#{text.Save}" update="display,:RoleListForm:datalist,:growl" oncomplete="handleSubmit(args,'RoleCreateDialog');"/>
+                    <p:commandButton actionListener="#{roleController.update()}" value="#{text.Save}" update="display,:RoleListForm:datalist,:growl" oncomplete="handleSubmit(args,'RoleCreateDialog');"/>
                     <p:commandButton value="#{text.Cancel}" onclick="RoleCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

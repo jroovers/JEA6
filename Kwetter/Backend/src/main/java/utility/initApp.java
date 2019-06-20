@@ -18,7 +18,6 @@ import domain.dao.PermissionDao;
 import domain.dao.RoleDao;
 import domain.dao.UserDao;
 import domain.dao.qualifiers.JPA;
-import java.util.ArrayList;
 
 /**
  *

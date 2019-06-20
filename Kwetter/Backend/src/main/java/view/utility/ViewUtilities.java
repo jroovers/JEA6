@@ -27,10 +27,4 @@ public class ViewUtilities {
         FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
         FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }
-
-    public static enum PersistAction {
-        CREATE,
-        DELETE,
-        UPDATE
-    }
 }

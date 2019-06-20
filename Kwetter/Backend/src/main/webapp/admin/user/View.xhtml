@@ -11,29 +11,35 @@
         <p:dialog id="UserViewDlg" widgetVar="UserViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{text.ViewUserTitle}">
             <h:form id="UserViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{userController.selected != null}">
-                        <h:outputText value="#{text.Id}"/>
-                        <h:outputText value="#{userController.selected.id}" title="#{text.Id}"/>
-                        <h:outputText value="#{text.Username}"/>
-                        <h:outputText value="#{userController.selected.username}" title="#{text.Username}"/>
-                        <h:outputText value="#{text.Password}"/>
-                        <h:outputText value="#{userController.selected.passwordHash}" title="#{text.Password}"/>
-                        <h:outputText value="#{text.ProfileImage}"/>
-                        <h:outputText value="#{userController.selected.image}" title="#{text.ProfileImage}"/>
-                        <h:outputText value="#{text.Name}"/>
-                        <h:outputText value="#{userController.selected.name}" title="#{text.Name}"/>
-                        <h:outputText value="#{text.Location}"/>
-                        <h:outputText value="#{userController.selected.location}" title="#{text.Location}"/>
-                        <h:outputText value="#{text.Website}"/>
-                        <h:outputText value="#{userController.selected.website}" title="#{text.Website}"/>
-                        <h:outputText value="#{text.Biography}"/>
-                        <h:outputText value="#{userController.selected.biography}" title="#{text.Biography}"/>
-                        <h:outputText value="Roles"/>
-                        <p:dataList value="#{userController.selected.roles}" var="role">
-                            #{role.name}
-                        </p:dataList>
-                    </p:panelGrid>
-                    <p:commandButton value="#{text.Close}" onclick="UserViewDialog.hide()"/>
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:panelGrid columns="2" rendered="#{userController.selected != null}">
+                                <h:outputText value="#{text.Id}"/>
+                                <h:outputText value="#{userController.selected.id}" title="#{text.Id}"/>
+                                <h:outputText value="#{text.Username}"/>
+                                <h:outputText value="#{userController.selected.username}" title="#{text.Username}"/>
+                                <h:outputText value="#{text.ProfileImage}"/>
+                                <h:outputText value="#{userController.selected.image}" title="#{text.ProfileImage}"/>
+                                <h:outputText value="#{text.Name}"/>
+                                <h:outputText value="#{userController.selected.name}" title="#{text.Name}"/>
+                                <h:outputText value="#{text.Location}"/>
+                                <h:outputText value="#{userController.selected.location}" title="#{text.Location}"/>
+                                <h:outputText value="#{text.Website}"/>
+                                <h:outputText value="#{userController.selected.website}" title="#{text.Website}"/>
+                                <h:outputText value="#{text.Biography}"/>
+                                <h:outputText value="#{userController.selected.biography}" title="#{text.Biography}"/>
+                                <h:outputText value="Roles"/>
+                                <p:dataList value="#{userController.selected.roles}" var="role">
+                                    #{role.name}
+                                </p:dataList>
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="#{text.Close}" onclick="UserViewDialog.hide()"/>
+                        </div>
+                    </div>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

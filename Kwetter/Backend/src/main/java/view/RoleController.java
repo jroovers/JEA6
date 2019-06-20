@@ -3,14 +3,12 @@ package view;
 import domain.dao.PermissionDao;
 import domain.model.Role;
 import view.utility.ViewUtilities;
-import view.utility.ViewUtilities.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -64,12 +62,16 @@ public class RoleController implements Serializable {
         this.selectedPermissions = selectedPerms;
     }
 
-    public List<Permission> getAllPermissions() {
-        return permDao.getAll();
-    }
-
     public Role getSelected() {
         return selected;
+    }
+
+    public void setSelected(Role selected) {
+        this.selected = selected;
+    }
+
+    public List<Permission> getAllPermissions() {
+        return permDao.getAll();
     }
 
     public List<Permission> getPermissionsOfSelectedRole() {
@@ -78,10 +80,6 @@ public class RoleController implements Serializable {
         } else {
             return new ArrayList<>();
         }
-    }
-
-    public void setSelected(Role selected) {
-        this.selected = selected;
     }
 
     /**
@@ -104,10 +102,6 @@ public class RoleController implements Serializable {
         this.selected.setPermissions(newPermissions);
     }
 
-    private RoleDao getDao() {
-        return roleDao;
-    }
-
     /**
      * Clears current selections in preperation for creation of entity.
      *
@@ -119,62 +113,46 @@ public class RoleController implements Serializable {
         return selected;
     }
 
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
+    public void update() {
+        if (selected != null) {
+            try {
+                setEmbeddableKeys();
+                roleDao.update(selected);
+                ViewUtilities.addSuccessMessage(getText("UpdatedItem"));
+            } catch (Exception ex) {
+                ViewUtilities.addErrorMessage(ex, getText("PersistenceErrorOccured"));
+            }
+        }
         if (!ViewUtilities.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
-    }
-
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
+        if (selected != null) {
+            try {
+                setEmbeddableKeys();
+                roleDao.delete(selected);
+                ViewUtilities.addSuccessMessage(getText("UpdatedItem"));
+            } catch (Exception ex) {
+                ViewUtilities.addErrorMessage(ex, getText("PersistenceErrorOccured"));
+            }
+        }
         if (!ViewUtilities.isValidationFailed()) {
-            selected = null; // Remove selection
+            selected = null; // destroyed item no longer exists.
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Role> getItems() {
         if (items == null) {
-            items = getDao().getAll();
+            items = roleDao.getAll();
         }
         return items;
     }
 
-    private void persist(PersistAction persistAction, String successMessage) {
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getDao().update(selected);
-                } else {
-                    getDao().delete(selected);
-                }
-                ViewUtilities.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    ViewUtilities.addErrorMessage(msg);
-                } else {
-                    ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
-            }
-        }
-    }
-
-    public Role getRole(Long id) {
-        return getDao().getById(id);
+    public String getText(String key) {
+        return ResourceBundle.getBundle("/i18n/text").getString(key);
     }
 
     private Permission getPermission(Long id) {
@@ -209,34 +187,4 @@ public class RoleController implements Serializable {
         }
 
     }
-
-    @FacesConverter(forClass = Role.class)
-    public static class RoleConverter implements Converter {
-
-        @Override
-        public Object getAsObject(FacesContext context, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            RoleController controller = (RoleController) context.getApplication().getELResolver().
-                    getValue(context.getELContext(), null, "roleController");
-            return controller.getRole(Long.valueOf(value));
-        }
-
-        @Override
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Role) {
-                Role o = (Role) object;
-                return o.getId().toString();
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Role.class.getName()});
-                return null;
-            }
-        }
-
-    }
-
 }

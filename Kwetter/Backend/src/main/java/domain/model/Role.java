@@ -38,10 +38,10 @@ public class Role implements Serializable, Comparable<Role> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    
+
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-    
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Permission> permissions;
 
@@ -83,6 +83,5 @@ public class Role implements Serializable, Comparable<Role> {
         }
         return true;
     }
-    
-    
+
 }

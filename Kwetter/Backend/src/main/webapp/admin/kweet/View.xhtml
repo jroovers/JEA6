@@ -18,7 +18,7 @@
                         <h:outputText value="#{text.Kweet_Body}"/>
                         <h:outputText value="#{kweetController.selected.body}" title="#{text.Kweet_Body}"/>
                         <h:outputText value="#{text.CreatedTime}"/>
-                        <h:outputText value="#{kweetController.selected.createdTime}" title="#{text.CreatedTime}"/>
+                        <h:outputText value="#{kweetController.selected.humanReadableTime}" title="#{text.CreatedTime}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="KweetViewDialog.hide()"/>
                 </h:panelGroup>

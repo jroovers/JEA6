@@ -3,7 +3,6 @@ package view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -53,10 +52,11 @@ public class LoginController {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         if (request.getRemoteUser() != null) {
+            String user = request.getRemoteUser();
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             try {
                 // Already logged in, so redirect to some main page.
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + this.username, this.username));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + user, user));
                 FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
                 response.sendRedirect("http://localhost:8080/Backend/admin/admin_index.xhtml");
             } catch (IOException ex) {
