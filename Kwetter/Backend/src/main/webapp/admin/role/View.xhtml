@@ -16,6 +16,10 @@
                         <h:outputText value="#{roleController.selected.id}" title="#{text.Id}"/>
                         <h:outputText value="#{text.Name}"/>
                         <h:outputText value="#{roleController.selected.name}" title="#{text.Name}"/>
+                        <h:outputText value="#{text.Permissions}"/>
+                        <p:dataList value="#{roleController.permissionsOfSelectedRole}" var="perm">
+                            #{perm.name}
+                        </p:dataList>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="RoleViewDialog.hide()"/>
                 </h:panelGroup>

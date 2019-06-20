@@ -18,8 +18,8 @@
                         <p:inputText id="name" value="#{roleController.selected.name}" title="#{text.Name}" />
 
                         <p:outputLabel id="permissions" value="#{text.Permissions}" for="permCheckBoxes"/>
-                        <p:selectManyCheckbox id="permCheckBoxes" value="#{roleController.selectedPermissions}" layout="grid" columns="1">
-                            <f:selectItems value="#{roleController.allPermissions}"/>
+                        <p:selectManyCheckbox id="permCheckBoxes" value="#{roleController.selectedPermissions}" layout="grid" columns="1" converter="permissionConverter">
+                            <f:selectItems value="#{roleController.allPermissions}" var="p" itemLabel="#{p.name}" itemValue="#{p}"/>
                         </p:selectManyCheckbox>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{roleController.update}" value="#{text.Save}" update="display,:RoleListForm:datalist,:growl" oncomplete="handleSubmit(args, 'RoleEditDialog');"/>

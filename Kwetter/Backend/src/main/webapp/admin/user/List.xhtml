@@ -21,18 +21,18 @@
                                  paginator="true"
                                  rowKey="#{item.id}"
                                  rows="25"
-                                 rowsPerPageTemplate="25,50,100,500">
+                                 rowsPerPageTemplate="25,50,75,100">
 
                         <p:ajax event="rowSelect"   update="viewButton editButton"/>
                         <p:ajax event="rowUnselect" update="viewButton editButton"/>
 
-                        <p:column>
+                        <p:column width="80">
                             <f:facet name="header">
                                 <h:outputText value="#{text.Id}"/>
                             </f:facet>
                             <h:outputText value="#{item.id}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="200">
                             <f:facet name="header">
                                 <h:outputText value="#{text.Username}"/>
                             </f:facet>

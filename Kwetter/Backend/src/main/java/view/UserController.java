@@ -1,8 +1,8 @@
 package view;
 
 import domain.model.User;
-import view.utility.JsfUtil;
-import view.utility.JsfUtil.PersistAction;
+import view.utility.ViewUtilities;
+import view.utility.ViewUtilities.PersistAction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -89,16 +89,12 @@ public class UserController implements Serializable {
         this.selected.setRoles(newroles);
     }
 
-    protected void initializeEmbeddableKey() {
-    }
-
     private UserDao getDao() {
         return userCrud;
     }
 
     public User prepareCreate() {
         selected = new User();
-        initializeEmbeddableKey();
         return selected;
     }
 
@@ -122,7 +118,7 @@ public class UserController implements Serializable {
                 } else {
                     getDao().delete(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
+                ViewUtilities.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
@@ -130,27 +126,15 @@ public class UserController implements Serializable {
                     msg = cause.getLocalizedMessage();
                 }
                 if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
+                    ViewUtilities.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
+                    ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
+                ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
             }
         }
     }
-
-    public User getUser(java.lang.Long id) {
-        return getDao().getById(id);
-    }
-
-    public List<User> getItemsAvailableSelectMany() {
-        return getDao().getAll();
-    }
-
-    public List<User> getItemsAvailableSelectOne() {
-        return getDao().getAll();
-
-    }
+    
 }

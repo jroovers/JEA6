@@ -2,8 +2,8 @@ package view;
 
 import domain.dao.PermissionDao;
 import domain.model.Role;
-import view.utility.JsfUtil;
-import view.utility.JsfUtil.PersistAction;
+import view.utility.ViewUtilities;
+import view.utility.ViewUtilities.PersistAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,12 +18,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
-import org.primefaces.model.DualListModel;
 import domain.dao.RoleDao;
 import domain.dao.qualifiers.JPA;
 import domain.model.Permission;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Named("roleController")
 @SessionScoped
@@ -31,87 +31,97 @@ public class RoleController implements Serializable {
 
     @Inject
     @JPA
-    private RoleDao roleCrud;
+    private RoleDao roleDao;
 
     @Inject
     @JPA
-    private PermissionDao permCrud;
+    private PermissionDao permDao;
 
-    private DualListModel<Role> roles;
-
-    private List<String> selectedPermissions;
-    private List<String> allPermissions;
-
+    private List<Permission> selectedPermissions;
     private List<Role> items = null;
     private Role selected;
 
     public RoleController() {
     }
 
-    public List<String> getSelectedPermissions() {
-        if (this.selectedPermissions == null) {
-            this.selectedPermissions = new ArrayList<>();
+    public List<Permission> getSelectedPermissions() {
+        if (selected != null && selected.getPermissions() != null) {
+            List<Permission> activePerms = new ArrayList<>(selected.getPermissions());
+            String listString = activePerms.stream().map(Permission::toString)
+                    .collect(Collectors.joining(", "));
+            System.out.println(listString);
+            this.selectedPermissions = activePerms;
+            return this.selectedPermissions;
+        } else {
+            return new ArrayList<>();
         }
-        // here be dragons :(
-        int size = this.selected.getPermissions().size();
-        if (this.selectedPermissions.size() != size) {
-            this.selectedPermissions.clear();
-            for (Permission p : this.selected.getPermissions()) {
-                this.selected.getPermissions();
-                this.selectedPermissions.add(p.getName());
-            }
-        }
-        return selectedPermissions;
     }
 
-    public void setSelectedPermissions(List<String> selectedRoles) {
-        this.selectedPermissions = selectedRoles;
+    public void setSelectedPermissions(List<Permission> selectedPerms) {
+        String listString = selectedPerms.stream().map(Permission::toString)
+                .collect(Collectors.joining(", "));
+        System.out.println(listString);
+        this.selectedPermissions = selectedPerms;
     }
 
-    public List<String> getAllPermissions() {
-        if (this.allPermissions == null) {
-            this.allPermissions = new ArrayList<>();
-            for (Permission p : permCrud.getAll()) {
-                this.allPermissions.add(p.getName());
-            }
-        }
-        return this.allPermissions;
+    public List<Permission> getAllPermissions() {
+        return permDao.getAll();
     }
 
     public Role getSelected() {
         return selected;
     }
 
+    public List<Permission> getPermissionsOfSelectedRole() {
+        if (this.selected != null && this.selected.getPermissions() != null) {
+            return new ArrayList<>(this.selected.getPermissions());
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
     public void setSelected(Role selected) {
         this.selected = selected;
     }
 
+    /**
+     * When updating or creating roles sets any complex fields such as
+     * permissions.
+     */
     protected void setEmbeddableKeys() {
         HashSet<Permission> newPermissions = new HashSet<>();
-        for (Permission p : permCrud.getAll()) {
-            if (selectedPermissions.contains(p.getName())) {
-                newPermissions.add(p);
+        if (selectedPermissions != null) {
+            if (selectedPermissions.size() > 0) {
+                for (Permission p : permDao.getAll()) {
+                    if (selectedPermissions.contains(p)) {
+                        newPermissions.add(p);
+                    }
+                }
             }
+        } else {
+            this.selectedPermissions = new ArrayList<>();
         }
         this.selected.setPermissions(newPermissions);
     }
 
-    protected void initializeEmbeddableKey() {
-    }
-
     private RoleDao getDao() {
-        return roleCrud;
+        return roleDao;
     }
 
+    /**
+     * Clears current selections in preperation for creation of entity.
+     *
+     * @return
+     */
     public Role prepareCreate() {
         selected = new Role();
-        initializeEmbeddableKey();
+        this.selectedPermissions = null;
         return selected;
     }
 
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
-        if (!JsfUtil.isValidationFailed()) {
+        if (!ViewUtilities.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
@@ -122,7 +132,7 @@ public class RoleController implements Serializable {
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/i18n/text").getString("UpdatedItem"));
-        if (!JsfUtil.isValidationFailed()) {
+        if (!ViewUtilities.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -144,7 +154,7 @@ public class RoleController implements Serializable {
                 } else {
                     getDao().delete(selected);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
+                ViewUtilities.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
@@ -152,52 +162,65 @@ public class RoleController implements Serializable {
                     msg = cause.getLocalizedMessage();
                 }
                 if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
+                    ViewUtilities.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
+                    ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
+                ViewUtilities.addErrorMessage(ex, ResourceBundle.getBundle("/i18n/text").getString("PersistenceErrorOccured"));
             }
         }
     }
 
-    public Role getRole(java.lang.Long id) {
+    public Role getRole(Long id) {
         return getDao().getById(id);
     }
 
-    public List<Role> getItemsAvailableSelectMany() {
-        return getDao().getAll();
+    private Permission getPermission(Long id) {
+        return permDao.getById(id);
     }
 
-    public List<Role> getItemsAvailableSelectOne() {
-        return getDao().getAll();
-    }
-
-    @FacesConverter(forClass = Role.class)
-    public static class RoleControllerConverter implements Converter {
+    @FacesConverter(forClass = Permission.class, value = "permissionConverter")
+    public static class PermissionConverter implements Converter {
 
         @Override
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+        public Object getAsObject(FacesContext context, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            RoleController controller = (RoleController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "roleController");
-            return controller.getRole(getKey(value));
+            RoleController controller = (RoleController) context.getApplication().getELResolver().
+                    getValue(context.getELContext(), null, "roleController");
+            return controller.getPermission(Long.valueOf(value));
         }
 
-        java.lang.Long getKey(String value) {
-            java.lang.Long key;
-            key = Long.valueOf(value);
-            return key;
+        @Override
+        public String getAsString(FacesContext context, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Permission) {
+                Permission o = (Permission) object;
+                return o.getId().toString();
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Permission.class.getName()});
+                return null;
+            }
         }
 
-        String getStringKey(java.lang.Long value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
+    }
+
+    @FacesConverter(forClass = Role.class)
+    public static class RoleConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext context, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            RoleController controller = (RoleController) context.getApplication().getELResolver().
+                    getValue(context.getELContext(), null, "roleController");
+            return controller.getRole(Long.valueOf(value));
         }
 
         @Override
@@ -207,7 +230,7 @@ public class RoleController implements Serializable {
             }
             if (object instanceof Role) {
                 Role o = (Role) object;
-                return getStringKey(o.getId());
+                return o.getId().toString();
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Role.class.getName()});
                 return null;

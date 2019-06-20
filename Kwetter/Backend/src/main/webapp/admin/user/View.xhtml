@@ -28,14 +28,10 @@
                         <h:outputText value="#{userController.selected.website}" title="#{text.Website}"/>
                         <h:outputText value="#{text.Biography}"/>
                         <h:outputText value="#{userController.selected.biography}" title="#{text.Biography}"/>
-                        <h:outputText value="roles"/>
-                        <p:outputPanel>
-                            <p:panelGrid columns="1">
-                                <c:forEach items="#{userController.selected.roles}" var="item">
-                                    <h:outputText value="#{item.name}"/>
-                                </c:forEach>
-                            </p:panelGrid>
-                        </p:outputPanel>
+                        <h:outputText value="Roles"/>
+                        <p:dataList value="#{userController.selected.roles}" var="role">
+                            #{role.name}
+                        </p:dataList>
                     </p:panelGrid>
                     <p:commandButton value="#{text.Close}" onclick="UserViewDialog.hide()"/>
                 </h:panelGroup>

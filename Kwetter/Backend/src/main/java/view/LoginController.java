@@ -32,23 +32,6 @@ public class LoginController {
     private String username;
     private String password;
 
-    @PostConstruct
-    public void init() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.getRemoteUser() != null) {
-            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            try {
-                // Already logged in, so redirect to some main page.
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + this.username, username));
-                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-                response.sendRedirect("http://localhost:8080/Backend/admin/admin_index.xhtml");
-            } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
     public String getUsername() {
         return username;
     }
@@ -63,6 +46,23 @@ public class LoginController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void init() {
+        System.out.println("Inside Login Filter");
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.getRemoteUser() != null) {
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            try {
+                // Already logged in, so redirect to some main page.
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Welkom terug, " + this.username, this.username));
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                response.sendRedirect("http://localhost:8080/Backend/admin/admin_index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public String login() {
@@ -82,12 +82,11 @@ public class LoginController {
 
     public void logout() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        context.getExternalContext().invalidateSession();
         try {
-            request.logout();
-            context.getExternalContext().invalidateSession();
-        } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Logout failed.", username));
+            context.getExternalContext().redirect("/Backend/nlogin.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,11 +100,9 @@ public class LoginController {
                 } else {
                     return password;
                 }
-            } catch (PasswordStorage.CannotPerformOperationException ex) {
+            } catch (PasswordStorage.CannotPerformOperationException | PasswordStorage.InvalidHashException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 
-            } catch (PasswordStorage.InvalidHashException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return password;

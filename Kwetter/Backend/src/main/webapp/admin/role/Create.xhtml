@@ -12,8 +12,6 @@
             <h:form id="RoleCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{roleController.selected != null}">
-                        <p:outputLabel value="#{text.Id}" for="id" />
-                        <p:inputText id="id" value="#{roleController.selected.id}" title="#{text.Id}" />
                         <p:outputLabel value="#{text.Name}" for="name" />
                         <p:inputText id="name" value="#{roleController.selected.name}" title="#{text.Name}" />
                     </p:panelGrid>

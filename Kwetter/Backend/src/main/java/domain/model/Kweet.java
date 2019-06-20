@@ -2,6 +2,7 @@ package domain.model;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Entity;
@@ -50,4 +51,8 @@ public class Kweet implements Serializable {
 
     @Transient
     private List<UriLink> links;
+    
+    public String getHumanReadableTime(){
+        return createdTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+   }
 }
