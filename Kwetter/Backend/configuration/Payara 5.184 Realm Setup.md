@@ -25,16 +25,16 @@ Create a connection pool in payara console:
 
 You'll need to set additional properties in the connection pool for payara to be able to connect to MySQL 8
 
-#   | Property        | Value
---- | ------------  | ---
-1   | useSSL          | false
-2   | useTimezone     | true
-3   | serverTimezone  | CET
-4   | serverName      | localhost
-5   | portNumber      | 3306
-6   | databaseName    | kwetter or your schema name
-7   | user            | username for schema access
-8   | password        | password for schema access
+| #   | Property        | Value
+| --- | ------------    | ---
+| 1   | useSSL          | false
+| 2   | useTimezone     | true
+| 3   | serverTimezone  | CET
+| 4   | serverName      | localhost
+| 5   | portNumber      | 3306
+| 6   | databaseName    | kwetter or your schema name
+| 7   | user            | username for schema access
+| 8   | password        | password for schema access
 
 ## Configure kwetter JDBC resource
 
